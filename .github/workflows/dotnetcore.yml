@@ -36,10 +36,10 @@ jobs:
         docker info
         docker build -t $HEROKU_APP_NAME -f ./AIKI.CO.HelpDesk.WebAPI/Dockerfile .
         docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
-        docker tag $HEROKU_APP_NAME registry.heroku.com/$HEROKU_APP_NAME/webapi
-        docker push registry.heroku.com/$HEROKU_APP_NAME/webapi
+        docker tag $HEROKU_APP_NAME registry.heroku.com/$HEROKU_APP_NAME/web
+        docker push registry.heroku.com/$HEROKU_APP_NAME/web
         curl https://cli-assets.heroku.com/install.sh | sh
-        heroku container:release webapi -a $HEROKU_APP_NAME
+        heroku container:release web -a $HEROKU_APP_NAME
     - name: Send Notification To Slack
       uses: rtCamp/action-slack-notify@v2.0.0
       env:
