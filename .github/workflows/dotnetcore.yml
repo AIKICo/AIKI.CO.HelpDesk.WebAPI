@@ -1,0 +1,48 @@
+name: Helpdesk ASP.NET WEB Core Web API
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.102
+    - name: dotnet Restore
+      run: dotnet restore -s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/my/api/v3/index.json
+    - name: Build with dotnet
+      run: dotnet build ./AIKI.CO.HelpDesk.WebAPI.sln --configuration Release
+    - name: Publish 
+      run: dotnet publish -c Release -o bin/Release/netcoreapp3.1/publish --self-contained false
+    - name: dotnet build artifact back to Github
+      uses: actions/upload-artifact@master
+      with:
+        name: webapi
+        path: bin/Release/netcoreapp3.1/publish
+    - name: Docker Publish
+      uses: elgohr/Publish-Docker-Github-Action@2.11
+      with:
+        name: aikico/helpdeskwebapi
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        dockerfile: ./AIKI.CO.HelpDesk.WebAPI/Dockerfile
+        tag_names: true
+    - name: Upload WebAPI On Heroku
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        HEROKU_APP_NAME: "aiki-co-helpdesk-webapi"
+      run: |
+        docker info
+        docker build -t $HEROKU_APP_NAME -f ./AIKI.CO.HelpDesk.WebAPI/Dockerfile .
+        docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+        docker tag $HEROKU_APP_NAME registry.heroku.com/$HEROKU_APP_NAME/web
+        docker push registry.heroku.com/$HEROKU_APP_NAME/web
+        curl https://cli-assets.heroku.com/install.sh | sh
+        heroku container:release web -a $HEROKU_APP_NAME
+    - name: Send Notification To Slack
+      uses: rtCamp/action-slack-notify@v2.0.0
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_CHANNEL: "#general" 
+        SLACK_TITLE: "Help Desk Web API Published On Heroku"
