@@ -36,10 +36,16 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             return Ok(user);
         }
 
-        [HttpGet]
+        [HttpGet(nameof(GetAll))]
         public IActionResult GetAll()
         {
             var users = _userService.GetAll();
+            return Ok(users);
+        }
+        [HttpGet("GetById/{id}")]
+        public IActionResult GetById(string id)
+        {
+            var users = _userService.GetAll().Where(q=>q.id== new Guid(id));
             return Ok(users);
         }
     }
