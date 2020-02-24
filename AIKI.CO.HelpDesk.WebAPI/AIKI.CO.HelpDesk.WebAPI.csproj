@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.2" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+    <Folder Include="AutoMapperSettings\" />
+    <Folder Include="BuilderExtensions\" />
+    <Folder Include="CustomMiddleware\" />
+    <Folder Include="Models\Entities\" />
+    <Folder Include="Models\EntitiesConfiguration\" />
+    <Folder Include="Models\CustomValidation\" />
+    <Folder Include="Models\ViewModel\" />
+    <Folder Include="Settings\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+
+</Project>
