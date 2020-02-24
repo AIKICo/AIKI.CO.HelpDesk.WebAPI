@@ -5,21 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.2" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.6.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Extensions\" />
     <Folder Include="AutoMapperSettings\" />
     <Folder Include="BuilderExtensions\" />
     <Folder Include="CustomMiddleware\" />
-    <Folder Include="Models\Entities\" />
     <Folder Include="Models\EntitiesConfiguration\" />
     <Folder Include="Models\CustomValidation\" />
-    <Folder Include="Models\ViewModel\" />
-    <Folder Include="Settings\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 
