@@ -15,7 +15,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Extensions
 
         public static User WithoutPassword(this User user)
         {
-            user.password = null;
+            user.password = string.Empty;
             return user;
         }
     }

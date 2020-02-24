@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
+using AIKI.CO.HelpDesk.WebAPI.Settings;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
@@ -14,10 +16,12 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private IUserService _userService;
-        public UsersController(IUserService userService)
+        private readonly IUserService _userService;
+        private readonly AppSettings _appSettings;
+        public UsersController(IUserService userService, IOptions<AppSettings> appSettings)
         {
             _userService = userService;
+            _appSettings = appSettings.Value;
         }
 
         [AllowAnonymous]
