@@ -20,9 +20,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         public MemberService(IUnitOfWork unitofwork,IOptions<AppSettings> appSettings):base(unitofwork, appSettings)
         {
         }
-        public async Task<Member> Authenticate(string username, string password)
+        public Member Authenticate(string username, string password)
         {
-            var user = await _unitofwork.GetRepository<Member>().GetFirstOrDefaultAsync(predicate: x => x.username == username && x.password == password);
+            var user = _unitofwork.GetRepository<Member>().GetFirstOrDefault(predicate: x => x.username == username && x.password == password);
 
             if (user == null)
                 return null;
