@@ -1,6 +1,8 @@
 ﻿using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration;
+using AIKI.CO.HelpDesk.WebAPI.Settings;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +12,17 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
 {
     public class dbContext:DbContext
     {
-        private Guid _companyid { get; set; } = new Guid("997afb89-9abf-4889-8e43-cc301a311a9f");
+        private readonly AppSettings _appSettings;
+        private Guid _companyid { get; set; }
         public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<Customer> Customer { get; private set; }
         public virtual DbSet<Member> Member { get; private set; }
 
-        public dbContext(DbContextOptions options)
+        public dbContext(DbContextOptions options, IOptions<AppSettings> appSettings)
             : base(options)
         {
+            _appSettings = appSettings.Value;
+            _companyid = _appSettings.CompanyID;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -55,7 +55,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 
         public async Task<IEnumerable<Member>> GetAll()
         {
-            return await _unitofwork.GetRepository<Member>().GetAllAsync();
+            return (await _unitofwork.GetRepository<Member>().GetAllAsync()).WithoutPasswords();
         }
     }
 }
