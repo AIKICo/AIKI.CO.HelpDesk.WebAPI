@@ -15,23 +15,14 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
-    public class MemberService : IMemberService
+    public class MemberService :BaseService, IMemberService
     {
-        private readonly AppSettings _appSettings;
-        private readonly IUnitOfWork _unitofwork;
-
-        private List<Member> _members = new List<Member>
+        public MemberService(IUnitOfWork unitofwork,IOptions<AppSettings> appSettings):base(unitofwork, appSettings)
         {
-            new Member { id = Guid.NewGuid(),companyid=Guid.NewGuid(), membername = "test", username = "test", roles = "admin", password = "test", email="qermezkon@gmail.com" }
-        };
-        public MemberService(IUnitOfWork unitofwork,IOptions<AppSettings> appSettings)
-        {
-            _appSettings = appSettings.Value;
-            _unitofwork = unitofwork;
         }
-        public Member Authenticate(string username, string password)
+        public async Task<Member> Authenticate(string username, string password)
         {
-            var user = _members.SingleOrDefault(x => x.username == username && x.password == password);
+            var user = await _unitofwork.GetRepository<Member>().GetFirstOrDefaultAsync(predicate: x => x.username == username && x.password == password);
 
             if (user == null)
                 return null;
