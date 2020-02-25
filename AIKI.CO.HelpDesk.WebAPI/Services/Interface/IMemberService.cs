@@ -8,7 +8,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services.Interface
 {
     public interface IMemberService
     {
-        Task<Member> Authenticate(string username, string password);
+        Member Authenticate(string username, string password);
         Task<IEnumerable<Member>> GetAll();
     }
 }
