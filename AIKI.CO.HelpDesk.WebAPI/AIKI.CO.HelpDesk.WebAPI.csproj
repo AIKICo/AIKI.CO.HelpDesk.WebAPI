@@ -26,7 +26,6 @@
     <Folder Include="AutoMapperSettings\" />
     <Folder Include="CustomMiddleware\" />
     <Folder Include="Models\CustomValidation\" />
-    <Folder Include="Models\ViewModels\" />
   </ItemGroup>
 
 
