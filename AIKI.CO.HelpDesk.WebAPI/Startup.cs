@@ -5,9 +5,12 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AIKI.CO.HelpDesk.WebAPI.BuilderExtensions;
+using AIKI.CO.HelpDesk.WebAPI.Models;
 using AIKI.CO.HelpDesk.WebAPI.Services;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
+using Arch.EntityFrameworkCore.UnitOfWork;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
@@ -15,6 +18,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -34,6 +38,18 @@ namespace AIKI.CO.HelpDesk.WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var builder = new PostgreSqlConnectionStringBuilder(Configuration["DATABASE_URL"])
+            {
+                Pooling = true,
+                TrustServerCertificate = true,
+                SslMode = SslMode.Require
+            };
+
+            services.AddDbContext<dbContext>(options =>
+            {
+                options.UseNpgsql(builder.ConnectionString);
+            }).AddUnitOfWork<dbContext>();
+
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(policy =>
@@ -86,7 +102,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
                 };
             });
 
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IMemberService, MemberService>();
 
             services.AddControllers()
                  .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); ;

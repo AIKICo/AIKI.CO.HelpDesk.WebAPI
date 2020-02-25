@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services.Interface
 {
-    public interface IUserService
+    public interface IMemberService
     {
-        User Authenticate(string username, string password);
-        IEnumerable<User> GetAll();
+        Member Authenticate(string username, string password);
+        Task<IEnumerable<Member>> GetAll();
     }
 }

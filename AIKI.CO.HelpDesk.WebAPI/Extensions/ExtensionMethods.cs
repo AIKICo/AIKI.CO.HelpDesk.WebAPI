@@ -8,12 +8,12 @@ namespace AIKI.CO.HelpDesk.WebAPI.Extensions
 {
     public static class ExtensionMethods
     {
-        public static IEnumerable<User> WithoutPasswords(this IEnumerable<User> users)
+        public static IEnumerable<Member> WithoutPasswords(this IEnumerable<Member> members)
         {
-            return users.Select(x => x.WithoutPassword());
+            return members.Select(x => x.WithoutPassword());
         }
 
-        public static User WithoutPassword(this User user)
+        public static Member WithoutPassword(this Member user)
         {
             user.password = string.Empty;
             return user;
