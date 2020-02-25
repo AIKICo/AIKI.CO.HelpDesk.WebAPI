@@ -2,6 +2,7 @@
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
+using Arch.EntityFrameworkCore.UnitOfWork;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -14,21 +15,23 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
-    public class UserService : IUserService
+    public class MemberService : IMemberService
     {
         private readonly AppSettings _appSettings;
+        private readonly IUnitOfWork _unitofwork;
 
-        private List<User> _users = new List<User>
+        private List<Member> _members = new List<Member>
         {
-            new User { id = Guid.NewGuid(),companyid=Guid.NewGuid(), membername = "test", username = "test", roles = "admin", password = "test", email="qermezkon@gmail.com" }
+            new Member { id = Guid.NewGuid(),companyid=Guid.NewGuid(), membername = "test", username = "test", roles = "admin", password = "test", email="qermezkon@gmail.com" }
         };
-        public UserService(IOptions<AppSettings> appSettings)
+        public MemberService(IUnitOfWork unitofwork,IOptions<AppSettings> appSettings)
         {
             _appSettings = appSettings.Value;
+            _unitofwork = unitofwork;
         }
-        public User Authenticate(string username, string password)
+        public Member Authenticate(string username, string password)
         {
-            var user = _users.SingleOrDefault(x => x.username == username && x.password == password);
+            var user = _members.SingleOrDefault(x => x.username == username && x.password == password);
 
             if (user == null)
                 return null;
@@ -50,9 +53,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             return user.WithoutPassword();
         }
 
-        public IEnumerable<User> GetAll()
+        public async Task<IEnumerable<Member>> GetAll()
         {
-            return _users.WithoutPasswords();
+            return await _unitofwork.GetRepository<Member>().GetAllAsync();
         }
     }
 }
