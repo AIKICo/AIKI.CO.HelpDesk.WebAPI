@@ -14,14 +14,13 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseApiController
     {
         private readonly IMemberService _userService;
-        private readonly AppSettings _appSettings;
-        public UsersController(IMemberService userService, IOptions<AppSettings> appSettings)
+        
+        public UsersController(IMemberService userService, IOptions<AppSettings> appSettings) :base(appSettings)
         {
             _userService = userService;
-            _appSettings = appSettings.Value;
         }
 
         [AllowAnonymous]
