@@ -16,9 +16,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IMemberService _userService;
         private readonly AppSettings _appSettings;
-        public UsersController(IUserService userService, IOptions<AppSettings> appSettings)
+        public UsersController(IMemberService userService, IOptions<AppSettings> appSettings)
         {
             _userService = userService;
             _appSettings = appSettings.Value;
@@ -37,15 +37,15 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpGet(nameof(GetAll))]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            var users = _userService.GetAll();
+            var users = await _userService.GetAll();
             return Ok(users);
         }
         [HttpGet("GetById/{id}")]
-        public IActionResult GetById(string id)
+        public async Task<IActionResult> GetById(string id)
         {
-            var users = _userService.GetAll().Where(q=>q.id== new Guid(id));
+            var users = (await _userService.GetAll()).Where(q=>q.id== new Guid(id));
             return Ok(users);
         }
     }
