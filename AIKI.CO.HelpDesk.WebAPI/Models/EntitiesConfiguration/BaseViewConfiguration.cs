@@ -14,10 +14,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
         {
             _companyid = companyid;
         }
-        public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<T> builder)
+        public virtual void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<T> builder)
         {
             builder.HasNoKey();
-            builder.HasQueryFilter(p => p.companyid == _companyid);
+            builder.HasQueryFilter(c => c.companyid == _companyid);
         }
     }
 }
