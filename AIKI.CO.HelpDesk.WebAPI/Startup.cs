@@ -31,7 +31,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace AIKI.CO.HelpDesk.WebAPI
 {
-    public class Startup
+    public sealed class Startup
     {
         public Startup(IConfiguration configuration)
         {
@@ -109,8 +109,8 @@ namespace AIKI.CO.HelpDesk.WebAPI
             services.AddAutoMapper(typeof(HelpdeskMapper));
 
             services.AddTransient<IMemberService, MemberService>();
-            services.AddTransient<IService<Customer, CustomerResponse, Guid>, CustomerService>();
-            services.AddTransient<IService<Member, MemberResponse, Guid>, MemberService>();
+            services.AddTransient<IService<Customer, CustomerResponse>, CustomerService>();
+            services.AddTransient<IService<Member, MemberResponse>, MemberService>();
 
             services.AddControllers()
                  .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); ;

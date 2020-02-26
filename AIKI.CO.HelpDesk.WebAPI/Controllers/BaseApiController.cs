@@ -14,19 +14,19 @@ using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
-    public class BaseApiController<T,V,IDType> : ControllerBase 
+    public class BaseApiController<T,V> : ControllerBase 
         where T:BaseObject
         where V: BaseResponse
     {
         protected readonly AppSettings _appSettings;
         protected readonly IMapper _map;
-        protected readonly IService<T, V, IDType> _service;
+        protected readonly IService<T, V> _service;
         public BaseApiController(
             IMapper map, 
             IOptions<AppSettings> appSettings,
-            IService<T, V, IDType> service)
+            IService<T, V> service)
         {
             _map = map;
             _appSettings = appSettings.Value;

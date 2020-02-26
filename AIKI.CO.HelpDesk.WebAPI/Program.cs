@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace AIKI.CO.HelpDesk.WebAPI
 {
-    public class Program
+    public sealed class Program
     {
         public static void Main(string[] args)
         {

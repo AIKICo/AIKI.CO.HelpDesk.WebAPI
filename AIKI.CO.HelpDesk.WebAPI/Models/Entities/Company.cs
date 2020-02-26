@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
 {
-    public partial class Company
+    public sealed class Company
     {
         public Company()
         {
@@ -14,7 +14,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public string title { get; set; }
         public string email { get; set; }
 
-        public virtual ICollection<Customer> Customer { get; set; }
-        public virtual ICollection<Member> Member { get; set; }
+        public ICollection<Customer> Customer { get; set; }
+        public ICollection<Member> Member { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
         Prefer
     }
 
-    public class PostgreSqlConnectionStringBuilder : DbConnectionStringBuilder
+    public sealed class PostgreSqlConnectionStringBuilder : DbConnectionStringBuilder
     {
         private string _database;
         private string _host;
