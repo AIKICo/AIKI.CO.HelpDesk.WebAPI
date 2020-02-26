@@ -111,6 +111,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
             services.AddTransient<IMemberService, MemberService>();
             services.AddTransient<IService<Customer, CustomerResponse>, CustomerService>();
             services.AddTransient<IService<Member, MemberResponse>, MemberService>();
+            services.AddHttpContextAccessor();
 
             services.AddControllers()
                  .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); ;

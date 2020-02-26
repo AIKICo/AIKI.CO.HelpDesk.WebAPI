@@ -1,6 +1,7 @@
 ﻿using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
@@ -13,14 +14,19 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
     public sealed class dbContext:DbContext
     {
         private readonly AppSettings _appSettings;
+        private readonly IHttpContextAccessor _context;
         private Guid _companyid { get; set; }
         public DbSet<Company> Company { get; set; }
         public DbSet<Customer> Customer { get; private set; }
         public DbSet<Member> Member { get; private set; }
 
-        public dbContext(DbContextOptions options, IOptions<AppSettings> appSettings)
+        public dbContext(
+            DbContextOptions options, 
+            IOptions<AppSettings> appSettings,
+            IHttpContextAccessor context)
             : base(options)
         {
+            _context = context;
             _appSettings = appSettings.Value;
             _companyid = _appSettings.CompanyID;
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
