@@ -11,11 +11,12 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services.Interface
         where T : BaseObject 
         where V : BaseResponse
     {
-        Task<V> GetById(IDType id);
+        Task<V> GetById(Guid id);
         Task<IEnumerable<V>> GetAll();
 
         Task<int> AddRecord(V request);
-        Task<int> UpdateRecord(V record);
-        Task<int> DeleteRecord(IDType id);
+        Task<int> UpdateRecord(V request);
+        Task<int> PartialUpdateRecord(V request);
+        Task<int> DeleteRecord(Guid id);
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
+using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
 using AutoMapper;
@@ -15,14 +16,15 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class UsersController : BaseApiController
+    public class UsersController : BaseApiController<Member, MemberResponse, Guid>
     {
         private readonly IMemberService _userService;
         
         public UsersController(
             IMemberService userService,
             IMapper map,
-            IOptions<AppSettings> appSettings) :base(map,appSettings)
+            IOptions<AppSettings> appSettings,
+            IService<Member, MemberResponse, Guid> service) :base(map,appSettings, service)
         {
             _userService = userService;
         }

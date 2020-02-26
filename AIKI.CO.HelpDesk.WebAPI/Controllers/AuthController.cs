@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
+using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
 using AutoMapper;
@@ -15,13 +16,14 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController : BaseApiController
+    public class AuthController : BaseApiController<Member, MemberResponse, Guid>
     {
         private readonly IMemberService _userService;
         public AuthController(
             IMapper map, 
             IMemberService userService, 
-            IOptions<AppSettings> appSettings) : base(map,appSettings)
+            IOptions<AppSettings> appSettings,
+            IService<Member, MemberResponse, Guid> service) : base(map,appSettings,service)
         {
             _userService = userService;
         }
