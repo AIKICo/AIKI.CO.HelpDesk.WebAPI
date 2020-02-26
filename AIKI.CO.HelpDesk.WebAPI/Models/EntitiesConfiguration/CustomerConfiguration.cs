@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {
-    public class CustomerConfiguration : BaseConfiguration<Customer>, IEntityTypeConfiguration<Customer>
+    public sealed class CustomerConfiguration : BaseConfiguration<Customer>, IEntityTypeConfiguration<Customer>
     {
         public CustomerConfiguration(Guid companyid):base(companyid)
         {

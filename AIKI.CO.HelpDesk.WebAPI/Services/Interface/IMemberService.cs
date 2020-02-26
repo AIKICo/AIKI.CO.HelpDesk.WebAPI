@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services.Interface
 {
-    public interface IMemberService:IService<Member, MemberResponse, Guid>
+    public interface IMemberService:IService<Member, MemberResponse>
     {
         MemberResponse Authenticate(string username, string password);
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services.Interface
 {
-    public interface IService<T, V, IDType> 
+    public interface IService<T, V> 
         where T : BaseObject 
         where V : BaseResponse
     {

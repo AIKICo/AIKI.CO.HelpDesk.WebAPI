@@ -16,7 +16,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class UsersController : BaseApiController<Member, MemberResponse, Guid>
+    public sealed class UsersController : BaseApiController<Member, MemberResponse>
     {
         private readonly IMemberService _userService;
         
@@ -24,7 +24,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             IMemberService userService,
             IMapper map,
             IOptions<AppSettings> appSettings,
-            IService<Member, MemberResponse, Guid> service) :base(map,appSettings, service)
+            IService<Member, MemberResponse> service) :base(map,appSettings, service)
         {
             _userService = userService;
         }
@@ -39,19 +39,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
                 return BadRequest(new { message = "Username or password is incorrect" });
 
             return Ok(user);
-        }
-
-        [HttpGet(nameof(GetAll))]
-        public async Task<IActionResult> GetAll()
-        {
-            var users = await _userService.GetAll();
-            return Ok(users);
-        }
-        [HttpGet("GetById/{id}")]
-        public async Task<IActionResult> GetById(string id)
-        {
-            var users = (await _userService.GetAll()).Where(q=>q.id== new Guid(id));
-            return Ok(users);
         }
     }
 }

@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models
 {
-    public class dbContext:DbContext
+    public sealed class dbContext:DbContext
     {
         private readonly AppSettings _appSettings;
         private Guid _companyid { get; set; }
-        public virtual DbSet<Company> Company { get; set; }
-        public virtual DbSet<Customer> Customer { get; private set; }
-        public virtual DbSet<Member> Member { get; private set; }
+        public DbSet<Company> Company { get; set; }
+        public DbSet<Customer> Customer { get; private set; }
+        public DbSet<Member> Member { get; private set; }
 
         public dbContext(DbContextOptions options, IOptions<AppSettings> appSettings)
             : base(options)

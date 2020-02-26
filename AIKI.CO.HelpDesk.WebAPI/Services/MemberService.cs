@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
-    public class MemberService :BaseService<Member,MemberResponse, Guid>, IMemberService
+    public sealed class MemberService :BaseService<Member,MemberResponse>, IMemberService
     {
         public MemberService(
             IMapper map, 

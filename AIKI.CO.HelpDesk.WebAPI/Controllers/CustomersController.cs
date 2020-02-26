@@ -16,12 +16,12 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class CustomersController : BaseApiController<Customer, CustomerResponse, Guid>
+    public sealed class CustomersController : BaseApiController<Customer, CustomerResponse>
     {
         public CustomersController(
             IMapper map,
             IOptions<AppSettings> appSettings,
-            IService<Customer, CustomerResponse, Guid> service) : base(map, appSettings, service)
+            IService<Customer, CustomerResponse> service) : base(map, appSettings, service)
         {
         }
     }

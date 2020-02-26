@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
 {
-    public class MemberResponse:BaseResponse
+    public sealed class MemberResponse:BaseResponse
     {
         public string membername { get; set; }
         public string username { get; set; }
