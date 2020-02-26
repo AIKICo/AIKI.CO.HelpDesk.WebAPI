@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
-    public class CustomerService:BaseService<Customer, CustomerResponse>,IService<Customer, CustomerResponse>
+    public class CustomerService:BaseService<Customer, CustomerResponse, Guid>,IService<Customer, CustomerResponse, Guid>
     {
         public CustomerService(
             IMapper map, 

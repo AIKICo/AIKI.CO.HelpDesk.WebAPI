@@ -109,7 +109,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
             services.AddAutoMapper(typeof(HelpdeskMapper));
 
             services.AddTransient<IMemberService, MemberService>();
-            services.AddTransient<IService<Customer, CustomerResponse>, CustomerService>();
+            services.AddTransient<IService<Customer, CustomerResponse, Guid>, CustomerService>();
 
             services.AddControllers()
                  .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); ;

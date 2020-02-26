@@ -7,10 +7,15 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services.Interface
 {
-    public interface IService<T, V> 
+    public interface IService<T, V, IDType> 
         where T : BaseObject 
         where V : BaseResponse
     {
+        Task<V> GetById(IDType id);
         Task<IEnumerable<V>> GetAll();
+
+        Task<int> AddRecord(V request);
+        Task<int> UpdateRecord(V record);
+        Task<int> DeleteRecord(IDType id);
     }
 }
