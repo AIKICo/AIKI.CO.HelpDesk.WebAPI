@@ -1,8 +1,10 @@
 ﻿using AIKI.CO.HelpDesk.WebAPI.Extensions;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
+using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
 using Arch.EntityFrameworkCore.UnitOfWork;
+using AutoMapper;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -15,15 +17,17 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
-    public class MemberService :BaseService, IMemberService
+    public class MemberService :BaseService<Member,MemberResponse>, IMemberService
     {
-        public MemberService(IUnitOfWork unitofwork,IOptions<AppSettings> appSettings):base(unitofwork, appSettings)
+        public MemberService(
+            IMapper map, 
+            IUnitOfWork unitofwork,
+            IOptions<AppSettings> appSettings):base(map,unitofwork, appSettings)
         {
         }
-        public Member Authenticate(string username, string password)
+        public MemberResponse Authenticate(string username, string password)
         {
-            var user = _unitofwork.GetRepository<Member>().GetFirstOrDefault(predicate: x => x.username == username && x.password == password);
-
+            var user = _map.Map<MemberResponse>(_unitofwork.GetRepository<Member>().GetFirstOrDefault(predicate: x => x.username == username && x.password == password));
             if (user == null)
                 return null;
 
@@ -44,9 +48,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             return user.WithoutPassword();
         }
 
-        public async Task<IEnumerable<Member>> GetAll()
+        public override async Task<IEnumerable<MemberResponse>> GetAll()
         {
-            return (await _unitofwork.GetRepository<Member>().GetAllAsync()).WithoutPasswords();
+            return _map.Map<IEnumerable<MemberResponse>>(await _unitofwork.GetRepository<Member>().GetAllAsync()).WithoutPasswords();
         }
     }
 }
