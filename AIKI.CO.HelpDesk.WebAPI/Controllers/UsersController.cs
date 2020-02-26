@@ -16,7 +16,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public sealed class UsersController : BaseApiController<Member, MemberResponse>
+    public sealed class UsersController : BaseCRUDApiController<Member, MemberResponse>
     {
         private readonly IMemberService _userService;
         
@@ -34,10 +34,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         public IActionResult Authenticate([FromBody]AuthenticateModel model)
         {
             var user = _userService.Authenticate(model.Username, model.Password);
-
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
-
             return Ok(user);
         }
     }
