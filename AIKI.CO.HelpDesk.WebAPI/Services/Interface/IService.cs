@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services.Interface
 {
-    public interface IMemberService:IService<Member, MemberResponse>
+    public interface IService<T, V> 
+        where T : BaseObject 
+        where V : BaseResponse
     {
-        MemberResponse Authenticate(string username, string password);
+        Task<IEnumerable<V>> GetAll();
     }
 }

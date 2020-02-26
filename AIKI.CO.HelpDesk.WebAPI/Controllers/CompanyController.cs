@@ -12,14 +12,11 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BaseApiController : ControllerBase
+    public class CompanyController : BaseApiController
     {
-        protected readonly AppSettings _appSettings;
-        private readonly IMapper _map;
-        public BaseApiController(IMapper map, IOptions<AppSettings> appSettings)
+        public CompanyController(IMapper map,IOptions<AppSettings> appSettings):base(map,appSettings)
         {
-            _map = map;
-            _appSettings = appSettings.Value;
+
         }
     }
 }

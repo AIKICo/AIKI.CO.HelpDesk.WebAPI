@@ -5,12 +5,16 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AIKI.CO.HelpDesk.WebAPI.AutoMapperSettings;
 using AIKI.CO.HelpDesk.WebAPI.BuilderExtensions;
 using AIKI.CO.HelpDesk.WebAPI.Models;
+using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
+using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
 using Arch.EntityFrameworkCore.UnitOfWork;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
@@ -102,7 +106,10 @@ namespace AIKI.CO.HelpDesk.WebAPI
                 };
             });
 
-            services.AddScoped<IMemberService, MemberService>();
+            services.AddAutoMapper(typeof(HelpdeskMapper));
+
+            services.AddTransient<IMemberService, MemberService>();
+            services.AddTransient<IService<Customer, CustomerResponse>, CustomerService>();
 
             services.AddControllers()
                  .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore); ;

@@ -10,7 +10,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
             Customer = new HashSet<Customer>();
             Member = new HashSet<Member>();
         }
-
         public Guid id { get; set; }
         public string title { get; set; }
         public string email { get; set; }
