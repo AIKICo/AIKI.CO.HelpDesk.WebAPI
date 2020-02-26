@@ -16,14 +16,14 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class BaseApiController<T,V> : ControllerBase 
+    public class BaseCRUDApiController<T,V> : ControllerBase 
         where T:BaseObject
         where V: BaseResponse
     {
         protected readonly AppSettings _appSettings;
         protected readonly IMapper _map;
         protected readonly IService<T, V> _service;
-        public BaseApiController(
+        public BaseCRUDApiController(
             IMapper map, 
             IOptions<AppSettings> appSettings,
             IService<T, V> service)
@@ -42,7 +42,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            return Ok(await _service.GetById(id));
+            var result = await _service.GetById(id);
+            if (result != null)
+                return Ok(result);
+            else return NotFound();
         }
 
         public async Task<IActionResult> Post([FromBody] V request)
@@ -59,13 +62,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var existsRecord = await _service.GetById(request.id);
-            if (existsRecord != null)
-            {
-                var result = await _service.UpdateRecord(request);
-                if (result > 0) return Ok(request);
-                else return BadRequest(ModelState);
-            }
-            else return NotFound(request);
+            if (existsRecord == null) return NotFound();
+            var result = await _service.UpdateRecord(request);
+            if (result > 0) return Ok(request);
+            else return BadRequest(ModelState);
         }
 
         [HttpPatch("{id:guid}")]
@@ -82,7 +82,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             var result = await _service.PartialUpdateRecord(_map.Map(foundedToPatch, founded));
             if (result > 0)
                 return Ok(_map.Map(foundedToPatch, founded));
-            else return BadRequest();
+            else return BadRequest(ModelState);
 
         }
 
