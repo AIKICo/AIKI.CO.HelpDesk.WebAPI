@@ -8,7 +8,7 @@ using AutoMapper;
 
 namespace AIKI.CO.HelpDesk.WebAPI.AutoMapperSettings
 {
-    public class HelpdeskMapper : Profile
+    public sealed class HelpdeskMapper : Profile
     {
         public HelpdeskMapper()
         {

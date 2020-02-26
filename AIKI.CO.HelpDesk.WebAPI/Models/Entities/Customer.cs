@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
 {
-    public partial class Customer:BaseObject
+    public sealed class Customer:BaseObject
     {
         public string title { get; set; }
         public string description { get; set; }
@@ -11,6 +11,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public byte?[] schema { get; set; }
         public bool? disabled { get; set; }
 
-        public virtual Company Company { get; set; }
+        public Company Company { get; set; }
     }
 }

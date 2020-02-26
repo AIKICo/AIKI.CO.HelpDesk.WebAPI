@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
 {
-    public class AuthenticateModel
+    public sealed class AuthenticateModel
     {
         [Required]
         public string Username { get; set; }

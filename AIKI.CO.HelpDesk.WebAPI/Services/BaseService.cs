@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
-    public class BaseService<T, V, IDType>:IService<T, V, IDType> 
+    public class BaseService<T, V>:IService<T, V> 
         where T:BaseObject
         where V:BaseResponse
     {
