@@ -23,6 +23,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
         {
             _appSettings = appSettings.Value;
             _companyid = _appSettings.CompanyID;
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
