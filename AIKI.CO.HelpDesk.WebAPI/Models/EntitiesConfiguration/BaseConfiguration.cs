@@ -18,11 +18,11 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 
         public virtual void Configure(EntityTypeBuilder<T> builder)
         {
-            builder.HasKey(p => p.id);
-            builder.Property(e => e.id)
+            builder.HasKey(c => c.id);
+            builder.Property(c => c.id)
                     .ValueGeneratedNever();
 
-            builder.HasQueryFilter(p => p.companyid == _companyid);
+            builder.HasQueryFilter(c => c.companyid == _companyid);
         }
     }
 }
