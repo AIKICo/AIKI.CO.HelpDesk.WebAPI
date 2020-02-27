@@ -1,19 +1,34 @@
 ﻿using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
+using Arch.EntityFrameworkCore.UnitOfWork.Collections;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services.Interface
 {
-    public interface IService<T, V> 
-        where T : BaseObject 
+    public interface IService<T, V>
+        where T : BaseObject
         where V : BaseResponse
     {
         Task<V> GetById(Guid id);
         Task<IEnumerable<V>> GetAll();
-
+        Task<IEnumerable<V>> GetAll(
+            Expression<Func<T, bool>> predicate = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, bool disableTracking = true, bool ignoreQueryFilters = false);
+        Task<IPagedList<V>> GetPagedList(Expression<Func<T, bool>> predicate = null,
+                                                           Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+                                                           Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+                                                           int pageIndex = 0,
+                                                           int pageSize = 20,
+                                                           bool disableTracking = true,
+                                                           CancellationToken cancellationToken = default(CancellationToken),
+                                                           bool ignoreQueryFilters = false);
         Task<int> AddRecord(V request);
         Task<int> UpdateRecord(V request);
         Task<int> PartialUpdateRecord(V request);
