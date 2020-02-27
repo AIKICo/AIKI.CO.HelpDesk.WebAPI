@@ -3,18 +3,22 @@ using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
 using Arch.EntityFrameworkCore.UnitOfWork;
+using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
-    public class BaseService<T, V>:IService<T, V> 
-        where T:BaseObject
-        where V:BaseResponse
+    public class BaseService<T, V> : IService<T, V>
+        where T : BaseObject
+        where V : BaseResponse
     {
         protected readonly AppSettings _appSettings;
         protected readonly IUnitOfWork _unitofwork;
@@ -22,7 +26,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 
         public BaseService(
             IMapper map,
-            IUnitOfWork unitofwork, 
+            IUnitOfWork unitofwork,
             IOptions<AppSettings> appSettings)
         {
             _map = map;
@@ -35,6 +39,26 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             return _map.Map<IEnumerable<V>>(await _unitofwork.GetRepository<T>().GetAllAsync());
         }
 
+
+        public virtual async Task<IEnumerable<V>> GetAll(
+            Expression<Func<T, bool>> predicate = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, bool disableTracking = true, bool ignoreQueryFilters = false)
+        {
+            return _map.Map<IEnumerable<V>>(await _unitofwork.GetRepository<T>().GetAllAsync(predicate, orderBy, include, disableTracking, ignoreQueryFilters));
+        }
+
+        public virtual async Task<IPagedList<V>> GetPagedList(Expression<Func<T, bool>> predicate = null,
+                                                           Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+                                                           Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+                                                           int pageIndex = 0,
+                                                           int pageSize = 20,
+                                                           bool disableTracking = true,
+                                                           CancellationToken cancellationToken = default(CancellationToken),
+                                                           bool ignoreQueryFilters = false)
+        {
+            return _map.Map<IPagedList<V>>(await _unitofwork.GetRepository<T>().GetPagedListAsync(predicate, orderBy, include, pageIndex, pageSize, disableTracking, cancellationToken, ignoreQueryFilters));
+        }
         public virtual async Task<V> GetById(Guid id)
         {
             return _map.Map<V>(await _unitofwork.GetRepository<T>().FindAsync(id));
