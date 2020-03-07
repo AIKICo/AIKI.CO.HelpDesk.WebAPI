@@ -19,11 +19,14 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
     public sealed class MemberService :BaseService<Member,MemberResponse>, IMemberService
     {
+        private readonly IJWTService _jwtService;
         public MemberService(
             IMapper map, 
             IUnitOfWork unitofwork,
-            IOptions<AppSettings> appSettings):base(map,unitofwork, appSettings)
+            IOptions<AppSettings> appSettings,
+            IJWTService jwtService) :base(map,unitofwork, appSettings)
         {
+            _jwtService = jwtService;
         }
         public MemberResponse Authenticate(string username, string password)
         {
@@ -31,20 +34,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             if (user == null)
                 return null;
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, user.id.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            user.token = tokenHandler.WriteToken(token);
-
+            user.token = _jwtService.GenerateSecurityToken(user.id.ToString().ToString());
             return user.WithoutPassword();
         }
 
