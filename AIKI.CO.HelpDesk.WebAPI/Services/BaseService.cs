@@ -66,6 +66,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 
         public async Task<int> AddRecord(V request)
         {
+            request.id = Guid.NewGuid();
             await _unitofwork.GetRepository<T>().InsertAsync(_map.Map<T>(request));
             return await _unitofwork.SaveChangesAsync();
         }
