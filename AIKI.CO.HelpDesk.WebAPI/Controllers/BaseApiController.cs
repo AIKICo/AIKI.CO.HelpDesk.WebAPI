@@ -16,6 +16,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [ApiVersion("1.0")]
     public class BaseCRUDApiController<T,V> : ControllerBase 
         where T:BaseObject
         where V: BaseResponse
@@ -40,13 +41,13 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpGet("{pageSize:int}/{pageIndex:int}")]
-        public async Task<IActionResult> Get(int pageSize, int pageIndex)
+        public async Task<IActionResult> Get([FromQuery] int pageSize, [FromQuery] int pageIndex)
         {
             return Ok(await _service.GetPagedList(pageSize:pageSize,pageIndex:pageIndex));
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get([FromQuery] Guid id)
         {
             var result = await _service.GetById(id);
             if (result != null)
@@ -54,6 +55,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             else return NotFound();
         }
 
+        [HttpPost]
+        [Produces("application/json")]
         public async Task<IActionResult> Post([FromBody] V request)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -93,7 +96,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete([FromQuery] Guid id)
         {
             var result = await _service.DeleteRecord(id);
             if (result > 0)
