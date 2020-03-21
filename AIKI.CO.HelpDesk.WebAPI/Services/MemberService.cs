@@ -6,25 +6,19 @@ using AIKI.CO.HelpDesk.WebAPI.Settings;
 using Arch.EntityFrameworkCore.UnitOfWork;
 using AutoMapper;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
-    public sealed class MemberService :BaseService<Member,MemberResponse>, IMemberService
+    public sealed class MemberService : BaseService<Member, MemberResponse>, IMemberService
     {
         private readonly IJWTService _jwtService;
         public MemberService(
-            IMapper map, 
+            IMapper map,
             IUnitOfWork unitofwork,
             IOptions<AppSettings> appSettings,
-            IJWTService jwtService) :base(map,unitofwork, appSettings)
+            IJWTService jwtService) : base(map, unitofwork, appSettings)
         {
             _jwtService = jwtService;
         }

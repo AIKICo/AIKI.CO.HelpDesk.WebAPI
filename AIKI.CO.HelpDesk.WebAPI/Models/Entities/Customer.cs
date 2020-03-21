@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
+﻿namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
 {
-    public sealed class Customer:BaseObject
+    public sealed class Customer : BaseObject
     {
         public string title { get; set; }
         public string description { get; set; }
