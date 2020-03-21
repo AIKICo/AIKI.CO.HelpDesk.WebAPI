@@ -28,6 +28,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace AIKI.CO.HelpDesk.WebAPI
 {
@@ -93,6 +94,17 @@ namespace AIKI.CO.HelpDesk.WebAPI
             services.AddTransient<IJWTService, JWTService>();
             services.AddHttpContextAccessor();
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AIKI Help Desl API", Version = "v1" });
+            });
+
+            services.AddApiVersioning(config =>
+            {
+                config.AssumeDefaultVersionWhenUnspecified = true;
+                config.ReportApiVersions = true;
+            });
+
             services.AddControllers()
                  .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddTokenAuthentication(Configuration);
@@ -108,8 +120,14 @@ namespace AIKI.CO.HelpDesk.WebAPI
             app.UseHttpsRedirection();
             app.UseResponseCompression();
             app.UseResponseCaching();
-            app.UseRouting();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AIKI Help Desl API");
+                c.RoutePrefix = string.Empty;
+            });
             app.UseCors();
+            app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
 
