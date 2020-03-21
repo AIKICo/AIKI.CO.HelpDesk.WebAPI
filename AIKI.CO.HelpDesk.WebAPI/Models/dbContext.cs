@@ -5,13 +5,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models
 {
-    public sealed class dbContext:DbContext
+    public sealed class dbContext : DbContext
     {
         private readonly AppSettings _appSettings;
         private readonly IHttpContextAccessor _context;
@@ -21,7 +18,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
         public DbSet<Member> Member { get; private set; }
 
         public dbContext(
-            DbContextOptions options, 
+            DbContextOptions options,
             IOptions<AppSettings> appSettings,
             IHttpContextAccessor context)
             : base(options)

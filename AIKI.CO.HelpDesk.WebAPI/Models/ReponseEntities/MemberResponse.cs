@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
+﻿namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
 {
-    public sealed class MemberResponse:BaseResponse
+    public sealed class MemberResponse : BaseResponse
     {
         public string membername { get; set; }
         public string username { get; set; }

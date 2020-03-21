@@ -1,9 +1,6 @@
-﻿using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
-using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
-using System;
+﻿using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Extensions
 {

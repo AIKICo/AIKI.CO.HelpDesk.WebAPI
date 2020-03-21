@@ -1,9 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
+﻿using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {

@@ -1,31 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
+﻿using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System;
+using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
-    public class BaseCRUDApiController<T,V> : ControllerBase 
-        where T:BaseObject
-        where V: BaseResponse
+    public class BaseCRUDApiController<T, V> : ControllerBase
+        where T : BaseObject
+        where V : BaseResponse
     {
         protected readonly AppSettings _appSettings;
         protected readonly IMapper _map;
         protected readonly IService<T, V> _service;
         public BaseCRUDApiController(
-            IMapper map, 
+            IMapper map,
             IOptions<AppSettings> appSettings,
             IService<T, V> service)
         {
@@ -43,7 +40,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [HttpGet("{pageSize:int}/{pageIndex:int}")]
         public async Task<IActionResult> Get([FromQuery] int pageSize, [FromQuery] int pageIndex)
         {
-            return Ok(await _service.GetPagedList(pageSize:pageSize,pageIndex:pageIndex));
+            return Ok(await _service.GetPagedList(pageSize: pageSize, pageIndex: pageIndex));
         }
 
         [HttpGet("{id:guid}")]
