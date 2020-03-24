@@ -76,12 +76,8 @@ namespace AIKI.CO.HelpDesk.WebAPI
 
 
             services.AddAutoMapper(typeof(HelpdeskMapper));
+            services.RegisterServices(Configuration);
 
-            services.AddTransient<IMemberService, MemberService>();
-            services.AddTransient<IService<Customer, CustomerResponse>, CustomerService>();
-            services.AddTransient<IService<Member, MemberResponse>, MemberService>();
-            services.AddTransient<IJWTService, JWTService>();
-            services.AddHttpContextAccessor();
 
             services.AddSwaggerGen(c =>
             {

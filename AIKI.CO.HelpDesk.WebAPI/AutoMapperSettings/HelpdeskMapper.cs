@@ -14,6 +14,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.AutoMapperSettings
             CreateMap<byte[], byte[]>().ConvertUsing(b => b.Length == 0 ? null : b);
             CreateMap<Customer, CustomerResponse>().ReverseMap();
             CreateMap<Member, MemberResponse>().ReverseMap();
+            CreateMap<OperatingHour, OperatingHoureResponse>().ReverseMap();
         }
     }
 }

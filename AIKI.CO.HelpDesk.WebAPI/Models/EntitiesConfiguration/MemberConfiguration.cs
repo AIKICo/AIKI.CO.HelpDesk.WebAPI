@@ -18,9 +18,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
             builder.Property(c => c.id)
                     .ValueGeneratedNever();
 
-            builder.HasOne(d => d.Company)
-                .WithMany(p => p.Member)
-                .HasForeignKey(d => d.companyid);
+            builder.HasOne(c => c.Company)
+                .WithMany(c => c.Member)
+                .HasForeignKey(c => c.companyid);
         }
     }
 }
