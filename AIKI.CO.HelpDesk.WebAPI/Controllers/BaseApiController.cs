@@ -93,7 +93,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> Delete([FromQuery] Guid id)
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var result = await _service.DeleteRecord(id);
             if (result > 0)
