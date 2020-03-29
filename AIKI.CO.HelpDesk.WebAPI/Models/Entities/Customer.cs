@@ -1,4 +1,6 @@
-﻿namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
+﻿using System;
+
+namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
 {
     public sealed class Customer : BaseObject
     {
@@ -7,6 +9,7 @@
         public string domains { get; set; }
         public byte?[] schema { get; set; }
         public bool? disabled { get; set; }
+        public Guid? operatinghourid { get; set; }
 
         public Company Company { get; set; }
     }

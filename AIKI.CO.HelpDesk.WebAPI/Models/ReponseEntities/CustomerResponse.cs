@@ -1,4 +1,6 @@
-﻿namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
+﻿using System;
+
+namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
 {
     public sealed class CustomerResponse : BaseResponse
     {
@@ -7,5 +9,6 @@
         public string domains { get; set; }
         public byte?[] schema { get; set; }
         public bool? disabled { get; set; }
+        public Guid? operatinghourid { get; set; }
     }
 }
