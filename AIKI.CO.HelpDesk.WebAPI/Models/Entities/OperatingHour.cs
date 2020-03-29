@@ -11,7 +11,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public string timezone { get; set; }
         public Workday[] workdays { get; set; }
         public Holiday[] holidays { get; set; }
-        
+        public bool isdefault { get; set; }
+
         public Company Company { get; set; }
     }
 }
