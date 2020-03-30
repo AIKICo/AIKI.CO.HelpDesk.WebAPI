@@ -17,6 +17,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
         public DbSet<Customer> Customer { get; private set; }
         public DbSet<Member> Member { get; private set; }
         public DbSet<OperatingHour> OperatingHour { get; private set; }
+        public DbSet<SLASetting> SLASetting { get; set; }
 
         public dbContext(
             DbContextOptions options,
@@ -42,6 +43,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             modelBuilder.ApplyConfiguration<Customer>(new CustomerConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<Member>(new MemberConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<OperatingHour>(new OperatingHourConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration<SLASetting>(new SLASettingConfiguration(_companyid));
         }
     }
 }
