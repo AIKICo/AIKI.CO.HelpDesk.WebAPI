@@ -19,6 +19,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
             services.AddTransient<IService<Customer, CustomerResponse>, CustomerService>();
             services.AddTransient<IService<Member, MemberResponse>, MemberService>();
             services.AddTransient<IService<OperatingHour, OperatingHoureResponse>, OperatingHoureService>();
+            services.AddTransient<IService<SLASetting, SLASettingResponse>, SLASettingService>();
             services.AddTransient<IJWTService, JWTService>();
 
             services.AddHttpContextAccessor();

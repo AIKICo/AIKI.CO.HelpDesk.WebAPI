@@ -10,6 +10,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
             Customer = new HashSet<Customer>();
             Member = new HashSet<Member>();
             OperatingHour = new HashSet<OperatingHour>();
+            SLASetting = new HashSet<SLASetting>();
         }
         public Guid id { get; set; }
         public string title { get; set; }
@@ -18,5 +19,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public ICollection<Customer> Customer { get; set; }
         public ICollection<Member> Member { get; set; }
         public ICollection<OperatingHour> OperatingHour { get; set; }
+        public ICollection<SLASetting> SLASetting { get; set; }
     }
 }

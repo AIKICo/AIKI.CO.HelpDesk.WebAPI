@@ -15,6 +15,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.AutoMapperSettings
             CreateMap<Customer, CustomerResponse>().ReverseMap();
             CreateMap<Member, MemberResponse>().ReverseMap();
             CreateMap<OperatingHour, OperatingHoureResponse>().ReverseMap();
+            CreateMap<SLASetting, SLASettingResponse>().ReverseMap();
         }
     }
 }
