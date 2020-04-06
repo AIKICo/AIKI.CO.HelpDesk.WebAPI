@@ -64,26 +64,26 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             return _map.Map<V>(await _unitofwork.GetRepository<T>().FindAsync(id));
         }
 
-        public async Task<int> AddRecord(V request)
+        public virtual async Task<int> AddRecord(V request)
         {
             request.id = Guid.NewGuid();
             await _unitofwork.GetRepository<T>().InsertAsync(_map.Map<T>(request));
             return await _unitofwork.SaveChangesAsync();
         }
 
-        public async Task<int> UpdateRecord(V request)
+        public virtual async Task<int> UpdateRecord(V request)
         {
             _unitofwork.GetRepository<T>().Update(_map.Map<T>(request));
             return await _unitofwork.SaveChangesAsync();
         }
 
-        public async Task<int> DeleteRecord(Guid id)
+        public virtual async Task<int> DeleteRecord(Guid id)
         {
             _unitofwork.GetRepository<T>().Delete(id);
             return await _unitofwork.SaveChangesAsync();
         }
 
-        public async Task<int> PartialUpdateRecord(V request)
+        public virtual async Task<int> PartialUpdateRecord(V request)
         {
             _unitofwork.GetRepository<T>().ChangeEntityState(_map.Map<T>(request), Microsoft.EntityFrameworkCore.EntityState.Modified);
             return await _unitofwork.SaveChangesAsync();

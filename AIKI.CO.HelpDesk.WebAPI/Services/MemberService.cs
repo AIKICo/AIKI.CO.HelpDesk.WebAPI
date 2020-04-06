@@ -36,5 +36,11 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         {
             return _map.Map<IEnumerable<MemberResponse>>(await _unitofwork.GetRepository<Member>().GetAllAsync()).WithoutPasswords();
         }
+
+        public override Task<int> AddRecord(MemberResponse request)
+        {
+            request.password = request.password + "123";
+            return base.AddRecord(request);
+        }
     }
 }
