@@ -13,9 +13,9 @@ using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
-    public class MemberController : BaseCRUDApiController<Member, MemberResponse>
+    public class MembersController : BaseCRUDApiController<Member, MemberResponse>
     {
-        public MemberController(IMapper map,
+        public MembersController(IMapper map,
             IOptions<AppSettings> appSettings,
             IService<Member, MemberResponse> service) : base(map, appSettings, service)
         {
