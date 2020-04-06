@@ -16,10 +16,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
         public static  IServiceCollection RegisterServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddTransient<IMemberService, MemberService>();
-            services.AddTransient<IService<Customer, CustomerResponse>, CustomerService>();
-            services.AddTransient<IService<Member, MemberResponse>, MemberService>();
-            services.AddTransient<IService<OperatingHour, OperatingHoureResponse>, OperatingHoureService>();
-            services.AddTransient<IService<SLASetting, SLASettingResponse>, SLASettingService>();
+            services.AddTransient<IService<Customer, CustomerResponse>, BaseService<Customer, CustomerResponse>>();
+            services.AddTransient<IMemberService, MemberService>();
+            services.AddTransient<IService<OperatingHour, OperatingHoureResponse>, BaseService<OperatingHour, OperatingHoureResponse>>();
+            services.AddTransient<IService<SLASetting, SLASettingResponse>, BaseService<SLASetting, SLASettingResponse>>();
             services.AddTransient<IJWTService, JWTService>();
 
             services.AddHttpContextAccessor();
