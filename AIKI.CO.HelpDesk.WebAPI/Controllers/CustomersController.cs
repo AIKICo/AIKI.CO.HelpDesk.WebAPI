@@ -8,8 +8,6 @@ using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
-    [Route("[controller]")]
-    [ApiController]
     public sealed class CustomersController : BaseCRUDApiController<Customer, CustomerResponse>
     {
         public CustomersController(
