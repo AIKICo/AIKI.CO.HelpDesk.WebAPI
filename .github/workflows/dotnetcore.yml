@@ -44,5 +44,10 @@ jobs:
       uses: rtCamp/action-slack-notify@v2.0.0
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_CHANNEL: "#general" 
+        SLACK_CHANNEL: "#general"
         SLACK_TITLE: "Help Desk Web API Published On Heroku"
+    - name: Send Notification To Microsoft Teams
+      uses: dhollerbach/github-action-send-message-to-ms-teams@1.0.10
+      with:
+        webhook: ${{ secrets.TEAMS_WEBHOOK }}
+        message: 'Help Desk Web API Published On Heroku'
