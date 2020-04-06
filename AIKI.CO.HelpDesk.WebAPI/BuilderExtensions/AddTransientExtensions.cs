@@ -16,6 +16,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
         public static  IServiceCollection RegisterServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddTransient<IMemberService, MemberService>();
+            services.AddTransient<IService<Member, MemberResponse>, BaseService<Member, MemberResponse>>();
             services.AddTransient<IService<Customer, CustomerResponse>, BaseService<Customer, CustomerResponse>>();
             services.AddTransient<IService<OperatingHour, OperatingHoureResponse>, BaseService<OperatingHour, OperatingHoureResponse>>();
             services.AddTransient<IService<SLASetting, SLASettingResponse>, BaseService<SLASetting, SLASettingResponse>>();
