@@ -22,7 +22,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
             builder.Property(c => c.requesttypepriority).HasColumnType("jsonb");
 
             builder.HasOne(c => c.Company)
-                .WithMany(c => c.SLASetting)
+                .WithMany(c => c.SLASettings)
                 .HasForeignKey(c => c.companyid);
         }
     }

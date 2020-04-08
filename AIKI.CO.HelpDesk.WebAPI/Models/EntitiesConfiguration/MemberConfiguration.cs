@@ -19,7 +19,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
                     .ValueGeneratedNever();
 
             builder.HasOne(c => c.Company)
-                .WithMany(c => c.Member)
+                .WithMany(c => c.Members)
                 .HasForeignKey(c => c.companyid);
         }
     }

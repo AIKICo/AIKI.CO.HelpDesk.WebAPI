@@ -32,7 +32,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
                 .HasMaxLength(200);
 
             builder.HasOne(d => d.Company)
-                .WithMany(p => p.Customer)
+                .WithMany(p => p.Customers)
                 .HasForeignKey(d => d.companyid);
         }
     }
