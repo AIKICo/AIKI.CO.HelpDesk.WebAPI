@@ -23,7 +23,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
             builder.Property(c => c.holidays).HasColumnType("jsonb");
 
             builder.HasOne(c => c.Company)
-                .WithMany(c => c.OperatingHour)
+                .WithMany(c => c.OperatingsHour)
                 .HasForeignKey(c => c.companyid);
         }
     }
