@@ -10,7 +10,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {
     public sealed class GroupConfiguration : BaseConfiguration<Entities.Group>, IEntityTypeConfiguration<Entities.Group>
     {
-        public GroupConfiguration(Guid companyid) : base(companyid)
+        public GroupConfiguration(Guid? companyid) : base(companyid)
         {
 
         }

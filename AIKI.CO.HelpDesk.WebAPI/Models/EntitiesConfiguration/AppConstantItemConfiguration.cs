@@ -10,7 +10,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {
     public class AppConstantItemConfiguration : BaseConfiguration<AppConstantItem>, IEntityTypeConfiguration<AppConstantItem>
     {
-        public AppConstantItemConfiguration(Guid companyid) : base(companyid)
+        public AppConstantItemConfiguration(Guid? companyid) : base(companyid)
         {
 
         }

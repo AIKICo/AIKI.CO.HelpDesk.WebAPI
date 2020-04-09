@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
+using System.Linq;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models
 {
@@ -12,7 +13,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
     {
         private readonly AppSettings _appSettings;
         private readonly IHttpContextAccessor _context;
-        private Guid _companyid { get; set; }
+        private Guid? _companyid { get; set; }
         public DbSet<Company> Company { get; set; }
         public DbSet<Customer> Customer { get; private set; }
         public DbSet<Member> Member { get; private set; }
@@ -30,7 +31,15 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
         {
             _context = context;
             _appSettings = appSettings.Value;
-            _companyid = _appSettings.CompanyID;
+            if (_context.HttpContext.Request.Headers.Any(q=>q.Key=="CompanyID"))
+            {
+                _companyid = new Guid(_context.HttpContext.Request.Headers["CompanyID"].ToString());
+            }
+            else
+            {
+                _companyid = null;
+            }
+
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
