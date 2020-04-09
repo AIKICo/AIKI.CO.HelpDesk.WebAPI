@@ -13,6 +13,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
             SLASettings = new HashSet<SLASetting>();
             Groups = new HashSet<Group>();
             AppConstants = new HashSet<AppConstant>();
+            AppConstantItems = new HashSet<AppConstantItem>();
         }
         public Guid id { get; set; }
         public string title { get; set; }
@@ -24,5 +25,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public ICollection<SLASetting> SLASettings { get; set; }
         public ICollection<Group> Groups { get; set; }
         public ICollection<AppConstant> AppConstants { get; set; }
+        public ICollection<AppConstantItem> AppConstantItems { get; set; }
     }
 }
