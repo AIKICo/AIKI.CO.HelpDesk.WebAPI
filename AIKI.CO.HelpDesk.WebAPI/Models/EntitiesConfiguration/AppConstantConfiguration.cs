@@ -16,6 +16,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
         }
         public override void Configure(EntityTypeBuilder<AppConstant> builder)
         {
+            base.Configure(builder);
+
             builder.HasKey(c => c.id);
             builder.Property(c => c.id)
                     .ValueGeneratedNever();

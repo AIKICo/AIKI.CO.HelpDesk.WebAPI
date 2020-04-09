@@ -18,6 +18,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
         public override void Configure(EntityTypeBuilder<SLASetting> builder)
         {
             base.Configure(builder);
+
             builder.Property(c => c.targetspriority).HasColumnType("jsonb");
             builder.Property(c => c.requesttypepriority).HasColumnType("jsonb");
 
