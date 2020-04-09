@@ -22,6 +22,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
             services.AddTransient<IService<SLASetting, SLASettingResponse>, BaseService<SLASetting, SLASettingResponse>>();
             services.AddTransient<IService<Group, GroupResponse>, BaseService<Group, GroupResponse>>();
             services.AddTransient<IService<AppConstant, AppConstantResponse>, BaseService<AppConstant, AppConstantResponse>>();
+            services.AddTransient<IService<AppConstantItem, AppConstantItemResponse>, BaseService<AppConstantItem, AppConstantItemResponse>>();
             services.AddTransient<IJWTService, JWTService>();
 
             services.AddHttpContextAccessor();

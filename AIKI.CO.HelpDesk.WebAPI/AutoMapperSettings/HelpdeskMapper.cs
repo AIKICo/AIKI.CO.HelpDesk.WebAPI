@@ -18,6 +18,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.AutoMapperSettings
             CreateMap<SLASetting, SLASettingResponse>().ReverseMap();
             CreateMap<Group, GroupResponse>().ReverseMap();
             CreateMap<AppConstant, AppConstantResponse>().ReverseMap();
+            CreateMap<AppConstantItem, AppConstantItemResponse>().ReverseMap();
         }
     }
 }
