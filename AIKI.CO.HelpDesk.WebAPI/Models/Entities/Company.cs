@@ -12,6 +12,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
             OperatingsHour = new HashSet<OperatingHour>();
             SLASettings = new HashSet<SLASetting>();
             Groups = new HashSet<Group>();
+            AppConstants = new HashSet<AppConstant>();
         }
         public Guid id { get; set; }
         public string title { get; set; }
@@ -22,5 +23,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public ICollection<OperatingHour> OperatingsHour { get; set; }
         public ICollection<SLASetting> SLASettings { get; set; }
         public ICollection<Group> Groups { get; set; }
+        public ICollection<AppConstant> AppConstants { get; set; }
     }
 }
