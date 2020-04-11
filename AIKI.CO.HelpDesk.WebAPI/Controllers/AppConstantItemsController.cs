@@ -13,8 +13,6 @@ using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class AppConstantItemsController : BaseCRUDApiController<AppConstantItem, AppConstantItemResponse>
     {
         public AppConstantItemsController(
