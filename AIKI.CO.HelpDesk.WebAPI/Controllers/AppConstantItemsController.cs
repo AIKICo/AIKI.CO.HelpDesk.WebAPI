@@ -20,6 +20,16 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             IOptions<AppSettings> appSettings,
             IService<AppConstantItem, AppConstantItemResponse> service) : base(map, appSettings, service)
         {
+            
+        }
+        
+        [HttpGet("GetByParentId/{id:guid}")]
+        public async Task<IActionResult> GetByParentId(Guid id)
+        {
+            var result = await _service.GetAll(predicate: q=>q.appconstantid == id);
+            if (result != null)
+                return Ok(result);
+            else return NotFound();
         }
     }
 }

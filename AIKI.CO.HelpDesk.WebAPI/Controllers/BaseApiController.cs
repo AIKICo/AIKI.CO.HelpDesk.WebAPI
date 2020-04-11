@@ -32,19 +32,19 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public virtual async Task<IActionResult> Get()
         {
             return Ok(await _service.GetAll());
         }
 
         [HttpGet("{pageSize:int}/{pageIndex:int}")]
-        public async Task<IActionResult> Get([FromQuery] int pageSize, [FromQuery] int pageIndex)
+        public virtual async Task<IActionResult> Get([FromQuery] int pageSize, [FromQuery] int pageIndex)
         {
             return Ok(await _service.GetPagedList(pageSize: pageSize, pageIndex: pageIndex));
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<IActionResult> Get([FromQuery] Guid id)
+        public virtual async Task<IActionResult> Get([FromQuery] Guid id)
         {
             var result = await _service.GetById(id);
             if (result != null)
@@ -54,7 +54,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         [HttpPost]
         [Produces("application/json")]
-        public async Task<IActionResult> Post([FromBody] V request)
+        public virtual async Task<IActionResult> Post([FromBody] V request)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var result = await _service.AddRecord(request);
@@ -64,7 +64,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] V request)
+        public virtual async Task<IActionResult> Put([FromBody] V request)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var existsRecord = await _service.GetById(request.id);
@@ -75,7 +75,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpPatch("{id:guid}")]
-        public async Task<IActionResult> Patch([FromRoute] Guid id, [FromBody] JsonPatchDocument<V> patchDoc)
+        public virtual async Task<IActionResult> Patch([FromRoute] Guid id, [FromBody] JsonPatchDocument<V> patchDoc)
         {
             if (patchDoc == null) return BadRequest();
             var founded = await _service.GetById(id);
@@ -93,7 +93,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        public virtual async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var result = await _service.DeleteRecord(id);
             if (result > 0)
