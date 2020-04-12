@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models
 {
@@ -22,6 +23,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
         public DbSet<Group> Group { get; set; }
         public DbSet<AppConstant> AppConstant { get; set; }
         public DbSet<AppConstantItem> AppConstantItem { get; set; }
+        public DbSet<OrganizeChart> OrganizeChart { get; set; }
 
         public dbContext(
             DbContextOptions options,
@@ -55,6 +57,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             modelBuilder.ApplyConfiguration<Group>(new GroupConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<AppConstant>(new AppConstantConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<AppConstantItem>(new AppConstantItemConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration<OrganizeChart>(new OrganizeChartConfiguration(_companyid));
         }
     }
 }
