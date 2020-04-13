@@ -14,7 +14,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
     {
         private readonly AppSettings _appSettings;
         private readonly IHttpContextAccessor _context;
-        private Guid? _companyid { get; set; }
+        private Guid? _companyid { get; set; } = Guid.Empty;
         public DbSet<Company> Company { get; set; }
         public DbSet<Customer> Customer { get; private set; }
         public DbSet<Member> Member { get; private set; }
@@ -34,10 +34,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             _context = context;
             _appSettings = appSettings.Value;
             if (_context.HttpContext.Request.Headers["CompanyID"].Any())
+            {
                 _companyid = new Guid(_context.HttpContext.Request.Headers["CompanyID"].ToString());
-            else
-                _companyid = Guid.Empty;
-
+            }
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
