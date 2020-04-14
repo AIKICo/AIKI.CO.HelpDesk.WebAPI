@@ -20,6 +20,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.AutoMapperSettings
             CreateMap<AppConstant, AppConstantResponse>().ReverseMap();
             CreateMap<AppConstantItem, AppConstantItemResponse>().ReverseMap();
             CreateMap<OrganizeChart, OrganizeChartResponse>().ReverseMap();
+            CreateMap<OrganizeCharts_JsonView, OrganizeCharts_JsonViewResponse>().ReverseMap();
         }
     }
 }
