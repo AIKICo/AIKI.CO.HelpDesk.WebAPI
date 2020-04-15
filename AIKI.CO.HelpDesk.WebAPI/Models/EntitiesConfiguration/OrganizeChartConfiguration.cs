@@ -14,6 +14,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
         public override void Configure(EntityTypeBuilder<OrganizeChart> builder)
         {
             base.Configure(builder);
+            builder.Property(c => c.additionalinfo).HasColumnType("jsonb");
             builder.HasOne(c => c.Company)
                 .WithMany(c => c.OrganizeCharts)
                 .HasForeignKey(c => c.companyid);
