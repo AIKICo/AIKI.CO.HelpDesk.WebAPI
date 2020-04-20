@@ -22,7 +22,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [HttpGet("GetByCompanyId/{id:guid}")]
         public async Task<IActionResult> GetByCompanyId(Guid id)
         {
-            var result = await _service.GetAll(predicate: q=>q.companyid == id);
+            var result = await _service.GetAll(predicate: q=>q.companyid == id && q.parent_id==null);
             if (result != null)
                 return Ok(result);
             else return NotFound();
