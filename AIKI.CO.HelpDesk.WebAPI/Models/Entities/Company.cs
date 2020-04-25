@@ -14,6 +14,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
             Groups = new HashSet<Group>();
             AppConstants = new HashSet<AppConstant>();
             AppConstantItems = new HashSet<AppConstantItem>();
+            OrganizeCharts = new HashSet<OrganizeChart>();
         }
         public Guid id { get; set; }
         public string title { get; set; }
@@ -26,5 +27,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public ICollection<Group> Groups { get; set; }
         public ICollection<AppConstant> AppConstants { get; set; }
         public ICollection<AppConstantItem> AppConstantItems { get; set; }
+        public ICollection<OrganizeChart> OrganizeCharts { get; set; }
     }
 }

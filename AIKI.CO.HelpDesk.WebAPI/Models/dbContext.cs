@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models
 {
@@ -13,7 +14,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
     {
         private readonly AppSettings _appSettings;
         private readonly IHttpContextAccessor _context;
-        private Guid? _companyid { get; set; }
+        private Guid? _companyid { get; set; } = Guid.Empty;
         public DbSet<Company> Company { get; set; }
         public DbSet<Customer> Customer { get; private set; }
         public DbSet<Member> Member { get; private set; }
@@ -22,6 +23,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
         public DbSet<Group> Group { get; set; }
         public DbSet<AppConstant> AppConstant { get; set; }
         public DbSet<AppConstantItem> AppConstantItem { get; set; }
+        public DbSet<OrganizeChart> OrganizeChart { get; set; }
+        public DbSet<OrganizeCharts_JsonView> OrganizeCharts_JsonView { get; set; }
 
         public dbContext(
             DbContextOptions options,
@@ -32,10 +35,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             _context = context;
             _appSettings = appSettings.Value;
             if (_context.HttpContext.Request.Headers["CompanyID"].Any())
+            {
                 _companyid = new Guid(_context.HttpContext.Request.Headers["CompanyID"].ToString());
-            else
-                _companyid = Guid.Empty;
-
+            }
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -55,6 +57,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             modelBuilder.ApplyConfiguration<Group>(new GroupConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<AppConstant>(new AppConstantConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<AppConstantItem>(new AppConstantItemConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration<OrganizeChart>(new OrganizeChartConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration<OrganizeCharts_JsonView>(new OrganizeCharts_JsonViewConfiguration(_companyid));
         }
     }
 }
