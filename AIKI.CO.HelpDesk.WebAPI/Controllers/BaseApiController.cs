@@ -3,6 +3,7 @@ using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
 using AutoMapper;
+using Microsoft.AspNet.OData;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -31,19 +32,19 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             _service = service;
         }
 
-        [HttpGet]
+        [HttpGet, EnableQuery]
         public async Task<IActionResult> Get()
         {
             return Ok(await _service.GetAll());
         }
 
-        [HttpGet("{pageSize:int}/{pageIndex:int}")]
+        [HttpGet("{pageSize:int}/{pageIndex:int}"), EnableQuery]
         public async Task<IActionResult> Get([FromQuery] int pageSize, [FromQuery] int pageIndex)
         {
             return Ok(await _service.GetPagedList(pageSize: pageSize, pageIndex: pageIndex));
         }
 
-        [HttpGet("{id:guid}")]
+        [HttpGet("{id:guid}"), EnableQuery]
         public async Task<IActionResult> Get([FromQuery] Guid id)
         {
             var result = await _service.GetById(id);
