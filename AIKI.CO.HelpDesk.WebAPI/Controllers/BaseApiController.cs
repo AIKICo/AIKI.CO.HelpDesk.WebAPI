@@ -22,29 +22,31 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         protected readonly AppSettings _appSettings;
         protected readonly IMapper _map;
         protected readonly IService<T, V> _service;
+        protected bool _isReadOnly;
         public BaseCRUDApiController(
             IMapper map,
             IOptions<AppSettings> appSettings,
-            IService<T, V> service)
+            IService<T, V> service, bool isReadOnly = false)
         {
             _map = map;
             _appSettings = appSettings.Value;
             _service = service;
+            _isReadOnly = isReadOnly;
         }
 
-        [HttpGet, EnableQuery]
+        [HttpGet]
         public async Task<IActionResult> Get()
         {
             return Ok(await _service.GetAll());
         }
 
-        [HttpGet("{pageSize:int}/{pageIndex:int}"), EnableQuery]
+        [HttpGet("{pageSize:int}/{pageIndex:int}")]
         public async Task<IActionResult> Get([FromQuery] int pageSize, [FromQuery] int pageIndex)
         {
             return Ok(await _service.GetPagedList(pageSize: pageSize, pageIndex: pageIndex));
         }
 
-        [HttpGet("{id:guid}"), EnableQuery]
+        [HttpGet("{id:guid}")]
         public async Task<IActionResult> Get([FromQuery] Guid id)
         {
             var result = await _service.GetById(id);
@@ -55,8 +57,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         [HttpPost]
         [Produces("application/json")]
-        public async Task<IActionResult> Post([FromBody] V request)
+        public virtual async Task<IActionResult> Post([FromBody] V request)
         {
+            if (_isReadOnly) return BadRequest("Entity is ReadOnly");
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var result = await _service.AddRecord(request);
             if (result > 0)
@@ -65,8 +68,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] V request)
+        public virtual async Task<IActionResult> Put([FromBody] V request)
         {
+            if (_isReadOnly) return BadRequest("Entity is ReadOnly");
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var existsRecord = await _service.GetById(request.id);
             if (existsRecord == null) return NotFound();
@@ -76,8 +80,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpPatch("{id:guid}")]
-        public async Task<IActionResult> Patch([FromRoute] Guid id, [FromBody] JsonPatchDocument<V> patchDoc)
+        public virtual async Task<IActionResult> Patch([FromRoute] Guid id, [FromBody] JsonPatchDocument<V> patchDoc)
         {
+            if (_isReadOnly) return BadRequest("Entity is ReadOnly");
             if (patchDoc == null) return BadRequest();
             var founded = await _service.GetById(id);
             if (founded == null) return NotFound();
@@ -94,8 +99,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        public virtual async Task<IActionResult> Delete([FromRoute] Guid id)
         {
+            if (_isReadOnly) return BadRequest("Entity is ReadOnly");
             var result = await _service.DeleteRecord(id);
             if (result > 0)
                 return Ok(id);
