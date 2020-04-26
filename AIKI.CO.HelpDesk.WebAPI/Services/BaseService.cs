@@ -88,5 +88,21 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             _unitofwork.GetRepository<T>().ChangeEntityState(_map.Map<T>(request), Microsoft.EntityFrameworkCore.EntityState.Modified);
             return await _unitofwork.SaveChangesAsync();
         }
+
+        public virtual async Task<V> GetSingle(Expression<Func<T, bool>> predicate)
+        {
+            return _map.Map<V>(await _unitofwork.GetRepository<T>().GetFirstOrDefaultAsync(predicate: predicate));
+        }
+
+        public virtual async Task<K> GetSingle<K>(Expression<Func<K, bool>> predicate) where K : BaseObject
+        {
+            return _map.Map<K>(await _unitofwork.GetRepository<K>().GetFirstOrDefaultAsync(predicate: predicate));
+
+        }
+
+        public virtual List<K> GetRawSQL<K>(string sqlQuery, params object[] parameters) where K : BaseObject
+        {
+            return _unitofwork.GetRepository<K>().FromSql(sqlQuery, parameters).ToList();
+        }
     }
 }

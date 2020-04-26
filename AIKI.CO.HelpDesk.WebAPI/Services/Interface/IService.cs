@@ -29,6 +29,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services.Interface
                                                            bool disableTracking = true,
                                                            CancellationToken cancellationToken = default(CancellationToken),
                                                            bool ignoreQueryFilters = false);
+        Task<V> GetSingle(Expression<Func<T, bool>> predicate);
+        Task<K> GetSingle<K>(Expression<Func<K, bool>> predicate) where K : BaseObject;
+        List<K> GetRawSQL<K>(string sqlQuery, params object[] parameters) where K : BaseObject;
         Task<int> AddRecord(V request);
         Task<int> UpdateRecord(V request);
         Task<int> PartialUpdateRecord(V request);
