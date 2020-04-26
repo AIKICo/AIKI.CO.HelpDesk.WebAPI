@@ -10,7 +10,7 @@ using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
-    public class OrganizeChartsJsonViewController : BaseCRUDApiController<OrganizeCharts_JsonView, OrganizeCharts_JsonViewResponse>
+    public class OrganizeChartsJsonViewController : BaseRApiController<OrganizeCharts_JsonView, OrganizeCharts_JsonViewResponse>
     {
         public OrganizeChartsJsonViewController(
             IMapper map,
@@ -19,10 +19,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         {
         }
         
-        [HttpGet("GetByCompanyId/{id:guid}")]
-        public async Task<IActionResult> GetByCompanyId(Guid id)
+        [HttpGet("GetByCompanyId")]
+        public async Task<IActionResult> GetByCompanyId()
         {
-            var result = await _service.GetAll(predicate: q=>q.companyid == id);
+            var result = await _service.GetSingle<OrganizeChart>(predicate: q=> q.parent_id == null);
             if (result != null)
                 return Ok(result);
             else return NotFound();
