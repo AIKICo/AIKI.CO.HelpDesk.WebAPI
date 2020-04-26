@@ -100,9 +100,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 
         }
 
-        public virtual List<K> GetRawSQL<K>(string sqlQuery, params object[] parameters) where K : BaseObject
+        public virtual List<T> GetRawSQL(string sqlQuery, params object[] parameters) 
         {
-            return _unitofwork.GetRepository<K>().FromSql(sqlQuery, parameters).ToList();
+            return _unitofwork.GetRepository<T>().FromSql(sqlQuery, parameters).ToList();
         }
     }
 }
