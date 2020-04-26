@@ -94,7 +94,6 @@ namespace AIKI.CO.HelpDesk.WebAPI
             services.AddControllers()
                  .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddTokenAuthentication(Configuration);
-            services.AddOData();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -121,8 +120,6 @@ namespace AIKI.CO.HelpDesk.WebAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.EnableDependencyInjection();
-                endpoints.Select().Expand().Filter().OrderBy().Count().MaxTop(20);
             });
         }
     }
