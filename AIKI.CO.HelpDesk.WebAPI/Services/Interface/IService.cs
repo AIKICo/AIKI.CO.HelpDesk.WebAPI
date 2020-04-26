@@ -31,7 +31,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services.Interface
                                                            bool ignoreQueryFilters = false);
         Task<V> GetSingle(Expression<Func<T, bool>> predicate);
         Task<K> GetSingle<K>(Expression<Func<K, bool>> predicate) where K : BaseObject;
-        List<K> GetRawSQL<K>(string sqlQuery, params object[] parameters) where K : BaseObject;
+        List<T> GetRawSQL(string sqlQuery, params object[] parameters);
         Task<int> AddRecord(V request);
         Task<int> UpdateRecord(V request);
         Task<int> PartialUpdateRecord(V request);
