@@ -23,10 +23,17 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         public async Task<IActionResult> GetByCompanyId()
         {
             var parent = await _service.GetSingle<OrganizeChart>(predicate: q=> q.parent_id == null);
-            var result = _service.GetRawSQL("SELECT * FROM organizecharts_jsonview({0})", parent.id);
-            if (result != null)
-                return Ok(result);
-            else return NotFound();
+            if (parent != null)
+            {
+                var result = _service.GetRawSQL("SELECT * FROM organizecharts_jsonview({0})", parent.id);
+                if (result != null)
+                    return Ok(result);
+                else return NotFound();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }
