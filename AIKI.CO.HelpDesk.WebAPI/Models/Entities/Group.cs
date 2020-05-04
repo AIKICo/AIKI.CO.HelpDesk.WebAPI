@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
 {
-    public sealed class Group:BaseObject
+    public sealed class Group : BaseObject
     {
         public string title { get; set; }
         public string description { get; set; }

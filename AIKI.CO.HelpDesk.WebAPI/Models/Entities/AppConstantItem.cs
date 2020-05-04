@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
 {
-    public class AppConstantItem:BaseObject
+    public class AppConstantItem : BaseObject
     {
         public Guid appconstantid { get; set; }
         public string value1 { get; set; }

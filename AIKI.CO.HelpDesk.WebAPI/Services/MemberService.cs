@@ -14,6 +14,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
     public sealed class MemberService : BaseService<Member, MemberResponse>, IMemberService
     {
         private readonly IJWTService _jwtService;
+
         public MemberService(
             IMapper map,
             IUnitOfWork unitofwork,
@@ -22,9 +23,11 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         {
             _jwtService = jwtService;
         }
+
         public MemberResponse Authenticate(string username, string password)
         {
-            var user = _map.Map<MemberResponse>(_unitofwork.GetRepository<Member>().GetFirstOrDefault(predicate: x => x.username == username && x.password == password));
+            var user = _map.Map<MemberResponse>(_unitofwork.GetRepository<Member>()
+                .GetFirstOrDefault(predicate: x => x.username == username && x.password == password));
             if (user == null)
                 return null;
 
@@ -34,7 +37,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 
         public override async Task<IEnumerable<MemberResponse>> GetAll()
         {
-            return _map.Map<IEnumerable<MemberResponse>>(await _unitofwork.GetRepository<Member>().GetAllAsync()).WithoutPasswords();
+            return _map.Map<IEnumerable<MemberResponse>>(await _unitofwork.GetRepository<Member>().GetAllAsync())
+                .WithoutPasswords();
         }
 
         public override Task<int> AddRecord(MemberResponse request)

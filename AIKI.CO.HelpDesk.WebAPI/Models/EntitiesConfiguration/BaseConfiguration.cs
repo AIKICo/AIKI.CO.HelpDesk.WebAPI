@@ -8,6 +8,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
     public class BaseConfiguration<T> : IEntityTypeConfiguration<T> where T : BaseObject
     {
         protected Guid? _companyid { get; set; }
+
         public BaseConfiguration(Guid? companyid)
         {
             _companyid = companyid;
@@ -17,7 +18,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
         {
             builder.HasKey(c => c.id);
             builder.Property(c => c.id)
-                    .ValueGeneratedNever();
+                .ValueGeneratedNever();
 
             builder.HasQueryFilter(c => c.companyid == _companyid);
         }

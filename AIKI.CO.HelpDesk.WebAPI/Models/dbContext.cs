@@ -35,11 +35,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             _context = context;
             _appSettings = appSettings.Value;
             if (_context.HttpContext.Request.Headers["CompanyID"].Any())
-            {
                 _companyid = new Guid(_context.HttpContext.Request.Headers["CompanyID"].ToString());
-            }
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);

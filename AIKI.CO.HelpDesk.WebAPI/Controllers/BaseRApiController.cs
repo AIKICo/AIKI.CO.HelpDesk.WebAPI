@@ -23,6 +23,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         protected readonly IMapper _map;
         protected readonly IService<T, V> _service;
         protected bool _isReadOnly;
+
         public BaseRApiController(
             IMapper map,
             IOptions<AppSettings> appSettings,
@@ -54,6 +55,5 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
                 return Ok(result);
             else return NotFound();
         }
-
     }
 }

@@ -9,7 +9,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
     {
         public CustomerConfiguration(Guid? companyid) : base(companyid)
         {
-
         }
 
         public override void Configure(EntityTypeBuilder<Customer> builder)

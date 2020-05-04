@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
 {
-    public sealed class GroupResponse:BaseResponse
+    public sealed class GroupResponse : BaseResponse
     {
         public string title { get; set; }
         public string description { get; set; }

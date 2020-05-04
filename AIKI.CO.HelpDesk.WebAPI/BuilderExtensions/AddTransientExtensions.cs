@@ -13,18 +13,29 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
 {
     public static class AddTransientExtensions
     {
-        public static  IServiceCollection RegisterServices(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection RegisterServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddTransient<IMemberService, MemberService>();
             services.AddTransient<IService<Member, MemberResponse>, BaseService<Member, MemberResponse>>();
             services.AddTransient<IService<Customer, CustomerResponse>, BaseService<Customer, CustomerResponse>>();
-            services.AddTransient<IService<OperatingHour, OperatingHoureResponse>, BaseService<OperatingHour, OperatingHoureResponse>>();
-            services.AddTransient<IService<SLASetting, SLASettingResponse>, BaseService<SLASetting, SLASettingResponse>>();
+            services
+                .AddTransient<IService<OperatingHour, OperatingHoureResponse>,
+                    BaseService<OperatingHour, OperatingHoureResponse>>();
+            services
+                .AddTransient<IService<SLASetting, SLASettingResponse>, BaseService<SLASetting, SLASettingResponse>>();
             services.AddTransient<IService<Group, GroupResponse>, BaseService<Group, GroupResponse>>();
-            services.AddTransient<IService<AppConstant, AppConstantResponse>, BaseService<AppConstant, AppConstantResponse>>();
-            services.AddTransient<IService<AppConstantItem, AppConstantItemResponse>, BaseService<AppConstantItem, AppConstantItemResponse>>();
-            services.AddTransient<IService<OrganizeChart, OrganizeChartResponse>, BaseService<OrganizeChart, OrganizeChartResponse>>();
-            services.AddTransient<IService<OrganizeCharts_JsonView, OrganizeCharts_JsonViewResponse>, BaseService<OrganizeCharts_JsonView, OrganizeCharts_JsonViewResponse>>();
+            services
+                .AddTransient<IService<AppConstant, AppConstantResponse>, BaseService<AppConstant, AppConstantResponse>
+                >();
+            services
+                .AddTransient<IService<AppConstantItem, AppConstantItemResponse>,
+                    BaseService<AppConstantItem, AppConstantItemResponse>>();
+            services
+                .AddTransient<IService<OrganizeChart, OrganizeChartResponse>,
+                    BaseService<OrganizeChart, OrganizeChartResponse>>();
+            services
+                .AddTransient<IService<OrganizeCharts_JsonView, OrganizeCharts_JsonViewResponse>,
+                    BaseService<OrganizeCharts_JsonView, OrganizeCharts_JsonViewResponse>>();
             services.AddTransient<IJWTService, JWTService>();
 
             services.AddHttpContextAccessor();
