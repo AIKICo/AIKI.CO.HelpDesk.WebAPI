@@ -16,6 +16,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
             AppConstantItems = new HashSet<AppConstantItem>();
             OrganizeCharts = new HashSet<OrganizeChart>();
         }
+
         public Guid id { get; set; }
         public string title { get; set; }
         public string email { get; set; }

@@ -12,15 +12,15 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
     {
         public AppConstantConfiguration(Guid? companyid) : base(companyid)
         {
-
         }
+
         public override void Configure(EntityTypeBuilder<AppConstant> builder)
         {
             base.Configure(builder);
 
             builder.HasKey(c => c.id);
             builder.Property(c => c.id)
-                    .ValueGeneratedNever();
+                .ValueGeneratedNever();
 
             builder.HasOne(c => c.Company)
                 .WithMany(c => c.AppConstants)

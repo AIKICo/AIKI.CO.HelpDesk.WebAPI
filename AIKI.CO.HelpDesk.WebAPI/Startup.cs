@@ -40,10 +40,8 @@ namespace AIKI.CO.HelpDesk.WebAPI
                 SslMode = SslMode.Require
             };
 
-            services.AddDbContext<dbContext>(options =>
-            {
-                options.UseNpgsql(builder.ConnectionString);
-            }).AddUnitOfWork<dbContext>();
+            services.AddDbContext<dbContext>(options => { options.UseNpgsql(builder.ConnectionString); })
+                .AddUnitOfWork<dbContext>();
 
             services.AddCors(options =>
             {
@@ -82,7 +80,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "AIKI Help Desl API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "AIKI Help Desl API", Version = "v1"});
             });
 
             services.AddApiVersioning(config =>
@@ -92,16 +90,14 @@ namespace AIKI.CO.HelpDesk.WebAPI
             });
 
             services.AddControllers()
-                 .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+                .AddNewtonsoftJson(x =>
+                    x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddTokenAuthentication(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseHttpsRedirection();
             app.UseResponseCompression();
@@ -117,10 +113,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
     }
 }

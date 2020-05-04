@@ -43,22 +43,26 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         public virtual async Task<IEnumerable<V>> GetAll(
             Expression<Func<T, bool>> predicate = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, bool disableTracking = true, bool ignoreQueryFilters = false)
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, bool disableTracking = true,
+            bool ignoreQueryFilters = false)
         {
-            return _map.Map<IEnumerable<V>>(await _unitofwork.GetRepository<T>().GetAllAsync(predicate, orderBy, include, disableTracking, ignoreQueryFilters));
+            return _map.Map<IEnumerable<V>>(await _unitofwork.GetRepository<T>()
+                .GetAllAsync(predicate, orderBy, include, disableTracking, ignoreQueryFilters));
         }
 
         public virtual async Task<IPagedList<V>> GetPagedList(Expression<Func<T, bool>> predicate = null,
-                                                           Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-                                                           Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
-                                                           int pageIndex = 0,
-                                                           int pageSize = 20,
-                                                           bool disableTracking = true,
-                                                           CancellationToken cancellationToken = default(CancellationToken),
-                                                           bool ignoreQueryFilters = false)
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+            int pageIndex = 0,
+            int pageSize = 20,
+            bool disableTracking = true,
+            CancellationToken cancellationToken = default(CancellationToken),
+            bool ignoreQueryFilters = false)
         {
-            return _map.Map<IPagedList<V>>(await _unitofwork.GetRepository<T>().GetPagedListAsync(predicate, orderBy, include, pageIndex, pageSize, disableTracking, cancellationToken, ignoreQueryFilters));
+            return _map.Map<IPagedList<V>>(await _unitofwork.GetRepository<T>().GetPagedListAsync(predicate, orderBy,
+                include, pageIndex, pageSize, disableTracking, cancellationToken, ignoreQueryFilters));
         }
+
         public virtual async Task<V> GetById(Guid id)
         {
             return _map.Map<V>(await _unitofwork.GetRepository<T>().FindAsync(id));
@@ -85,7 +89,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 
         public virtual async Task<int> PartialUpdateRecord(V request)
         {
-            _unitofwork.GetRepository<T>().ChangeEntityState(_map.Map<T>(request), Microsoft.EntityFrameworkCore.EntityState.Modified);
+            _unitofwork.GetRepository<T>()
+                .ChangeEntityState(_map.Map<T>(request), Microsoft.EntityFrameworkCore.EntityState.Modified);
             return await _unitofwork.SaveChangesAsync();
         }
 
@@ -97,10 +102,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         public virtual async Task<K> GetSingle<K>(Expression<Func<K, bool>> predicate) where K : BaseObject
         {
             return _map.Map<K>(await _unitofwork.GetRepository<K>().GetFirstOrDefaultAsync(predicate: predicate));
-
         }
 
-        public virtual List<T> GetRawSQL(string sqlQuery, params object[] parameters) 
+        public virtual List<T> GetRawSQL(string sqlQuery, params object[] parameters)
         {
             return _unitofwork.GetRepository<T>().FromSql(sqlQuery, parameters).ToList();
         }

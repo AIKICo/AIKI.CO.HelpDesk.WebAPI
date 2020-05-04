@@ -17,18 +17,22 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services.Interface
     {
         Task<V> GetById(Guid id);
         Task<IEnumerable<V>> GetAll();
+
         Task<IEnumerable<V>> GetAll(
             Expression<Func<T, bool>> predicate = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, bool disableTracking = true, bool ignoreQueryFilters = false);
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, bool disableTracking = true,
+            bool ignoreQueryFilters = false);
+
         Task<IPagedList<V>> GetPagedList(Expression<Func<T, bool>> predicate = null,
-                                                           Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
-                                                           Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
-                                                           int pageIndex = 0,
-                                                           int pageSize = 20,
-                                                           bool disableTracking = true,
-                                                           CancellationToken cancellationToken = default(CancellationToken),
-                                                           bool ignoreQueryFilters = false);
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
+            int pageIndex = 0,
+            int pageSize = 20,
+            bool disableTracking = true,
+            CancellationToken cancellationToken = default(CancellationToken),
+            bool ignoreQueryFilters = false);
+
         Task<V> GetSingle(Expression<Func<T, bool>> predicate);
         Task<K> GetSingle<K>(Expression<Func<K, bool>> predicate) where K : BaseObject;
         List<T> GetRawSQL(string sqlQuery, params object[] parameters);

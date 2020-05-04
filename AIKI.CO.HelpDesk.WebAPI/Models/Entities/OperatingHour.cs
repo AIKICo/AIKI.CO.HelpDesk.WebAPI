@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
 {
-    public class OperatingHour:BaseObject
+    public class OperatingHour : BaseObject
     {
         public string title { get; set; }
         public string timezone { get; set; }

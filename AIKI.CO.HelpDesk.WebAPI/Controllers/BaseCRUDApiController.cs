@@ -23,6 +23,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         protected readonly IMapper _map;
         protected readonly IService<T, V> _service;
         protected bool _isReadOnly;
+
         public BaseCRUDApiController(
             IMapper map,
             IOptions<AppSettings> appSettings,
@@ -95,7 +96,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             if (result > 0)
                 return Ok(_map.Map(foundedToPatch, founded));
             else return BadRequest(ModelState);
-
         }
 
         [HttpDelete("{id:guid}")]
@@ -108,6 +108,5 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             else
                 return BadRequest();
         }
-
     }
 }

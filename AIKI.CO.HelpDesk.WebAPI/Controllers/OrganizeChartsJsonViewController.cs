@@ -10,19 +10,21 @@ using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
-    public class OrganizeChartsJsonViewController : BaseRApiController<OrganizeCharts_JsonView, OrganizeCharts_JsonViewResponse>
+    public class
+        OrganizeChartsJsonViewController : BaseRApiController<OrganizeCharts_JsonView, OrganizeCharts_JsonViewResponse>
     {
         public OrganizeChartsJsonViewController(
             IMapper map,
             IOptions<AppSettings> appSettings,
-            IService<OrganizeCharts_JsonView, OrganizeCharts_JsonViewResponse> service) : base(map, appSettings, service,isReadOnly:true)
+            IService<OrganizeCharts_JsonView, OrganizeCharts_JsonViewResponse> service) : base(map, appSettings,
+            service, true)
         {
         }
-        
+
         [HttpGet("GetByCompanyId")]
         public async Task<IActionResult> GetByCompanyId()
         {
-            var parent = await _service.GetSingle<OrganizeChart>(predicate: q=> q.parent_id == null);
+            var parent = await _service.GetSingle<OrganizeChart>(q => q.parent_id == null);
             if (parent != null)
             {
                 var result = _service.GetRawSQL("SELECT * FROM organizecharts_jsonview({0})", parent.id);

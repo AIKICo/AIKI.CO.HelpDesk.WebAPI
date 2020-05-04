@@ -30,13 +30,13 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                     new Claim(ClaimTypes.Name, Id)
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(double.Parse(_expDate)),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
+                    SecurityAlgorithms.HmacSha256Signature)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
             return tokenHandler.WriteToken(token);
-
         }
     }
 }

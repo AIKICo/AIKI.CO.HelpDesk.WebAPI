@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
 {
-    public class AppConstantItemResponse:BaseResponse
+    public class AppConstantItemResponse : BaseResponse
     {
         public Guid appconstantid { get; set; }
         public string value1 { get; set; }

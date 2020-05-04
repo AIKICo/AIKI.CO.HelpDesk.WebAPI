@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
 {
-    public class SLASetting:BaseObject
+    public class SLASetting : BaseObject
     {
         public string title { get; set; }
         public string description { get; set; }

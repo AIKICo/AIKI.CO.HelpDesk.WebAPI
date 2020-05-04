@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {
-    public class AppConstantItemConfiguration : BaseConfiguration<AppConstantItem>, IEntityTypeConfiguration<AppConstantItem>
+    public class AppConstantItemConfiguration : BaseConfiguration<AppConstantItem>,
+        IEntityTypeConfiguration<AppConstantItem>
     {
         public AppConstantItemConfiguration(Guid? companyid) : base(companyid)
         {
-
         }
 
         public override void Configure(EntityTypeBuilder<AppConstantItem> builder)

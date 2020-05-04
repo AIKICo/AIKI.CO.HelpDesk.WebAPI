@@ -120,7 +120,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
                 switch (keyword.ToLower())
                 {
                     case "host":
-                        Host = (string)value;
+                        Host = (string) value;
                         break;
 
                     case "port":
@@ -128,15 +128,15 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
                         break;
 
                     case "database":
-                        Database = (string)value;
+                        Database = (string) value;
                         break;
 
                     case "username":
-                        Username = (string)value;
+                        Username = (string) value;
                         break;
 
                     case "password":
-                        Password = (string)value;
+                        Password = (string) value;
                         break;
 
                     case "pooling":
@@ -148,7 +148,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
                         break;
 
                     case "sslmode":
-                        SslMode = (SslMode)value;
+                        SslMode = (SslMode) value;
                         break;
 
                     default:

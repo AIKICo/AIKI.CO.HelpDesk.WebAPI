@@ -10,9 +10,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {
     public class SLASettingConfiguration : BaseConfiguration<SLASetting>, IEntityTypeConfiguration<SLASetting>
     {
-        public SLASettingConfiguration(Guid? companyid):base(companyid)
+        public SLASettingConfiguration(Guid? companyid) : base(companyid)
         {
-
         }
 
         public override void Configure(EntityTypeBuilder<SLASetting> builder)

@@ -12,7 +12,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
     {
         public OperatingHourConfiguration(Guid? companyid) : base(companyid)
         {
-
         }
 
         public override void Configure(EntityTypeBuilder<OperatingHour> builder)
