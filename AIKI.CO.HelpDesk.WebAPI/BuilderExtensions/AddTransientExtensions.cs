@@ -37,7 +37,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
                 .AddTransient<IService<OrganizeCharts_JsonView, OrganizeCharts_JsonViewResponse>,
                     BaseService<OrganizeCharts_JsonView, OrganizeCharts_JsonViewResponse>>();
             services.AddTransient<IJWTService, JWTService>();
-
+            services
+                .AddTransient<IService<Asset, AssetResponse>,
+                    BaseService<Asset, AssetResponse>>();
             services.AddHttpContextAccessor();
             return services;
         }
