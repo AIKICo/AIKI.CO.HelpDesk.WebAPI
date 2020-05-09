@@ -8,9 +8,9 @@ using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
-    public class AssetController : BaseCRUDApiController<Asset, AssetResponse>
+    public class AssetsController : BaseCRUDApiController<Asset, AssetResponse>
     {
-        public AssetController(
+        public AssetsController(
             IMapper map,
             IOptions<AppSettings> appSettings,
             IService<Asset, AssetResponse> service) : base(map, appSettings, service)
