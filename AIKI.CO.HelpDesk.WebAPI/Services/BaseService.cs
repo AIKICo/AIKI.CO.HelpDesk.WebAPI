@@ -50,7 +50,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                 .GetAllAsync(predicate, orderBy, include, disableTracking, ignoreQueryFilters));
         }
 
-        public virtual async Task<IPagedList<V>> GetPagedList(Expression<Func<T, bool>> predicate = null,
+        public virtual async Task<IList<V>> GetPagedList(Expression<Func<T, bool>> predicate = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null,
             int pageIndex = 0,
@@ -59,8 +59,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             CancellationToken cancellationToken = default(CancellationToken),
             bool ignoreQueryFilters = false)
         {
-            return _map.Map<IPagedList<V>>(await _unitofwork.GetRepository<T>().GetPagedListAsync(predicate, orderBy,
-                include, pageIndex, pageSize, disableTracking, cancellationToken, ignoreQueryFilters));
+            return _map.Map<IList<V>>((await _unitofwork.GetRepository<T>().GetPagedListAsync(predicate, orderBy,
+                include, pageIndex, pageSize, disableTracking, cancellationToken, ignoreQueryFilters)).Items);
         }
 
         public virtual async Task<V> GetById(Guid id)
