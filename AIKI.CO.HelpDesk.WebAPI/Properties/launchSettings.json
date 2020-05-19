@@ -19,7 +19,6 @@
     "AIKI.CO.HelpDesk.WebAPI": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "users/GetAll",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
