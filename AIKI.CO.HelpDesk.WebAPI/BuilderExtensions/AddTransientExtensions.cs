@@ -40,6 +40,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
             services
                 .AddTransient<IService<Asset, AssetResponse>,
                     BaseService<Asset, AssetResponse>>();
+            services
+                .AddTransient<IService<AssetsView, AssetsViewResponse>,
+                    BaseService<AssetsView, AssetsViewResponse>>();
             services.AddHttpContextAccessor();
             return services;
         }

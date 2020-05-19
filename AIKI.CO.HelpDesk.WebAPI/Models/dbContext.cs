@@ -26,6 +26,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
         public DbSet<OrganizeChart> OrganizeChart { get; set; }
         public DbSet<OrganizeCharts_JsonView> OrganizeCharts_JsonView { get; set; }
         public DbSet<Asset> Asset { get; set; }
+        public DbSet<AssetsView> AssetsView { get; set; }
 
         public dbContext(
             DbContextOptions options,
@@ -59,6 +60,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             modelBuilder.ApplyConfiguration<AppConstantItem>(new AppConstantItemConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<OrganizeChart>(new OrganizeChartConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<Asset>(new AssetConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration<AssetsView>(new AssetsViewConfiguration(_companyid));
         }
     }
 }
