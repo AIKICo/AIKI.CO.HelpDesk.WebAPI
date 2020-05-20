@@ -22,17 +22,15 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         protected readonly AppSettings _appSettings;
         protected readonly IMapper _map;
         protected readonly IService<T, V> _service;
-        protected bool _isReadOnly;
 
         public BaseRApiController(
             IMapper map,
             IOptions<AppSettings> appSettings,
-            IService<T, V> service, bool isReadOnly = false)
+            IService<T, V> service)
         {
             _map = map;
             _appSettings = appSettings.Value;
             _service = service;
-            _isReadOnly = isReadOnly;
         }
 
         [HttpGet]
