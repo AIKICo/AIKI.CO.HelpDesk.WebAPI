@@ -16,8 +16,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         public OrganizeChartsJsonViewController(
             IMapper map,
             IOptions<AppSettings> appSettings,
-            IService<OrganizeCharts_JsonView, OrganizeCharts_JsonViewResponse> service) : base(map, appSettings,
-            service, true)
+            IService<OrganizeCharts_JsonView, OrganizeCharts_JsonViewResponse> service) : base(map, appSettings, service)
         {
         }
 

@@ -13,8 +13,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         public AssetsViewController(
             IMapper map,
             IOptions<AppSettings> appSettings,
-            IService<AssetsView, AssetsViewResponse> service) : base(map, appSettings,
-            service, true)
+            IService<AssetsView, AssetsViewResponse> service) : base(map, appSettings, service)
         {
         }
     }
