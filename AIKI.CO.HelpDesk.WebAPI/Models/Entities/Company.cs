@@ -16,6 +16,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
             AppConstantItems = new HashSet<AppConstantItem>();
             OrganizeCharts = new HashSet<OrganizeChart>();
             Assets = new HashSet<Asset>();
+            Tickets = new HashSet<Ticket>();
         }
 
         public Guid id { get; set; }
@@ -31,5 +32,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public ICollection<AppConstantItem> AppConstantItems { get; set; }
         public ICollection<OrganizeChart> OrganizeCharts { get; set; }
         public ICollection<Asset> Assets { get; set; }
+        public ICollection<Ticket> Tickets { get; set; }
     }
 }

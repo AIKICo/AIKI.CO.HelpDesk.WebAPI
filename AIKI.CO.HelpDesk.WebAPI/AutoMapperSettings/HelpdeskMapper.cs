@@ -23,6 +23,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.AutoMapperSettings
             CreateMap<OrganizeCharts_JsonView, OrganizeCharts_JsonViewResponse>().ReverseMap();
             CreateMap<Asset, AssetResponse>().ReverseMap();
             CreateMap<AssetsView, AssetsViewResponse>().ReverseMap();
+            CreateMap<Ticket, TicketResponse>().ReverseMap();
         }
     }
 }
