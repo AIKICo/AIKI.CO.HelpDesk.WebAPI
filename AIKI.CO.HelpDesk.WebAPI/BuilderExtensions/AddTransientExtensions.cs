@@ -40,6 +40,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
             services
                 .AddTransient<IService<Asset, AssetResponse>,
                     BaseService<Asset, AssetResponse>>();
+
+            services
+                .AddTransient<IService<Ticket, TicketResponse>,
+                    BaseService<Ticket, TicketResponse>>();
             services
                 .AddTransient<IService<AssetsView, AssetsViewResponse>,
                     BaseService<AssetsView, AssetsViewResponse>>();
