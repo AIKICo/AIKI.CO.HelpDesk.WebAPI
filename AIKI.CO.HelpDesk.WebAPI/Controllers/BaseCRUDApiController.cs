@@ -48,7 +48,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<IActionResult> Get([FromQuery] Guid id)
+        public async Task<IActionResult> Get([FromRoute] Guid id)
         {
             var result = await _service.GetById(id);
             if (result != null)
