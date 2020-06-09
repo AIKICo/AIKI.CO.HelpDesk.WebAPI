@@ -10,7 +10,7 @@ WORKDIR /app/AIKI.CO.HelpDesk.WebAPI
 RUN dotnet publish -c Release -o out --self-contained false
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS runtime
-RUN apt-get update && apt-get install -y vim apt-utils libgdiplus libc6-dev tzdata
+RUN apt-get update && apt-get install -y vim apt-utils libgdiplus libc6-dev tzdata && apt-get clean && rm -rf /var/lib/apt/lists/*
 ENV TZ=Asia/Tehran
 ENV DEBIAN_FRONTEND=noninteractive
 ENV ASPNETCORE_ENVIRONMENT=Development
