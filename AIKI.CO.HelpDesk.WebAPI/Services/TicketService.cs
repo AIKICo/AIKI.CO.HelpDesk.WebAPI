@@ -13,11 +13,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
     {
         public TicketService(IMapper map,
             IUnitOfWork unitofwork,
-            IOptions<AppSettings> appSettings):base(map, unitofwork, appSettings)
-        {
-                
-        }
-
+            IOptions<AppSettings> appSettings):base(map, unitofwork, appSettings){}
         public override async Task<int> AddRecord(TicketResponse request)
         {
             request.id = Guid.NewGuid();
