@@ -8,7 +8,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
     public class Ticket:BaseObject
     {
         public DateTime registerdate { get; set; }
-        public DateTime enddate { get; set; }
+        public DateTime? enddate { get; set; }
         public string description { get; set; }
         public Guid tickettype { get; set; }
         public Guid ticketcategory { get; set; }
