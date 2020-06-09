@@ -28,6 +28,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
         public DbSet<Asset> Asset { get; set; }
         public DbSet<Ticket> Ticket { get; set; }
         public DbSet<AssetsView> AssetsView { get; set; }
+        public DbSet<TicketsView> TicketsView { get; set; }
 
         public dbContext(
             DbContextOptions options,
@@ -63,6 +64,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             modelBuilder.ApplyConfiguration<Asset>(new AssetConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<AssetsView>(new AssetsViewConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<Ticket>(new TicketConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration<TicketsView>(new TicketsViewConfiguration(_companyid));
         }
     }
 }
