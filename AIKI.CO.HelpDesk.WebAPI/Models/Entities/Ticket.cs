@@ -13,7 +13,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public Guid tickettype { get; set; }
         public Guid ticketcategory { get; set; }
         public Guid tickettags { get; set; }
-        public Guid? asset { get; set; }
+        public string asset { get; set; }
         public Company Company { get; set; }
     }
 }
