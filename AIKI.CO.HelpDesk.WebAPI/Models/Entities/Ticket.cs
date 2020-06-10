@@ -7,6 +7,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
 {
     public class Ticket:BaseObject
     {
+        public Ticket()
+        {
+            TicketHistories = new HashSet<TicketHistory>();
+        }
         public DateTime registerdate { get; set; }
         public DateTime? enddate { get; set; }
         public string description { get; set; }
@@ -15,5 +19,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public Guid tickettags { get; set; }
         public string asset { get; set; }
         public Company Company { get; set; }
+        public ICollection<TicketHistory> TicketHistories { get; set; }
     }
 }
