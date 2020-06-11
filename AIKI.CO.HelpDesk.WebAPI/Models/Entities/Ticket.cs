@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,7 +19,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public Guid ticketcategory { get; set; }
         public Guid tickettags { get; set; }
         public string asset { get; set; }
-        public double ticketrate { get; set; }
+        public double? ticketrate { get; set; }
         public Company Company { get; set; }
         public ICollection<TicketHistory> TicketHistories { get; set; }
     }
