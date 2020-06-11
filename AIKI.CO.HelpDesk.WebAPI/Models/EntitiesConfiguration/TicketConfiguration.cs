@@ -17,7 +17,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
         public override void Configure(EntityTypeBuilder<Ticket> builder)
         {
             base.Configure(builder);
-
+            builder.Property(q => q.registerdate).IsRequired();
             builder.HasOne(c => c.Company)
                 .WithMany(c => c.Tickets)
                 .HasForeignKey(c => c.companyid);
