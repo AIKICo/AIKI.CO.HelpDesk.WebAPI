@@ -19,7 +19,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         {
         }
 
-        [HttpGet("TicketHistoryByTicketID{id:guid}")]
+        [HttpGet("TicketHistoryByTicketID/{id:guid}")]
         public async Task<IActionResult> TicketHistoryByTicketID([FromRoute] Guid id)
         {
             var response = await _service.GetAll(q => q.ticketid == id);
