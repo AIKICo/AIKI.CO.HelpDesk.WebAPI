@@ -19,8 +19,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         {
         }
 
-        [HttpGet("TicketHistoryByTicketID")]
-        public async Task<IActionResult> TicketHistoryByTicketID(Guid id)
+        [HttpGet("TicketHistoryByTicketID{id:guid}")]
+        public async Task<IActionResult> TicketHistoryByTicketID([FromRoute] Guid id)
         {
             var response = await _service.GetAll(q => q.ticketid == id);
             if (response != null)
