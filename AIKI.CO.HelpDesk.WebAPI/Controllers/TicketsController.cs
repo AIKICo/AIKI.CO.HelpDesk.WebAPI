@@ -21,5 +21,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             IService<Ticket, TicketResponse> service) : base(map, appSettings, service)
         {
         }
+
+        public override async Task<IActionResult> Get()
+        {
+            return Ok(await _service.GetAll(orderBy:o=>o.OrderByDescending(c=>c.registerdate)));
+        }
     }
 }

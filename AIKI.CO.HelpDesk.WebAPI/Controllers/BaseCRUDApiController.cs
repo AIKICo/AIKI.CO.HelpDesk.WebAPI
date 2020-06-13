@@ -36,19 +36,19 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public virtual async Task<IActionResult> Get()
         {
             return Ok(await _service.GetAll());
         }
 
         [HttpGet("{pageSize:int}/{pageIndex:int}")]
-        public async Task<IActionResult> Get([FromQuery] int pageSize, [FromQuery] int pageIndex)
+        public virtual async Task<IActionResult> Get([FromQuery] int pageSize, [FromQuery] int pageIndex)
         {
             return Ok(await _service.GetPagedList(pageSize: pageSize, pageIndex: pageIndex));
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<IActionResult> Get([FromRoute] Guid id)
+        public virtual async Task<IActionResult> Get([FromRoute] Guid id)
         {
             var result = await _service.GetById(id);
             if (result != null)
