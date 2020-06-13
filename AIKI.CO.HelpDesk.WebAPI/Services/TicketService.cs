@@ -36,7 +36,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         public override async Task<int> PartialUpdateRecord(TicketResponse request)
         {
             var ticketInfo = await _repository.FindAsync(request.id);
-            if ((ticketInfo.ticketrate ?? 0.00) != (request.ticketrate ?? 0.00))
+            if (((ticketInfo.ticketrate ?? 0.00) != (request.ticketrate ?? 0.00)) && ticketInfo.ticketrate==null)
             {
                 await AddHistory(request, $"ارزیابی ناظر {request.ticketrate} تعیین گردید",null);
             }
