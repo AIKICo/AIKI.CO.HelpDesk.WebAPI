@@ -18,7 +18,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         public TicketService(IMapper map,
             IUnitOfWork unitofwork,
             IOptions<AppSettings> appSettings,
-            IService<TicketHistory, TicketHistoryResponse> serviceHistory) : base(map, unitofwork, appSettings)
+            IService<TicketHistory, 
+                TicketHistoryResponse> serviceHistory) : base(map, unitofwork, appSettings)
         {
             _serviceHistory = serviceHistory;
         }
@@ -30,6 +31,16 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             await _unitofwork.GetRepository<Ticket>().InsertAsync(_map.Map<Ticket>(request));
             await _unitofwork.SaveChangesAsync();
             return await AddHistory(request, "درخواست رفع ایراد رایانه ای دریافت گردید",null);
+        }
+
+        public override async Task<int> PartialUpdateRecord(TicketResponse request)
+        {
+            var ticketInfo = await _repository.FindAsync(request.id);
+            if ((ticketInfo.ticketrate ?? 0.00) != (request.ticketrate ?? 0.00))
+            {
+                await AddHistory(request, $"ارزیابی ناظر {request.ticketrate} تعیین گردید",null);
+            }
+            return await base.PartialUpdateRecord(request);
         }
 
         private async Task<int> AddHistory(TicketResponse ticketInfo,string comment, string agentName = "سامانه ثبت درخواست ایراد رایانه ای")
