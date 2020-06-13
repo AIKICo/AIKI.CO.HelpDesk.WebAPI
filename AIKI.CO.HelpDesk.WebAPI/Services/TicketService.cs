@@ -8,6 +8,7 @@ using AIKI.CO.HelpDesk.WebAPI.Settings;
 using Arch.EntityFrameworkCore.UnitOfWork;
 using AutoMapper;
 using Microsoft.Extensions.Options;
+using Microsoft.VisualBasic;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
@@ -38,7 +39,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             var ticketInfo = await _repository.FindAsync(request.id);
             if (((ticketInfo.ticketrate ?? 0.00) != (request.ticketrate ?? 0.00)) && ticketInfo.ticketrate==null)
             {
-                await AddHistory(request, $"ارزیابی ناظر {request.ticketrate} تعیین گردید",null);
+                await AddHistory(request, $"ارزیابی ناظر {Strings.StrDup(Convert.ToInt32(request.ticketrate / 20), Strings.ChrW(0x2605))} تعیین گردید",null);
             }
             return await base.PartialUpdateRecord(request);
         }
