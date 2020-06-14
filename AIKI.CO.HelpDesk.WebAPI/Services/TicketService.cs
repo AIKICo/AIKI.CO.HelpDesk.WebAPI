@@ -41,6 +41,14 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             {
                 await AddHistory(request, $"ارزیابی ناظر {Strings.StrDup(Convert.ToInt32(request.ticketrate / 20), Strings.ChrW(0x2605))} تعیین گردید",null);
             }
+
+            if (request.tickettags != ticketInfo.tickettags && request.tickettags!=null)
+            {
+                if (request.tickettags == new Guid("e746ba44-ccf0-4159-a60d-1f147656bdfc")) //درخواست بسته شود
+                {
+                    request.enddate = DateTime.Now;
+                }
+            }
             return await base.PartialUpdateRecord(request);
         }
 
