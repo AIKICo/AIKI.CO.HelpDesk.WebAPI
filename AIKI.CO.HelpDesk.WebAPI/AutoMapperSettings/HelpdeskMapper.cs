@@ -44,7 +44,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.AutoMapperSettings
         private string ConvertToJalili(DateTime? date)
         {
             if (date == null) return string.Empty;
-            return $"{new PersianDateTime(date).ToShortDateString()}  {new PersianDateTime(date).ToLongTimeString()}";
+            return $"{new PersianDateTime(date).ToShortDateString()} {new PersianDateTime(date).ToLongTimeString()}";
         }
     }
 }
