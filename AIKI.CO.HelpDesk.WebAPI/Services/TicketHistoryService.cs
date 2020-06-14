@@ -20,7 +20,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
            request.id = Guid.NewGuid();
            var newRecord = _map.Map<TicketHistory>(request);
            newRecord.historydate = DateTime.Now;
-           await _unitofwork.GetRepository<TicketHistory>().InsertAsync(newRecord);
+           await _repository.InsertAsync(newRecord);
            return await _unitofwork.SaveChangesAsync();
        }
     }
