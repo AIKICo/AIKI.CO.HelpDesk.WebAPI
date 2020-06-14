@@ -53,7 +53,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             return await base.PartialUpdateRecord(request);
         }
 
-        private async Task<int> AddHistory(TicketResponse ticketInfo,string comment, string agentName = "سامانه ثبت درخواست ایراد رایانه ای")
+        private async Task<int> AddHistory(TicketResponse ticketInfo,string comment, string agentName = "سامانه ثبت درخواست")
         {
             return await _serviceHistory.AddRecord(new TicketHistoryResponse
             {
