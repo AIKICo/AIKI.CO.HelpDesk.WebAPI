@@ -14,5 +14,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public string asset { get; set; }
         public string ticketfriendlynumber { get; set; }
         public string agentname { get; set; }
+        public double? ticketrate { get; set; }
     }
 }
