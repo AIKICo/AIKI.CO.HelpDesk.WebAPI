@@ -47,6 +47,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                 if (request.tickettags == new Guid("e746ba44-ccf0-4159-a60d-1f147656bdfc")) //درخواست بسته شود
                 {
                     request.enddate = DateTime.Now;
+                    await AddHistory(request, "درخواست کار بسته شد",null);
                 }
             }
             return await base.PartialUpdateRecord(request);
