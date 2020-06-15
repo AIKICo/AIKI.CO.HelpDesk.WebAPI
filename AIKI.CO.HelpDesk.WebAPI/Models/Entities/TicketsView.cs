@@ -15,5 +15,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public string ticketfriendlynumber { get; set; }
         public string agentname { get; set; }
         public double? ticketrate { get; set; }
+        public double? mandays { get; set; }
+        public Guid? operateid { get; set; }
     }
 }
