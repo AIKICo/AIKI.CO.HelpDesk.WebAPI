@@ -18,6 +18,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         {
         }
 
+        [HttpGet]
         public override async Task<IActionResult> Get()
         {
             return Ok(await _service.GetAll(q => q.enddate == null));
