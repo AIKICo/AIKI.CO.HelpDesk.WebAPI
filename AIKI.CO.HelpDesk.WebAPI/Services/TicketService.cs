@@ -49,6 +49,11 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                     request.enddate = DateTime.Now;
                     await AddHistory(request, "درخواست کار بسته شد",null);
                 }
+                else if (request.tickettype == new Guid("9e2a917a-fd55-4483-9270-e2a7fa3d69c0")) //درخواست رد شود
+                {
+                    request.enddate = DateTime.Now;
+                    await AddHistory(request, "درخواست رد گردید",null);
+                }
             }
             return await base.PartialUpdateRecord(request);
         }
