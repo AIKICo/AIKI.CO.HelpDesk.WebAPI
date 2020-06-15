@@ -20,6 +20,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public Guid tickettags { get; set; }
         public string asset { get; set; }
         public double? ticketrate { get; set; }
+        public double? mandays { get; set; }
+        public Guid? operateid { get; set; }
         public Company Company { get; set; }
         public ICollection<TicketHistory> TicketHistories { get; set; }
     }
