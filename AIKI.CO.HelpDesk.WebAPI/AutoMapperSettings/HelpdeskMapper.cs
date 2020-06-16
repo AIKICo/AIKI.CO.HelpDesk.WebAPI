@@ -1,6 +1,9 @@
-﻿using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
+﻿using System;
+using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AutoMapper;
+using MD.PersianDateTime.Standard;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AIKI.CO.HelpDesk.WebAPI.AutoMapperSettings
 {
@@ -24,6 +27,24 @@ namespace AIKI.CO.HelpDesk.WebAPI.AutoMapperSettings
             CreateMap<Asset, AssetResponse>().ReverseMap();
             CreateMap<AssetsView, AssetsViewResponse>().ReverseMap();
             CreateMap<Ticket, TicketResponse>().ReverseMap();
+            CreateMap<TicketsView, TicketsViewResponse>()
+                .ForMember(d => d.registerdate,
+                    opt =>
+                        opt.MapFrom(s =>
+                            $"{new PersianDateTime(s.registerdate).ToShortDateString()} {new PersianDateTime(s.registerdate).ToShortTimeString()}"))
+                .ForMember(d => d.enddate,
+                    opt =>
+                        opt.MapFrom(s => s.enddate == null ? string.Empty : ConvertToJalili(s.enddate))).ReverseMap();
+            CreateMap<TicketHistory, TicketHistoryResponse>()
+                .ForMember(d => d.historydate, opt =>
+                    opt.MapFrom(s =>ConvertToJalili(s.historydate)))
+                .ReverseMap();
+        }
+
+        private string ConvertToJalili(DateTime? date)
+        {
+            if (date == null) return string.Empty;
+            return $"{new PersianDateTime(date).ToShortDateString()} {new PersianDateTime(date).ToLongTimeString()}";
         }
     }
 }
