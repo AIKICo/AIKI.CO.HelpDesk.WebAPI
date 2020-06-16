@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
@@ -15,6 +16,12 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             IOptions<AppSettings> appSettings,
             IService<Asset, AssetResponse> service) : base(map, appSettings, service)
         {
+        }
+
+        [HttpGet("isAssetExists/{id}")]
+        public async Task<IActionResult> isAssetExists(string id)
+        {
+            return Ok(await _service.isExists(q=>q.assetnumber==id));
         }
     }
 }
