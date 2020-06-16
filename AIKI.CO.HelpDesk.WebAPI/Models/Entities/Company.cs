@@ -17,6 +17,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
             OrganizeCharts = new HashSet<OrganizeChart>();
             Assets = new HashSet<Asset>();
             Tickets = new HashSet<Ticket>();
+            TicketHistory = new List<TicketHistory>();
         }
 
         public Guid id { get; set; }
@@ -33,5 +34,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public ICollection<OrganizeChart> OrganizeCharts { get; set; }
         public ICollection<Asset> Assets { get; set; }
         public ICollection<Ticket> Tickets { get; set; }
+        public ICollection<TicketHistory> TicketHistory { get; set; }
     }
 }

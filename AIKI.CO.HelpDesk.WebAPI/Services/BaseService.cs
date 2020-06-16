@@ -20,9 +20,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         where T : BaseObject
         where V : BaseResponse
     {
-        protected readonly AppSettings _appSettings;
-        protected readonly IUnitOfWork _unitofwork;
-        protected readonly IMapper _map;
+        protected AppSettings _appSettings { get; private set; }
+        protected IUnitOfWork _unitofwork { get; private set; }
+        protected IRepository<T> _repository { get; private set; }
+        protected IMapper _map { get; private set; }
 
         public BaseService(
             IMapper map,
@@ -32,11 +33,12 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             _map = map;
             _appSettings = appSettings.Value;
             _unitofwork = unitofwork;
+            _repository = _unitofwork.GetRepository<T>();
         }
 
         public virtual async Task<IEnumerable<V>> GetAll()
         {
-            return _map.Map<IEnumerable<V>>(await _unitofwork.GetRepository<T>().GetAllAsync());
+            return _map.Map<IEnumerable<V>>(await _repository.GetAllAsync());
         }
 
 
@@ -46,8 +48,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, bool disableTracking = true,
             bool ignoreQueryFilters = false)
         {
-            return _map.Map<IEnumerable<V>>(await _unitofwork.GetRepository<T>()
-                .GetAllAsync(predicate, orderBy, include, disableTracking, ignoreQueryFilters));
+            return _map.Map<IEnumerable<V>>(await _repository.GetAllAsync(predicate, orderBy, include, disableTracking, ignoreQueryFilters));
         }
 
         public virtual async Task<IList<V>> GetPagedList(Expression<Func<T, bool>> predicate = null,
@@ -59,44 +60,47 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             CancellationToken cancellationToken = default(CancellationToken),
             bool ignoreQueryFilters = false)
         {
-            return _map.Map<IList<V>>((await _unitofwork.GetRepository<T>().GetPagedListAsync(predicate, orderBy,
+            return _map.Map<IList<V>>((await _repository.GetPagedListAsync(predicate, orderBy,
                 include, pageIndex, pageSize, disableTracking, cancellationToken, ignoreQueryFilters)).Items);
         }
 
         public virtual async Task<V> GetById(Guid id)
         {
-            return _map.Map<V>(await _unitofwork.GetRepository<T>().FindAsync(id));
+            return _map.Map<V>(await _repository.FindAsync(id));
         }
 
+        public virtual async Task<bool> isExists(Expression<Func<T, bool>> predicate)
+        {
+            return (await _repository.ExistsAsync(predicate));
+        }
         public virtual async Task<int> AddRecord(V request)
         {
             request.id = Guid.NewGuid();
-            await _unitofwork.GetRepository<T>().InsertAsync(_map.Map<T>(request));
+            await _repository.InsertAsync(_map.Map<T>(request));
             return await _unitofwork.SaveChangesAsync();
         }
 
         public virtual async Task<int> UpdateRecord(V request)
         {
-            _unitofwork.GetRepository<T>().Update(_map.Map<T>(request));
+            _repository.Update(_map.Map<T>(request));
             return await _unitofwork.SaveChangesAsync();
         }
 
         public virtual async Task<int> DeleteRecord(Guid id)
         {
-            _unitofwork.GetRepository<T>().Delete(id);
+            _repository.Delete(id);
             return await _unitofwork.SaveChangesAsync();
         }
 
         public virtual async Task<int> PartialUpdateRecord(V request)
         {
-            _unitofwork.GetRepository<T>()
-                .ChangeEntityState(_map.Map<T>(request), Microsoft.EntityFrameworkCore.EntityState.Modified);
+            _repository.ChangeEntityState(_map.Map<T>(request), Microsoft.EntityFrameworkCore.EntityState.Modified);
             return await _unitofwork.SaveChangesAsync();
         }
 
         public virtual async Task<V> GetSingle(Expression<Func<T, bool>> predicate)
         {
-            return _map.Map<V>(await _unitofwork.GetRepository<T>().GetFirstOrDefaultAsync(predicate: predicate));
+            return _map.Map<V>(await _repository.GetFirstOrDefaultAsync(predicate: predicate));
         }
 
         public virtual async Task<K> GetSingle<K>(Expression<Func<K, bool>> predicate) where K : BaseObject
@@ -106,7 +110,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 
         public virtual List<T> GetRawSQL(string sqlQuery, params object[] parameters)
         {
-            return _unitofwork.GetRepository<T>().FromSql(sqlQuery, parameters).ToList();
+            return _repository.FromSql(sqlQuery, parameters).ToList();
         }
     }
 }
