@@ -20,5 +20,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
         public Guid? operateid { get; set; }
         public Guid? requesterid { get; set; }
         public string requestpriority { get; set; }
+        
     }
 }
