@@ -22,7 +22,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public double? ticketrate { get; set; }
         public double? mandays { get; set; }
         public Guid? operateid { get; set; }
-        public Guid? requesterid { get; set; }
         public string requestpriority { get; set; }
         public Company Company { get; set; }
         public ICollection<TicketHistory> TicketHistories { get; set; }
