@@ -69,6 +69,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             return _map.Map<V>(await _repository.FindAsync(id));
         }
 
+        public virtual async Task<bool> isExists(Expression<Func<T, bool>> predicate)
+        {
+            return (await _repository.ExistsAsync(predicate));
+        }
         public virtual async Task<int> AddRecord(V request)
         {
             request.id = Guid.NewGuid();
