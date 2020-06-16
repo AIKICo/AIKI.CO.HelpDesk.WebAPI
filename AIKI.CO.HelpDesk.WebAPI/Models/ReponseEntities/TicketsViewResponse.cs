@@ -16,5 +16,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
         public double? ticketrate { get; set; }
         public double? mandays { get; set; }
         public Guid? operateid { get; set; }
+        public string requester { get; set; }
+        public string requestpriority { get; set; }
     }
 }
