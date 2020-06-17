@@ -19,5 +19,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public Guid? operateid { get; set; }
         public string requester { get; set; }
         public string requestpriority { get; set; }
+        public string lasthistorycomment { get; set; }
     }
 }
