@@ -10,5 +10,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
         public Guid appconstantid { get; set; }
         public string value1 { get; set; }
         public string value2 { get; set; }
+        public bool? allowdelete { get; set; }
     }
 }
