@@ -21,5 +21,11 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             IService<Ticket, TicketResponse> service) : base(map, appSettings, service)
         {
         }
+
+        [HttpGet("GetLast30Ticket")]
+        public async Task<IActionResult> GetLast30Ticket()
+        {
+            return Ok(await _service.GetAnotherTableRecords<Last30Ticket, Last30TicketResponse>());
+        }
     }
 }
