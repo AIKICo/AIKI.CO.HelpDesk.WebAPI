@@ -39,6 +39,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.AutoMapperSettings
                 .ForMember(d => d.historydate, opt =>
                     opt.MapFrom(s =>ConvertToJalili(s.historydate)))
                 .ReverseMap();
+            CreateMap<Last30Ticket, Last30TicketResponse>().ReverseMap();
         }
 
         private string ConvertToJalili(DateTime? date)

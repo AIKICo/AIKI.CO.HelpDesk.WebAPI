@@ -69,6 +69,12 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             return _map.Map<V>(await _repository.FindAsync(id));
         }
 
+        public virtual async Task<IList<SR>> GetAnotherTableRecords<S, SR>() where S : BaseObject where SR : BaseResponse
+        {
+            var F = await _unitofwork.GetRepository<S>().GetAllAsync();
+            return _map.Map<IList<SR>>(await _unitofwork.GetRepository<S>().GetAllAsync());
+        }
+
         public virtual async Task<bool> isExists(Expression<Func<T, bool>> predicate)
         {
             return (await _repository.ExistsAsync(predicate));
@@ -112,5 +118,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         {
             return _repository.FromSql(sqlQuery, parameters).ToList();
         }
+
+       
     }
 }

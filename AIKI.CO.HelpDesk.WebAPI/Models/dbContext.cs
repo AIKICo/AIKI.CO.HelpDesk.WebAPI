@@ -30,6 +30,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
         public DbSet<AssetsView> AssetsView { get; set; }
         public DbSet<TicketsView> TicketsView { get; set; }
         public DbSet<TicketHistory> TicketHistory { get; set; }
+        public DbSet<Last30Ticket> Last30Ticket { get; set; }
 
         public dbContext(
             DbContextOptions options,
@@ -67,6 +68,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             modelBuilder.ApplyConfiguration<Ticket>(new TicketConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<TicketsView>(new TicketsViewConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<TicketHistory>(new TicketHistoryConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration<Last30Ticket>(new Last30TicketConfiguration(_companyid));
         }
     }
 }
