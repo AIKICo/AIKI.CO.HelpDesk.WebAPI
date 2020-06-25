@@ -9,12 +9,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
     [Route("[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
+    [Authorize]
     public class BaseRApiController<T, V> : ControllerBase
         where T : BaseObject
         where V : BaseResponse
