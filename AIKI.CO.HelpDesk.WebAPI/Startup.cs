@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using AIKI.CO.HelpDesk.WebAPI.AutoMapperSettings;
 using AIKI.CO.HelpDesk.WebAPI.BuilderExtensions;
 using AIKI.CO.HelpDesk.WebAPI.Models;
@@ -77,12 +79,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
             services.AddAutoMapper(typeof(HelpdeskMapper));
             services.RegisterServices(Configuration);
 
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "AIKI Help Desl API", Version = "v1"});
-            });
-
+            services.AddAikiSwagger(Configuration);
             services.AddApiVersioning(config =>
             {
                 config.AssumeDefaultVersionWhenUnspecified = true;
@@ -105,7 +102,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AIKI Help Desl API");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AIKI Help Desk API");
                 c.RoutePrefix = string.Empty;
             });
             app.UseCors();
