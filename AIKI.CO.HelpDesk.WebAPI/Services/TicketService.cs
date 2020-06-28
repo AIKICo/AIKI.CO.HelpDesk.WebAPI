@@ -61,6 +61,13 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                     request.enddate = null;
                     await AddHistory(request, "درخواست مجدد باز گردید",null);
                 }
+                else
+                {
+                    var ticketTypeinfo =
+                        (await _serviceHistory.GetAnotherTableRecords<AppConstantItem, AppConstantItemResponse>(
+                            predicate: q => q.id == request.tickettype)).Single();
+                    await AddHistory(request, $"وضعیت درخواست به {ticketTypeinfo.value1} تغییر داده شد ",null);
+                }
             }
             return await base.PartialUpdateRecord(request);
         }
