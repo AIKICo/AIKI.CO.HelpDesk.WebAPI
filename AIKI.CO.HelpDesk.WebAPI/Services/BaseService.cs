@@ -69,10 +69,13 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             return _map.Map<V>(await _repository.FindAsync(id));
         }
 
-        public virtual async Task<IList<SR>> GetAnotherTableRecords<S, SR>() where S : BaseObject where SR : BaseResponse
+        public virtual async Task<IList<SR>> GetAnotherTableRecords<S, SR>(
+            Expression<Func<S, bool>> predicate = null,
+            Func<IQueryable<S>, IOrderedQueryable<S>> orderBy = null,
+            Func<IQueryable<S>, IIncludableQueryable<S, object>> include = null, bool disableTracking = true,
+            bool ignoreQueryFilters = false) where S : BaseObject where SR : BaseResponse
         {
-            var F = await _unitofwork.GetRepository<S>().GetAllAsync();
-            return _map.Map<IList<SR>>(await _unitofwork.GetRepository<S>().GetAllAsync());
+            return _map.Map<IList<SR>>(await _unitofwork.GetRepository<S>().GetAllAsync(predicate, orderBy, include, disableTracking, ignoreQueryFilters));
         }
 
         public virtual async Task<bool> isExists(Expression<Func<T, bool>> predicate)
