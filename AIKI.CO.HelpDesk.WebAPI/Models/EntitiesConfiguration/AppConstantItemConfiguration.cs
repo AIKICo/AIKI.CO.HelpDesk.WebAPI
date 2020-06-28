@@ -19,6 +19,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
         {
             base.Configure(builder);
 
+            builder.Property(d => d.additionalinfo).HasColumnType("jsonb");
             builder.HasOne(d => d.Company)
                 .WithMany(p => p.AppConstantItems)
                 .HasForeignKey(d => d.companyid);
