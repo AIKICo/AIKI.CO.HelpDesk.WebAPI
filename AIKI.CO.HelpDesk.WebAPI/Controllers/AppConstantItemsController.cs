@@ -32,7 +32,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        protected override async Task<IActionResult> Delete([FromRoute] Guid id)
+        public override async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var itemInfo = await _service.GetById(id);
             if (itemInfo.allowdelete != null && !(bool)itemInfo.allowdelete) return BadRequest("Can not delete record");

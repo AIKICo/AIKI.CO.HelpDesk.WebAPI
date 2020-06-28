@@ -85,7 +85,6 @@ namespace AIKI.CO.HelpDesk.WebAPI
                 config.AssumeDefaultVersionWhenUnspecified = true;
                 config.ReportApiVersions = true;
             });
-
             services.AddControllers()
                 .AddNewtonsoftJson(x =>
                     x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
