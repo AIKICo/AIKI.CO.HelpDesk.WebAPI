@@ -94,6 +94,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 
         public virtual async Task<int> DeleteRecord(Guid id)
         {
+            var founded = await GetById(id);
+            if (founded == null) return 0;
             _repository.Delete(id);
             return await _unitofwork.SaveChangesAsync();
         }

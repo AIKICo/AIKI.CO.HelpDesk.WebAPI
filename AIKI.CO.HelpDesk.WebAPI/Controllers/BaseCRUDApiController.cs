@@ -104,7 +104,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [HttpDelete("{id:guid}")]
         public virtual async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            if (_isReadOnly) return BadRequest("Entity is ReadOnly");
+            if (_isReadOnly) return BadRequest("Entity is ReadOnly");      
             var result = await _service.DeleteRecord(id);
             if (result > 0)
                 return Ok(id);
