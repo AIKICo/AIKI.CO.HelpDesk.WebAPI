@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
+    [Authorize]
     public sealed class UsersController : BaseCRUDApiController<Member, MemberResponse>
     {
         private readonly IMemberService _userService;
