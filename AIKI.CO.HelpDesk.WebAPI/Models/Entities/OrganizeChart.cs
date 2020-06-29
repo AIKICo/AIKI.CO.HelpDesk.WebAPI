@@ -13,6 +13,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
 
         public Guid? parent_id { get; set; }
         public string title { get; set; }
+        public string titletype { get; set; }
         public OrganizeChartAdditionalInfo[] additionalinfo { get; set; }
 
         public Company Company { get; set; }
