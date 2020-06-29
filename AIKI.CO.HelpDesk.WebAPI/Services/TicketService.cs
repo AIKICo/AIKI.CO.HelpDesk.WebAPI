@@ -61,15 +61,22 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                     request.enddate = null;
                     await AddHistory(request, "درخواست مجدد باز گردید",null);
                 }
-                else
-                {
-                    var ticketTypeinfo =
-                        (await _serviceHistory.GetAnotherTableRecords<AppConstantItem, AppConstantItemResponse>(
-                            predicate: q => q.id == request.tickettype)).Single();
-                    await AddHistory(request, $"وضعیت درخواست به {ticketTypeinfo.value1} تغییر داده شد ",null);
-                }
             }
             return await base.PartialUpdateRecord(request);
+        }
+
+        public override async Task<int> UpdateRecord(TicketResponse request)
+        {
+            var ticketInfo = await _repository.FindAsync(request.id);
+            if (request.tickettype != ticketInfo.tickettype && request.tickettype != null)
+            {
+                var ticketTypeinfo =
+                    (await _serviceHistory.GetAnotherTableRecords<AppConstantItem, AppConstantItemResponse>(
+                        predicate: q => q.id == request.tickettype)).Single();
+                await AddHistory(request, $"وضعیت درخواست به {ticketTypeinfo.value1} تغییر داده شد ",null);
+            }
+
+            return await base.UpdateRecord(request);
         }
 
         private async Task<int> AddHistory(TicketResponse ticketInfo,string comment, string agentName = "سامانه ثبت درخواست")
