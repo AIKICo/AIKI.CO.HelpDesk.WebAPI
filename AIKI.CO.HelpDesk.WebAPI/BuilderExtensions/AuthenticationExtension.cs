@@ -12,7 +12,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
         public static IServiceCollection AddTokenAuthentication(this IServiceCollection services, IConfiguration config)
         {
             var secret = config.GetSection("JwtConfig").GetSection("secret").Value;
-            
             var key = Encoding.ASCII.GetBytes(secret);
             var encryptKey = Encoding.UTF8.GetBytes(config.GetSection("JwtConfig").GetSection("encryptionKey").Value);
             

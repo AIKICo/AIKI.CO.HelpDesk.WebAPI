@@ -5,6 +5,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
@@ -21,16 +22,29 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             _expDate = config.GetSection("JwtConfig").GetSection("expirationInMinutes").Value;
         }
 
-        public string GenerateSecurityToken(string Id)
+        public string GenerateSecurityToken(MemberResponse user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_secret);
+            
+            var claims = new[]    
+            {    
+                new Claim(JwtRegisteredClaimNames.Sub, user.username),    
+                new Claim("firstName", user.membername.ToString()),    
+                new Claim("role",user.roles),    
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),    
+            };    
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 IssuedAt=DateTime.Now,
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.Name, Id)
+                    new Claim(ClaimTypes.Name, user.id.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Sub, user.username),    
+                    new Claim("firstName", user.membername.ToString()),    
+                    new Claim("role",user.roles),    
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                    
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(double.Parse(_expDate)),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),

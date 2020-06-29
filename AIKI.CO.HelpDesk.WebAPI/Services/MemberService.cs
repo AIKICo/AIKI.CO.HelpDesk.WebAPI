@@ -31,7 +31,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             if (user == null)
                 return null;
 
-            user.token = _jwtService.GenerateSecurityToken(user.id.ToString().ToString());
+            user.token = _jwtService.GenerateSecurityToken(user);
             return user.WithoutPassword();
         }
 
