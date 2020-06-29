@@ -94,6 +94,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+            else app.UseHsts();
 
             app.UseHttpsRedirection();
             app.UseResponseCompression();
