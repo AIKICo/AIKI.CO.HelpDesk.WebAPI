@@ -42,7 +42,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                     new Claim(ClaimTypes.Name, user.id.ToString()),
                     new Claim(JwtRegisteredClaimNames.Sub, user.username),    
                     new Claim("firstName", user.membername.ToString()),    
-                    new Claim("role",user.roles),    
+                    new Claim(ClaimTypes.Role,user.roles),    
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                     
                 }),

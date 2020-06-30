@@ -1,4 +1,5 @@
-﻿using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
+﻿using System.Threading.Tasks;
+using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
@@ -21,6 +22,13 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             IService<Member, MemberResponse> service) : base(map, appSettings, service)
         {
             _userService = userService;
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "admin, user")]
+        public override async Task<IActionResult> Get()
+        {
+            return await base.Get();
         }
 
         [AllowAnonymous]
