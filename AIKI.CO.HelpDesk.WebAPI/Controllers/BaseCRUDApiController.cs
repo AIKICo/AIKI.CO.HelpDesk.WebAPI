@@ -72,6 +72,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpPut]
+        [Produces("application/json")]
         public virtual async Task<IActionResult> Put([FromBody] V request)
         {
             if (_isReadOnly) return BadRequest("Entity is ReadOnly");
