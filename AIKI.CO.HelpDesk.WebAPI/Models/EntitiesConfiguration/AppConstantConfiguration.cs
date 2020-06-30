@@ -18,13 +18,14 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
         {
             base.Configure(builder);
 
-            builder.HasKey(c => c.id);
+            builder.HasKey(c => new {c.id, c.companyid});
             builder.Property(c => c.id)
                 .ValueGeneratedNever();
 
             builder.HasOne(c => c.Company)
                 .WithMany(c => c.AppConstants)
                 .HasForeignKey(c => c.companyid);
+            
         }
     }
 }
