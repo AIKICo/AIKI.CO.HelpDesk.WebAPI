@@ -89,11 +89,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
                 .AddNewtonsoftJson(x =>
                     x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddTokenAuthentication(Configuration);
-            services.AddAuthorization(config =>
-            {
-                config.AddPolicy(Policies.Admin, Policies.AdminPolicy());
-                config.AddPolicy(Policies.User, Policies.UserPolicy());
-            });
+            services.AddAuthorization();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
