@@ -50,7 +50,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [HttpGet("{id:guid}")]
         public virtual async Task<IActionResult> Get([FromQuery] Guid id)
         {
-            var result = await _service.GetById(id);
+            var result = await _service.GetSingle(q=>q.id == id);
             if (result != null)
                 return Ok(result);
             else return NotFound();

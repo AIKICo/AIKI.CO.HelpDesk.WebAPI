@@ -53,7 +53,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [HttpGet("{id:guid}")]
         public virtual async Task<IActionResult> Get([FromRoute] Guid id)
         {
-            var result = await _service.GetById(id);
+            var result = await _service.GetSingle(q=>q.id == id);
             if (result != null)
                 return Ok(result);
             else return NotFound();
@@ -77,7 +77,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         {
             if (_isReadOnly) return BadRequest("Entity is ReadOnly");
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            var existsRecord = await _service.GetById(request.id);
+            var existsRecord = await _service.GetSingle(q=>q.id==request.id);
             if (existsRecord == null) return NotFound();
             var result = await _service.UpdateRecord(request);
             if (result > 0) return Ok(request);
@@ -89,7 +89,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         {
             if (_isReadOnly) return BadRequest("Entity is ReadOnly");
             if (patchDoc == null) return BadRequest();
-            var founded = await _service.GetById(id);
+            var founded = await _service.GetSingle(q=>q.id == id);
             if (founded == null) return NotFound();
 
             var foundedToPatch = _map.Map<V>(founded);
