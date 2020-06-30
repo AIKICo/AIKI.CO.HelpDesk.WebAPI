@@ -8,6 +8,7 @@ using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
 using Arch.EntityFrameworkCore.UnitOfWork;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.VisualBasic;
@@ -22,7 +23,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             IUnitOfWork unitofwork,
             IOptions<AppSettings> appSettings,
             IService<TicketHistory, 
-                TicketHistoryResponse> serviceHistory) : base(map, unitofwork, appSettings)
+                TicketHistoryResponse> serviceHistory,
+            IHttpContextAccessor context) : base(map, unitofwork, appSettings,context)
         {
             _serviceHistory = serviceHistory;
         }

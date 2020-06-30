@@ -8,6 +8,7 @@ using AutoMapper;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
@@ -19,7 +20,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             IMapper map,
             IUnitOfWork unitofwork,
             IOptions<AppSettings> appSettings,
-            IJWTService jwtService) : base(map, unitofwork, appSettings)
+            IJWTService jwtService,
+            IHttpContextAccessor context) : base(map, unitofwork, appSettings, context)
         {
             _jwtService = jwtService;
         }

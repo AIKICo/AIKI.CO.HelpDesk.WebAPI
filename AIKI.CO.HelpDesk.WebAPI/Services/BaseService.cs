@@ -13,6 +13,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+// ReSharper disable All
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
@@ -20,6 +22,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         where T : BaseObject
         where V : BaseResponse
     {
+        private readonly IHttpContextAccessor _context;
+        private readonly Guid _companyId;
         protected AppSettings _appSettings { get; private set; }
         protected IUnitOfWork _unitofwork { get; private set; }
         protected IRepository<T> _repository { get; private set; }
@@ -28,12 +32,17 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         public BaseService(
             IMapper map,
             IUnitOfWork unitofwork,
-            IOptions<AppSettings> appSettings)
+            IOptions<AppSettings> appSettings,
+            IHttpContextAccessor context)
         {
             _map = map;
             _appSettings = appSettings.Value;
             _unitofwork = unitofwork;
             _repository = _unitofwork.GetRepository<T>();
+            _context = context;
+            
+            if (_context.HttpContext.Request.Headers["CompanyID"].Any())
+                _companyId = new Guid(_context.HttpContext.Request.Headers["CompanyID"].ToString());
         }
 
         public virtual async Task<IEnumerable<V>> GetAll()
@@ -97,9 +106,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 
         public virtual async Task<int> DeleteRecord(Guid id)
         {
-            var founded = await GetById(id);
+            var founded = _map.Map<T>(await GetSingle(q=>q.id == id && q.companyid == _companyId));
             if (founded == null) return 0;
-            _repository.Delete(id);
+            _repository.Delete(founded);
             return await _unitofwork.SaveChangesAsync();
         }
 
@@ -111,6 +120,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 
         public virtual async Task<V> GetSingle(Expression<Func<T, bool>> predicate)
         {
+            var record = await _repository.GetFirstOrDefaultAsync(predicate: predicate);
             return _map.Map<V>(await _repository.GetFirstOrDefaultAsync(predicate: predicate));
         }
 
