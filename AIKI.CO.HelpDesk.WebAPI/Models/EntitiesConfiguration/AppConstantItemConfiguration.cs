@@ -17,7 +17,11 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 
         public override void Configure(EntityTypeBuilder<AppConstantItem> builder)
         {
-            base.Configure(builder);
+            builder.HasKey(c => new {c.id, c.companyid});
+            builder.Property(c => c.id)
+                .ValueGeneratedNever();
+
+            builder.HasQueryFilter(c => c.companyid == _companyid);
 
             builder.Property(d => d.additionalinfo).HasColumnType("jsonb");
             builder.HasOne(d => d.Company)
