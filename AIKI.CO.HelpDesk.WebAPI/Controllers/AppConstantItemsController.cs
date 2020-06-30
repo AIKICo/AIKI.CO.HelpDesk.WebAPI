@@ -31,6 +31,13 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             else return NotFound();
         }
 
+        public override async Task<IActionResult> Put(AppConstantItemResponse request)
+        {
+            var itemInfo = await _service.GetById(request.id);
+            if (itemInfo.allowdelete != null && !(bool)itemInfo.allowdelete) return BadRequest("Can not edit record");
+            return await base.Put(request);
+        }
+
         [HttpDelete("{id:guid}")]
         public override async Task<IActionResult> Delete([FromRoute] Guid id)
         {
