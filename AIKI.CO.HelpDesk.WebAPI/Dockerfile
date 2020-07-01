@@ -3,11 +3,9 @@ WORKDIR /app
 ENV ASPNETCORE_ENVIRONMENT Development
 COPY *.sln .
 COPY AIKI.CO.HelpDesk.WebAPI/*.csproj ./AIKI.CO.HelpDesk.WebAPI/
-COPY AIKI.CO.HelpDesk.WebAPI/certificate/*.pfx ./AIKI.CO.HelpDesk.WebAPI/certificate
 RUN dotnet restore -s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/my/api/v3/index.json
 
 COPY AIKI.CO.HelpDesk.WebAPI/. ./AIKI.CO.HelpDesk.WebAPI/
-COPY AIKI.CO.HelpDesk.WebAPI/certificate/*.pfx ./AIKI.CO.HelpDesk.WebAPI/certificate
 WORKDIR /app/AIKI.CO.HelpDesk.WebAPI
 RUN dotnet publish -c Release -o out --self-contained false
 
@@ -18,6 +16,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV ASPNETCORE_ENVIRONMENT=Development
 RUN mkdir -p /etc/keys
 WORKDIR /app
+RUN mkdir -p /app/certificate
+COPY AIKI.CO.HelpDesk.WebAPI/certificate/HelpDeskLog.pfx /app/certificate
 COPY --from=build /app/AIKI.CO.HelpDesk.WebAPI/out ./
 CMD ASPNETCORE_URLS=http://*:$PORT dotnet AIKI.CO.HelpDesk.WebAPI.dll
 
