@@ -29,7 +29,9 @@ using Microsoft.Extensions.Logging;
 using Raven.Client.Documents;
 using Raven.Client.Http;
 using Serilog;
+using Serilog.Context;
 using Serilog.Events;
+// ReSharper disable All
 
 namespace AIKI.CO.HelpDesk.WebAPI
 {
@@ -118,6 +120,16 @@ namespace AIKI.CO.HelpDesk.WebAPI
                 .WriteTo.Console()
                 .WriteTo.RavenDB(CreateRavenDocStore(env))
                 .CreateLogger();
+            app.Use(async (httpContext, next) =>  
+            {  
+                var username = httpContext.User.Identity.IsAuthenticated ? httpContext.User.Identity.Name : "anonymous";  
+                LogContext.PushProperty("User", username);  
+                var ip = httpContext.Connection.RemoteIpAddress.ToString();  
+                LogContext.PushProperty("IP", !String.IsNullOrWhiteSpace(ip) ? ip : "unknown");  
+                  
+                await next.Invoke();  
+            });  
+            
             loggerFactory.AddSerilog();
             Log.Information("Startup");
             
