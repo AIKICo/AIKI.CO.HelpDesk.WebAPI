@@ -3,10 +3,11 @@ WORKDIR /app
 ENV ASPNETCORE_ENVIRONMENT Development
 COPY *.sln .
 COPY AIKI.CO.HelpDesk.WebAPI/*.csproj ./AIKI.CO.HelpDesk.WebAPI/
-COPY AIKI.CO.HelpDesk.WebAPI/certificate/*.* ./AIKI.CO.HelpDesk.WebAPI/certificate
+COPY AIKI.CO.HelpDesk.WebAPI/certificate/*.pfx ./AIKI.CO.HelpDesk.WebAPI/certificate
 RUN dotnet restore -s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/my/api/v3/index.json
 
 COPY AIKI.CO.HelpDesk.WebAPI/. ./AIKI.CO.HelpDesk.WebAPI/
+COPY AIKI.CO.HelpDesk.WebAPI/certificate/*.pfx ./AIKI.CO.HelpDesk.WebAPI/certificate
 WORKDIR /app/AIKI.CO.HelpDesk.WebAPI
 RUN dotnet publish -c Release -o out --self-contained false
 
