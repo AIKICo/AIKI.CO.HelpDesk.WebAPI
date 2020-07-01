@@ -124,7 +124,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
             {  
                 var username = httpContext.User.Identity.IsAuthenticated ? httpContext.User.Identity.Name : "anonymous";  
                 LogContext.PushProperty("User", username);  
-                var ip = httpContext.Connection.RemoteIpAddress.ToString();  
+                var ip = httpContext.Connection.RemoteIpAddress.ToString();
                 LogContext.PushProperty("IP", !String.IsNullOrWhiteSpace(ip) ? ip : "unknown");  
                   
                 await next.Invoke();  
