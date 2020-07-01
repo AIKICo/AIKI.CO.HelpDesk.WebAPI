@@ -8,6 +8,7 @@ using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
 using Arch.EntityFrameworkCore.UnitOfWork;
 using AutoMapper;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -22,9 +23,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         public TicketService(IMapper map,
             IUnitOfWork unitofwork,
             IOptions<AppSettings> appSettings,
-            IService<TicketHistory, 
-                TicketHistoryResponse> serviceHistory,
-            IHttpContextAccessor context) : base(map, unitofwork, appSettings,context)
+            IService<TicketHistory, TicketHistoryResponse> serviceHistory,
+            IHttpContextAccessor context,
+            IDataProtectionProvider provider) : base(map, unitofwork, appSettings,context, provider)
         {
             _serviceHistory = serviceHistory;
         }

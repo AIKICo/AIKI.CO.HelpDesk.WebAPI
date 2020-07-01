@@ -1,6 +1,7 @@
 ﻿using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Extensions
 {

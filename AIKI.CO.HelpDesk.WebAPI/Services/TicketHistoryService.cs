@@ -5,6 +5,7 @@ using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
 using Arch.EntityFrameworkCore.UnitOfWork;
 using AutoMapper;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
@@ -15,7 +16,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
        public TicketHistoryService(IMapper map,
                    IUnitOfWork unitofwork,
                    IOptions<AppSettings> appSettings,
-                   IHttpContextAccessor context) : base(map, unitofwork, appSettings, context){}
+                   IHttpContextAccessor context,
+                   IDataProtectionProvider provider) : base(map, unitofwork, appSettings, context, provider){}
 
        public override async Task<int> AddRecord(TicketHistoryResponse request)
        {
