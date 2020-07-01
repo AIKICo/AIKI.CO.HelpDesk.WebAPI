@@ -114,9 +114,9 @@ namespace AIKI.CO.HelpDesk.WebAPI
 
             Log.Logger  = new LoggerConfiguration()
                 .Enrich.FromLogContext()
-                .WriteTo.Console()
                 .MinimumLevel.Debug()
-                .WriteTo.RavenDB(CreateRavenDocStore())
+                .WriteTo.Console()
+                .WriteTo.RavenDB(CreateRavenDocStore(env))
                 .CreateLogger();
             loggerFactory.AddSerilog();
             Log.Information("Startup");
@@ -138,10 +138,17 @@ namespace AIKI.CO.HelpDesk.WebAPI
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
         
-        private static IDocumentStore CreateRavenDocStore()
+        private static IDocumentStore CreateRavenDocStore(IWebHostEnvironment env)
         {
             RequestExecutor.RemoteCertificateValidationCallback += CertificateCallback;
-            logServerCertificate = new X509Certificate2($"{Directory.GetCurrentDirectory()}/certificate/HelpDeskLog.pfx", "Mveyma6303$");
+            if (env.IsDevelopment())
+            {
+                logServerCertificate = new X509Certificate2($"{Directory.GetCurrentDirectory()}/certificate/HelpDeskLog.pfx", "Mveyma6303$");
+            }
+            else
+            {
+                logServerCertificate = new X509Certificate2($"{Directory.GetCurrentDirectory()}/certificate/HelpDeskLog.pfx", "Mveyma6303$");
+            }
             var docStore = new DocumentStore
             {
                 Urls = new[] { "https://a.free.aiki.ravendb.cloud" },
