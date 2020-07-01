@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using AIKI.CO.HelpDesk.WebAPI.AutoMapperSettings;
 using AIKI.CO.HelpDesk.WebAPI.BuilderExtensions;
 using AIKI.CO.HelpDesk.WebAPI.Models;
@@ -21,12 +22,20 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.IO;
 using System.IO.Compression;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Raven.Client.Documents;
+using Raven.Client.Http;
+using Serilog;
+using Serilog.Events;
 
 namespace AIKI.CO.HelpDesk.WebAPI
 {
     public sealed class Startup
     {
+        private static X509Certificate2 logServerCertificate;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -95,11 +104,23 @@ namespace AIKI.CO.HelpDesk.WebAPI
                     x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
             else app.UseHsts();
 
+            Serilog.Debugging.SelfLog.Enable(msg => Debug.WriteLine(msg));
+            Serilog.Debugging.SelfLog.Enable(Console.Error);
+
+            Log.Logger  = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
+                .MinimumLevel.Debug()
+                .WriteTo.RavenDB(CreateRavenDocStore())
+                .CreateLogger();
+            loggerFactory.AddSerilog();
+            Log.Information("Startup");
+            
             app.UseHttpsRedirection();
             app.UseResponseCompression();
             app.UseResponseCaching();
@@ -113,8 +134,26 @@ namespace AIKI.CO.HelpDesk.WebAPI
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSerilogRequestLogging();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+        }
+        
+        private static IDocumentStore CreateRavenDocStore()
+        {
+            RequestExecutor.RemoteCertificateValidationCallback += CertificateCallback;
+            logServerCertificate = new X509Certificate2($"{Directory.GetCurrentDirectory()}/certificate/HelpDeskLog.pfx", "Mveyma6303$");
+            var docStore = new DocumentStore
+            {
+                Urls = new[] { "https://a.free.aiki.ravendb.cloud" },
+                Database = "HelpDeskLog",
+                Certificate = logServerCertificate
+            };
+            docStore.Initialize();
+            return docStore;
+        }
+        private static bool CertificateCallback(object sender, X509Certificate cert, X509Chain chain, SslPolicyErrors errors)
+        {
+            return true;
         }
     }
 }

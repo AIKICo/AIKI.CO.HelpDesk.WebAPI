@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
@@ -9,19 +10,14 @@ using Raven.Client;
 using Raven.Client.Documents;
 using Raven.Client.Http;
 using Serilog;
+using Serilog.Events;
 
 namespace AIKI.CO.HelpDesk.WebAPI
 {
     public sealed class Program
     {
-        private static X509Certificate2 logServerCertificate;
         public static void Main(string[] args)
         {
-            var log = new LoggerConfiguration()
-                .Enrich.FromLogContext()
-                .WriteTo.Console()
-                .WriteTo.RavenDB(CreateRavenDocStore())
-                .CreateLogger();
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -36,24 +32,6 @@ namespace AIKI.CO.HelpDesk.WebAPI
                 })
                 .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
-        }
-        
-        private static IDocumentStore CreateRavenDocStore()
-        {
-            RequestExecutor.RemoteCertificateValidationCallback += CertificateCallback;
-            logServerCertificate = new X509Certificate2($"{Directory.GetCurrentDirectory()}/certificate/HelpDeskLog.pfx", "Mveyma6303$");
-            var docStore = new DocumentStore
-            {
-                Urls = new[] { "https://a.free.aiki.ravendb.cloud" },
-                Database = "HelpDeskLog",
-                Certificate = logServerCertificate
-            };
-            docStore.Initialize();
-            return docStore;
-        }
-        private static bool CertificateCallback(object sender, X509Certificate cert, X509Chain chain, SslPolicyErrors errors)
-        {
-            return true;
         }
     }
 }
