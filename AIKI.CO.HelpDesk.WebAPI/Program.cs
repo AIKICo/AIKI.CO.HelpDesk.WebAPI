@@ -18,6 +18,8 @@ namespace AIKI.CO.HelpDesk.WebAPI
         public static void Main(string[] args)
         {
             var log = new LoggerConfiguration()
+                .Enrich.FromLogContext()
+                .WriteTo.Console()
                 .WriteTo.RavenDB(CreateRavenDocStore())
                 .CreateLogger();
             CreateHostBuilder(args).Build().Run();
@@ -32,6 +34,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
                     configApp.AddEnvironmentVariables("ASPNETCORE_");
                     configApp.AddCommandLine(args);
                 })
+                .UseSerilog()
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
         }
         
