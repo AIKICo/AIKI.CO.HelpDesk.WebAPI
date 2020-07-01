@@ -13,6 +13,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 // ReSharper disable All
 
@@ -24,6 +25,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
     {
         private readonly IHttpContextAccessor _context;
         private readonly Guid _companyId;
+        private readonly IDataProtector _protector;
         protected AppSettings _appSettings { get; private set; }
         protected IUnitOfWork _unitofwork { get; private set; }
         protected IRepository<T> _repository { get; private set; }
@@ -33,21 +35,22 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             IMapper map,
             IUnitOfWork unitofwork,
             IOptions<AppSettings> appSettings,
-            IHttpContextAccessor context)
+            IHttpContextAccessor context,
+            IDataProtectionProvider provider)
         {
             _map = map;
             _appSettings = appSettings.Value;
             _unitofwork = unitofwork;
             _repository = _unitofwork.GetRepository<T>();
             _context = context;
-            
+            _protector = provider.CreateProtector("MemberService.CompanyId");
             if (_context.HttpContext.Request.Headers["CompanyID"].Any())
-                _companyId = new Guid(_context.HttpContext.Request.Headers["CompanyID"].ToString());
+                _companyId = Guid.Parse(_protector.Unprotect(_context.HttpContext.Request.Headers["CompanyID"].ToString()));
         }
 
         public virtual async Task<IEnumerable<V>> GetAll()
         {
-            return _map.Map<IEnumerable<V>>(await _repository.GetAllAsync());
+            return _map.Map<IEnumerable<V>>(await _repository.GetAllAsync(disableTracking:true));
         }
 
 

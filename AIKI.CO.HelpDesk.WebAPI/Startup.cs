@@ -21,6 +21,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.IO;
 using System.IO.Compression;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AIKI.CO.HelpDesk.WebAPI
 {
@@ -51,13 +52,15 @@ namespace AIKI.CO.HelpDesk.WebAPI
                 {
                     policy.AllowAnyHeader();
                     policy.AllowAnyMethod();
-                    policy.AllowAnyOrigin();
+                    policy.WithOrigins("https://aiki-helpdesk-v1.firebaseapp.com","http://localhost:5001");
                 });
             });
 
             services.AddDataProtection()
                 .PersistKeysToFileSystem(new DirectoryInfo(@"DataProtectionKeys/"))
-                .SetApplicationName("AIKI.CO.HelpDesk");
+                .SetApplicationName("AIKI.CO.HelpDesk")
+                .SetDefaultKeyLifetime(TimeSpan.FromDays(14));
+            ;
             services.AddResponseCaching();
             services.Configure<GzipCompressionProviderOptions>(options =>
             {
@@ -85,11 +88,11 @@ namespace AIKI.CO.HelpDesk.WebAPI
                 config.AssumeDefaultVersionWhenUnspecified = true;
                 config.ReportApiVersions = true;
             });
+            services.AddTokenAuthentication(Configuration);
+            services.AddAuthorization();
             services.AddControllers()
                 .AddNewtonsoftJson(x =>
                     x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-            services.AddTokenAuthentication(Configuration);
-            services.AddAuthorization();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore.Internal;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models
@@ -14,6 +15,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
     {
         private readonly AppSettings _appSettings;
         private readonly IHttpContextAccessor _context;
+        private readonly IDataProtector _protector;
         private Guid? _companyid { get; set; } = Guid.Empty;
         public DbSet<Company> Company { get; set; }
         public DbSet<Customer> Customer { get; private set; }
@@ -35,13 +37,15 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
         public dbContext(
             DbContextOptions options,
             IOptions<AppSettings> appSettings,
-            IHttpContextAccessor context)
+            IHttpContextAccessor context,
+            IDataProtectionProvider provider)
             : base(options)
         {
             _context = context;
             _appSettings = appSettings.Value;
+            _protector = provider.CreateProtector("MemberService.CompanyId");
             if (_context.HttpContext.Request.Headers["CompanyID"].Any())
-                _companyid = new Guid(_context.HttpContext.Request.Headers["CompanyID"].ToString());
+                _companyid = Guid.Parse(_protector.Unprotect(_context.HttpContext.Request.Headers["CompanyID"].ToString()));
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
