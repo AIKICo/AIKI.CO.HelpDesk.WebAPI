@@ -5,7 +5,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {
     public class TicketsViewConfiguration : BaseViewConfiguration<TicketsView>
     {
-        public TicketsViewConfiguration(Guid? companyid) : base(companyid)
+        public TicketsViewConfiguration(Guid companyid) : base(companyid)
         {
         }
     }

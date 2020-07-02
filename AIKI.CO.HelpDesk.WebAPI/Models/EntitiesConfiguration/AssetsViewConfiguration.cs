@@ -5,7 +5,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {
     public class AssetsViewConfiguration : BaseViewConfiguration<AssetsView>
     {
-        public AssetsViewConfiguration(Guid? companyid) : base(companyid)
+        public AssetsViewConfiguration(Guid companyid) : base(companyid)
         {
         }
     }
