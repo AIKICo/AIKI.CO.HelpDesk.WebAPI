@@ -62,7 +62,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
                 {
                     policy.AllowAnyHeader();
                     policy.AllowAnyMethod();
-                    policy.WithOrigins("https://aiki-helpdesk-v1.firebaseapp.com","https://localhost:5001", "https://localhost:8080");
+                    policy.WithOrigins("https://aiki-helpdesk-v1.firebaseapp.com","https://localhost:5001", "http://localhost:8080");
                 });
             });
 
