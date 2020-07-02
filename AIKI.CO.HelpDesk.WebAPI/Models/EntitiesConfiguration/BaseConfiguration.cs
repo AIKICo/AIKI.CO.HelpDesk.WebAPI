@@ -19,8 +19,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
             builder.HasKey(c => c.id);
             builder.Property(c => c.id)
                 .ValueGeneratedNever();
-
-            builder.HasQueryFilter(c => c.companyid == _companyid);
         }
     }
 }
