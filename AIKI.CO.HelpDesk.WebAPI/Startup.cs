@@ -115,8 +115,8 @@ namespace AIKI.CO.HelpDesk.WebAPI
 
             Log.Logger  = new LoggerConfiguration()
                 .Enrich.FromLogContext()
-                //.MinimumLevel.Debug()
-                //.WriteTo.Console()
+                .MinimumLevel.Debug()
+                .WriteTo.Console()
                 .WriteTo.RavenDB(CreateRavenDocStore(env),errorExpiration: TimeSpan.FromDays(90))
                 .CreateLogger();
             app.Use(async (httpContext, next) =>  

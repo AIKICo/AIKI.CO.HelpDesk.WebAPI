@@ -36,20 +36,30 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
                     Type = SecuritySchemeType.Http,
                 };
 
-                OpenApiSecurityRequirement securityRequirements = new OpenApiSecurityRequirement()
+                options.SwaggerDoc("v1", apiinfo);
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "JWT Authorization header using the Bearer scheme."
+                });
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
                         new OpenApiSecurityScheme
                         {
-                            Reference = new OpenApiReference {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "adminAuth" }
-                        }, new List<string>() }
-                };
-
-                options.SwaggerDoc("v1", apiinfo);
-                options.AddSecurityDefinition("jwt_auth", securityDefinition);
-                options.AddSecurityRequirement(securityRequirements);  
+                            Reference = new OpenApiReference 
+                            { 
+                                Type = ReferenceType.SecurityScheme, 
+                                Id = "Bearer" 
+                            }
+                        },
+                        new string[] {}
+                    }
+                });
             });
             return services;
         }
