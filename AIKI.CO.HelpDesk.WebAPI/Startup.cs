@@ -118,7 +118,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
                 .Enrich.FromLogContext()
                 .MinimumLevel.Debug()
                 .WriteTo.Console()
-                .WriteTo.RavenDB(CreateRavenDocStore(env))
+                .WriteTo.RavenDB(CreateRavenDocStore(env),errorExpiration: TimeSpan.FromDays(90))
                 .CreateLogger();
             app.Use(async (httpContext, next) =>  
             {  
