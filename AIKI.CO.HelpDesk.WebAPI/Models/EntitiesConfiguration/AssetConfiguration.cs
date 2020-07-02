@@ -7,7 +7,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {
     public class AssetConfiguration: BaseConfiguration<Asset>, IEntityTypeConfiguration<Asset>
     {
-        public AssetConfiguration(Guid? companyid) : base(companyid)
+        public AssetConfiguration(Guid companyid) : base(companyid)
         {
         }
 

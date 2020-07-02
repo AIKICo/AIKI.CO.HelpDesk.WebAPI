@@ -16,7 +16,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
         private readonly AppSettings _appSettings;
         private readonly IHttpContextAccessor _context;
         private readonly IDataProtector _protector;
-        private Guid? _companyid { get; set; } = Guid.Empty;
+        private Guid _companyid { get; set; } = Guid.Empty;
         public DbSet<Company> Company { get; set; }
         public DbSet<Customer> Customer { get; private set; }
         public DbSet<Member> Member { get; private set; }

@@ -7,7 +7,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {
     public sealed class MemberConfiguration : BaseConfiguration<Member>, IEntityTypeConfiguration<Member>
     {
-        public MemberConfiguration(Guid? companyid) : base(companyid)
+        public MemberConfiguration(Guid companyid) : base(companyid)
         {
         }
 

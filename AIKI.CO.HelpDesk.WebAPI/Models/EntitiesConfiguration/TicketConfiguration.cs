@@ -10,7 +10,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {
     public class TicketConfiguration : BaseConfiguration<Ticket>, IEntityTypeConfiguration<Ticket>
     {
-        public TicketConfiguration(Guid? companyid) : base(companyid)
+        public TicketConfiguration(Guid companyid) : base(companyid)
         {
         }
 
