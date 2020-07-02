@@ -25,7 +25,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
             builder.HasOne(c => c.Company)
                 .WithMany(c => c.AppConstants)
                 .HasForeignKey(c => c.companyid);
-            
         }
     }
 }

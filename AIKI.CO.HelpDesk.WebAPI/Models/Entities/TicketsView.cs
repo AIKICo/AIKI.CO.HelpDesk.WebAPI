@@ -3,7 +3,7 @@ using Microsoft.OData.Edm;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
 {
-    public class TicketsView: BaseObject
+    public class TicketsView : BaseObject
     {
         public DateTime registerdate { get; set; }
         public DateTime? enddate { get; set; }

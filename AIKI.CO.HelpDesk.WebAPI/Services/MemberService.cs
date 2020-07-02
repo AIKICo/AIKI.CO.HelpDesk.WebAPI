@@ -45,7 +45,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 
         public override async Task<IEnumerable<MemberResponse>> GetAll()
         {
-            return _map.Map<IEnumerable<MemberResponse>>(await _unitofwork.GetRepository<Member>().GetAllAsync(disableTracking:true))
+            return _map.Map<IEnumerable<MemberResponse>>(await _unitofwork.GetRepository<Member>()
+                    .GetAllAsync(disableTracking: true))
                 .WithoutPasswords();
         }
 

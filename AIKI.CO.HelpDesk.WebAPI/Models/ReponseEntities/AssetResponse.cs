@@ -3,7 +3,7 @@ using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
 {
-    public class AssetResponse:BaseResponse
+    public class AssetResponse : BaseResponse
     {
         public Guid? employeeid { get; set; }
         public Guid? assetlocationid { get; set; }

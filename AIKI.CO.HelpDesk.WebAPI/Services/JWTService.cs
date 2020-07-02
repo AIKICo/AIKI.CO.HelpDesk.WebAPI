@@ -26,30 +26,30 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_secret);
-            
-            var claims = new[]    
-            {    
-                new Claim(JwtRegisteredClaimNames.Sub, user.username),    
-                new Claim("firstName", user.membername.ToString()),    
-                new Claim("role",user.roles),    
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),    
-            };    
+
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.username),
+                new Claim("firstName", user.membername.ToString()),
+                new Claim("role", user.roles),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                IssuedAt=DateTime.Now,
+                IssuedAt = DateTime.Now,
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.Name, user.id.ToString()),
-                    new Claim(JwtRegisteredClaimNames.Sub, user.username),    
-                    new Claim("firstName", user.membername.ToString()),    
-                    new Claim(ClaimTypes.Role,user.roles),    
+                    new Claim(JwtRegisteredClaimNames.Sub, user.username),
+                    new Claim("firstName", user.membername.ToString()),
+                    new Claim(ClaimTypes.Role, user.roles),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-                    
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(double.Parse(_expDate)),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
                     SecurityAlgorithms.HmacSha256Signature),
-                EncryptingCredentials= new EncryptingCredentials(new SymmetricSecurityKey(_encryptionkey), SecurityAlgorithms.Aes128KW, SecurityAlgorithms.Aes128CbcHmacSha256)
+                EncryptingCredentials = new EncryptingCredentials(new SymmetricSecurityKey(_encryptionkey),
+                    SecurityAlgorithms.Aes128KW, SecurityAlgorithms.Aes128CbcHmacSha256)
             };
 
             var token = tokenHandler.CreateToken(tokenDescriptor);

@@ -4,8 +4,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
 {
     public sealed class MemberResponse : BaseResponse
     {
-        [NotMapped]
-        public string encryptedCompnayId { get; set; }
+        [NotMapped] public string encryptedCompnayId { get; set; }
         public string membername { get; set; }
         public string username { get; set; }
         public string password { get; set; }

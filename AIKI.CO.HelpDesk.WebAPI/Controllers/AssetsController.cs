@@ -21,7 +21,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [HttpGet("isAssetExists/{id}")]
         public async Task<IActionResult> isAssetExists(string id)
         {
-            return Ok(await _service.isExists(q=>q.assetnumber==id));
+            return Ok(await _service.isExists(q => q.assetnumber == id));
         }
     }
 }

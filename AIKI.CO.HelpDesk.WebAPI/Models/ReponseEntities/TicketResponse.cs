@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
 {
-    public class TicketResponse:BaseResponse
+    public class TicketResponse : BaseResponse
     {
         public DateTime? registerdate { get; set; }
         public DateTime? enddate { get; set; }

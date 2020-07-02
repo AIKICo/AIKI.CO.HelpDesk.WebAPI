@@ -2,7 +2,7 @@ using System;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
 {
-    public class TicketsViewResponse:BaseResponse
+    public class TicketsViewResponse : BaseResponse
     {
         public string registerdate { get; set; }
         public string enddate { get; set; }

@@ -1,6 +1,6 @@
 namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
 {
-    public class AssetsViewResponse:BaseResponse
+    public class AssetsViewResponse : BaseResponse
     {
         public string assetnumber { get; set; }
         public string title { get; set; }

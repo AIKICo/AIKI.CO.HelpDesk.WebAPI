@@ -18,22 +18,12 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
                     Version = "v1",
                     Description = "AIKI Help Desk API",
                     Contact = new OpenApiContact
-                        { Name = "Aiki Co.", Url = new Uri("https://www.aiki.co.ir") },
+                        {Name = "Aiki Co.", Url = new Uri("https://www.aiki.co.ir")},
                     License = new OpenApiLicense()
                     {
                         Name = "Commercial",
                         Url = new Uri("https://www.aiki.co.ir")
                     }
-                };
-
-                OpenApiSecurityScheme securityDefinition = new OpenApiSecurityScheme()
-                {
-                    Name = "Bearer",
-                    BearerFormat = "JWT",
-                    Scheme = "bearer",
-                    Description = "Specify the authorization token.",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.Http,
                 };
 
                 options.SwaggerDoc("v1", apiinfo);
@@ -51,16 +41,17 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
                     {
                         new OpenApiSecurityScheme
                         {
-                            Reference = new OpenApiReference 
-                            { 
-                                Type = ReferenceType.SecurityScheme, 
-                                Id = "Bearer" 
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
                             }
                         },
-                        new string[] {}
+                        new string[] { }
                     }
                 });
             });
+            services.AddSwaggerGenNewtonsoftSupport();
             return services;
         }
     }
