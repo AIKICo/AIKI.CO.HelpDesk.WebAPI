@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
@@ -27,7 +28,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _service.GetAll());
+            return Ok(await _service.GetAll(q=>q.registerdate.Year == DateTime.Now.Year));
         }
     }
 }
