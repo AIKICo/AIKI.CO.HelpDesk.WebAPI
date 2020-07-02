@@ -60,7 +60,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 
         public virtual async Task<IEnumerable<V>> GetAll()
         {
-            return _map.Map<IEnumerable<V>>(await _repository.GetAllAsync(disableTracking:true));
+            return _map.Map<IEnumerable<V>>(await _repository.GetAllAsync());
         }
 
 
