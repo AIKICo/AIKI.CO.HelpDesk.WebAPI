@@ -45,7 +45,17 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             _context = context;
             _protector = provider.CreateProtector("MemberService.CompanyId");
             if (_context.HttpContext.Request.Headers["CompanyID"].Any())
-                _companyId = Guid.Parse(_protector.Unprotect(_context.HttpContext.Request.Headers["CompanyID"].ToString()));
+            {
+                try
+                {
+                    _companyId = Guid.Parse(_protector.Unprotect(_context.HttpContext.Request.Headers["CompanyID"].ToString()));
+
+                }
+                catch (Exception)
+                {
+                    _companyId = Guid.Empty;
+                }
+            }
         }
 
         public virtual async Task<IEnumerable<V>> GetAll()

@@ -36,6 +36,7 @@
 
   <ItemGroup>
     <Folder Include="CustomMiddleware\" />
+    <Folder Include="DataProtectionKeys" />
     <Folder Include="Models\CustomValidation\" />
   </ItemGroup>
 
