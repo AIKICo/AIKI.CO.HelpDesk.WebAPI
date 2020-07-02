@@ -73,6 +73,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             modelBuilder.ApplyConfiguration<TicketsView>(new TicketsViewConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<TicketHistory>(new TicketHistoryConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<Last30Ticket>(new Last30TicketConfiguration(_companyid));
+
+            modelBuilder.Entity<TicketsView>().HasQueryFilter(q => q.companyid == _companyid);
         }
     }
 }

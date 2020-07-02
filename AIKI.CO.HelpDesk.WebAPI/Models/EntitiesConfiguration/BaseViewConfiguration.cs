@@ -6,9 +6,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {
     public class BaseViewConfiguration<T> : IEntityTypeConfiguration<T> where T : BaseObject
     {
-        protected Guid? _companyid { get; set; }
+        protected Guid _companyid { get; set; }
 
-        public BaseViewConfiguration(Guid? companyid)
+        public BaseViewConfiguration(Guid companyid)
         {
             _companyid = companyid;
         }
@@ -16,7 +16,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
         public virtual void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<T> builder)
         {
             builder.HasNoKey();
-            builder.HasQueryFilter(c => c.companyid == _companyid);
+            //builder.HasQueryFilter(c => c.companyid == _companyid);
         }
     }
 }
