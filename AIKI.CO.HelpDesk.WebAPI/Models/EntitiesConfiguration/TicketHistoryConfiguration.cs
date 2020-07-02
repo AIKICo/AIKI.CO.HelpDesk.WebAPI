@@ -7,7 +7,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {
     public class TicketHistoryConfiguration:BaseConfiguration<TicketHistory>, IEntityTypeConfiguration<TicketHistory>
     {
-        public TicketHistoryConfiguration(Guid? companyid):base(companyid)
+        public TicketHistoryConfiguration(Guid companyid):base(companyid)
         {
             
         }

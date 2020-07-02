@@ -10,7 +10,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {
     public class OperatingHourConfiguration : BaseConfiguration<OperatingHour>, IEntityTypeConfiguration<OperatingHour>
     {
-        public OperatingHourConfiguration(Guid? companyid) : base(companyid)
+        public OperatingHourConfiguration(Guid companyid) : base(companyid)
         {
         }
 

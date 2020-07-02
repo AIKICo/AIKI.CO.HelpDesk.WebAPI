@@ -7,9 +7,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {
     public class BaseConfiguration<T> : IEntityTypeConfiguration<T> where T : BaseObject
     {
-        protected Guid? _companyid { get; set; }
+        protected Guid _companyid { get; set; }
 
-        public BaseConfiguration(Guid? companyid)
+        public BaseConfiguration(Guid companyid)
         {
             _companyid = companyid;
         }

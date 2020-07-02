@@ -7,7 +7,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {
     public class OrganizeChartConfiguration : BaseConfiguration<OrganizeChart>, IEntityTypeConfiguration<OrganizeChart>
     {
-        public OrganizeChartConfiguration(Guid? companyid) : base(companyid)
+        public OrganizeChartConfiguration(Guid companyid) : base(companyid)
         {
         }
 
