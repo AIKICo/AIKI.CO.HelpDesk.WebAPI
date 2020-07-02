@@ -69,7 +69,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
             services.AddDataProtection()
                 .PersistKeysToFileSystem(new DirectoryInfo(@"DataProtectionKeys/"))
                 .SetApplicationName("AIKI.CO.HelpDesk")
-                .SetDefaultKeyLifetime(TimeSpan.FromDays(365));
+                .SetDefaultKeyLifetime(TimeSpan.FromDays(14));
             ;
             services.AddResponseCaching();
             services.Configure<GzipCompressionProviderOptions>(options =>
