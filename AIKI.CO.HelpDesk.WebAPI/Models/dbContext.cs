@@ -45,7 +45,13 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             _appSettings = appSettings.Value;
             _protector = provider.CreateProtector("MemberService.CompanyId");
             if (_context.HttpContext.Request.Headers["CompanyID"].Any())
-                _companyid =  new Guid(_protector.Unprotect(_context.HttpContext.Request.Headers["CompanyID"].ToString()));
+                _companyid =  Guid.Parse(_protector.Unprotect(_context.HttpContext.Request.Headers["CompanyID"].ToString()));
+            else if (!string.IsNullOrEmpty(_context.HttpContext.User.Identity.Name))
+            {
+                var userInfo = this.Member.Find(Guid.Parse(_context.HttpContext.User.Identity.Name));
+                if (userInfo != null)
+                    _companyid = userInfo.companyid;
+            }
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
