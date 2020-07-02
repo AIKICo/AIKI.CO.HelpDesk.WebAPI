@@ -16,7 +16,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
         public virtual void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<T> builder)
         {
             builder.HasNoKey();
-            builder.HasQueryFilter(c => c.companyid == _companyid);
         }
     }
 }

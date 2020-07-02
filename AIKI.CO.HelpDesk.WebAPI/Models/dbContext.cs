@@ -46,12 +46,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             _protector = provider.CreateProtector("MemberService.CompanyId");
             if (_context.HttpContext.Request.Headers["CompanyID"].Any())
                 _companyid =  Guid.Parse(_protector.Unprotect(_context.HttpContext.Request.Headers["CompanyID"].ToString()));
-            else if (!string.IsNullOrEmpty(_context.HttpContext.User.Identity.Name))
-            {
-                var userInfo = this.Member.Find(Guid.Parse(_context.HttpContext.User.Identity.Name));
-                if (userInfo != null)
-                    _companyid = userInfo.companyid;
-            }
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
@@ -80,7 +74,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             modelBuilder.ApplyConfiguration<TicketHistory>(new TicketHistoryConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<Last30Ticket>(new Last30TicketConfiguration(_companyid));
 
-            /*modelBuilder.Entity<Customer>().HasQueryFilter(q => q.companyid == _companyid);
+            modelBuilder.Entity<Customer>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<OperatingHour>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<SLASetting>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<Group>().HasQueryFilter(q => q.companyid == _companyid);
@@ -92,7 +86,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             modelBuilder.Entity<Ticket>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<TicketsView>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<TicketHistory>().HasQueryFilter(q => q.companyid == _companyid);
-            modelBuilder.Entity<Last30Ticket>().HasQueryFilter(q => q.companyid == _companyid);*/
+            modelBuilder.Entity<Last30Ticket>().HasQueryFilter(q => q.companyid == _companyid);
         }
     }
 }
