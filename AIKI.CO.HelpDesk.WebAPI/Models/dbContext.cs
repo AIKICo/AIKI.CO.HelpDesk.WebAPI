@@ -74,7 +74,19 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             modelBuilder.ApplyConfiguration<TicketHistory>(new TicketHistoryConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<Last30Ticket>(new Last30TicketConfiguration(_companyid));
 
+            modelBuilder.Entity<Customer>().HasQueryFilter(q => q.companyid == _companyid);
+            modelBuilder.Entity<OperatingHour>().HasQueryFilter(q => q.companyid == _companyid);
+            modelBuilder.Entity<SLASetting>().HasQueryFilter(q => q.companyid == _companyid);
+            modelBuilder.Entity<Group>().HasQueryFilter(q => q.companyid == _companyid);
+            modelBuilder.Entity<AppConstant>().HasQueryFilter(q => q.companyid == _companyid);
+            modelBuilder.Entity<AppConstantItem>().HasQueryFilter(q => q.companyid == _companyid);
+            modelBuilder.Entity<OrganizeChart>().HasQueryFilter(q => q.companyid == _companyid);
+            modelBuilder.Entity<Asset>().HasQueryFilter(q => q.companyid == _companyid);
+            modelBuilder.Entity<AssetsView>().HasQueryFilter(q => q.companyid == _companyid);
+            modelBuilder.Entity<Ticket>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<TicketsView>().HasQueryFilter(q => q.companyid == _companyid);
+            modelBuilder.Entity<TicketHistory>().HasQueryFilter(q => q.companyid == _companyid);
+            modelBuilder.Entity<Last30Ticket>().HasQueryFilter(q => q.companyid == _companyid);
         }
     }
 }
