@@ -20,6 +20,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
                     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 })
+                
                 .AddJwtBearer(options =>
                 {
                     options.RequireHttpsMetadata = false;

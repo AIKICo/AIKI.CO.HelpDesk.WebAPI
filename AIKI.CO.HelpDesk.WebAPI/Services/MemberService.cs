@@ -38,8 +38,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             if (user == null)
                 return null;
             user.token = _jwtService.GenerateSecurityToken(user);
-            user.encryptedCompnayId = _protector.Protect(user.companyid.ToString());
-            user.companyid = Guid.Empty;
+            //user.encryptedCompnayId = _protector.Protect(user.companyid.ToString());
+            user.encryptedCompnayId = string.Empty;
+            //user.companyid = Guid.Empty;
             return user.WithoutPassword();
         }
 
