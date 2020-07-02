@@ -31,7 +31,6 @@ using Raven.Client.Http;
 using Serilog;
 using Serilog.Context;
 using Serilog.Events;
-// ReSharper disable All
 
 namespace AIKI.CO.HelpDesk.WebAPI
 {
