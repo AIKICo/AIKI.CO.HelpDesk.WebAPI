@@ -11,21 +11,23 @@ using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
-    public class TicketHistoryService:BaseService<TicketHistory, TicketHistoryResponse>
+    public class TicketHistoryService : BaseService<TicketHistory, TicketHistoryResponse>
     {
-       public TicketHistoryService(IMapper map,
-                   IUnitOfWork unitofwork,
-                   IOptions<AppSettings> appSettings,
-                   IHttpContextAccessor context,
-                   IDataProtectionProvider provider) : base(map, unitofwork, appSettings, context, provider){}
+        public TicketHistoryService(IMapper map,
+            IUnitOfWork unitofwork,
+            IOptions<AppSettings> appSettings,
+            IHttpContextAccessor context,
+            IDataProtectionProvider provider) : base(map, unitofwork, appSettings, context, provider)
+        {
+        }
 
-       public override async Task<int> AddRecord(TicketHistoryResponse request)
-       {
-           request.id = Guid.NewGuid();
-           var newRecord = _map.Map<TicketHistory>(request);
-           newRecord.historydate = DateTime.Now;
-           await _repository.InsertAsync(newRecord);
-           return await _unitofwork.SaveChangesAsync();
-       }
+        public override async Task<int> AddRecord(TicketHistoryResponse request)
+        {
+            request.id = Guid.NewGuid();
+            var newRecord = _map.Map<TicketHistory>(request);
+            newRecord.historydate = DateTime.Now;
+            await _repository.InsertAsync(newRecord);
+            return await _unitofwork.SaveChangesAsync();
+        }
     }
 }

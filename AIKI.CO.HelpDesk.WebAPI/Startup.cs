@@ -37,6 +37,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
     public sealed class Startup
     {
         private static X509Certificate2 logServerCertificate;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -62,7 +63,8 @@ namespace AIKI.CO.HelpDesk.WebAPI
                 {
                     policy.AllowAnyHeader();
                     policy.AllowAnyMethod();
-                    policy.WithOrigins("https://aiki-helpdesk-v1.firebaseapp.com","https://localhost:5001", "http://localhost:8080");
+                    policy.WithOrigins("https://aiki-helpdesk-v1.firebaseapp.com", "https://localhost:5001",
+                        "http://localhost:8080");
                 });
             });
 
@@ -88,7 +90,6 @@ namespace AIKI.CO.HelpDesk.WebAPI
                 action.Providers.Add<GzipCompressionProvider>();
             });
 
-
             services.AddAutoMapper(typeof(HelpdeskMapper));
             services.RegisterServices(Configuration);
 
@@ -113,63 +114,65 @@ namespace AIKI.CO.HelpDesk.WebAPI
             Serilog.Debugging.SelfLog.Enable(msg => Debug.WriteLine(msg));
             Serilog.Debugging.SelfLog.Enable(Console.Error);
 
-            Log.Logger  = new LoggerConfiguration()
+            Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .MinimumLevel.Debug()
                 .WriteTo.Console()
-                .WriteTo.RavenDB(CreateRavenDocStore(env),errorExpiration: TimeSpan.FromDays(90))
+                .WriteTo.RavenDB(CreateRavenDocStore(env), errorExpiration: TimeSpan.FromDays(90))
                 .CreateLogger();
-            app.Use(async (httpContext, next) =>  
-            {  
-                var username = httpContext.User.Identity.IsAuthenticated ? httpContext.User.Identity.Name : "anonymous";  
-                LogContext.PushProperty("User", username);  
+            app.Use(async (httpContext, next) =>
+            {
+                var username = httpContext.User.Identity.IsAuthenticated ? httpContext.User.Identity.Name : "anonymous";
+                LogContext.PushProperty("User", username);
                 var ip = httpContext.Connection.RemoteIpAddress.ToString();
-                LogContext.PushProperty("IP", !String.IsNullOrWhiteSpace(ip) ? ip : "unknown");  
-                  
-                await next.Invoke();  
-            });  
-            
+                LogContext.PushProperty("IP", !string.IsNullOrWhiteSpace(ip) ? ip : "unknown");
+
+                await next.Invoke();
+            });
+
             loggerFactory.AddSerilog();
             Log.Information("Startup");
-            
+
             app.UseHttpsRedirection();
             app.UseResponseCompression();
             app.UseResponseCaching();
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AIKI Help Desk API");
-                c.RoutePrefix = string.Empty;
-            });
             app.UseCors();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSerilogRequestLogging();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "AIKI Help Desk API");
+                options.RoutePrefix = string.Empty;
+            });
         }
-        
+
         private static IDocumentStore CreateRavenDocStore(IWebHostEnvironment env)
         {
             RequestExecutor.RemoteCertificateValidationCallback += CertificateCallback;
             if (env.IsDevelopment())
-            {
-                logServerCertificate = new X509Certificate2($"{Directory.GetCurrentDirectory()}/certificate/HelpDeskLog.pfx", "Mveyma6303$");
-            }
+                logServerCertificate =
+                    new X509Certificate2($"{Directory.GetCurrentDirectory()}/certificate/HelpDeskLog.pfx",
+                        "Mveyma6303$");
             else
-            {
-                logServerCertificate = new X509Certificate2($"{Directory.GetCurrentDirectory()}/certificate/HelpDeskLog.pfx", "Mveyma6303$");
-            }
+                logServerCertificate =
+                    new X509Certificate2($"{Directory.GetCurrentDirectory()}/certificate/HelpDeskLog.pfx",
+                        "Mveyma6303$");
             var docStore = new DocumentStore
             {
-                Urls = new[] { "https://a.free.aiki.ravendb.cloud" },
+                Urls = new[] {"https://a.free.aiki.ravendb.cloud"},
                 Database = "HelpDeskLog",
                 Certificate = logServerCertificate
             };
             docStore.Initialize();
             return docStore;
         }
-        private static bool CertificateCallback(object sender, X509Certificate cert, X509Chain chain, SslPolicyErrors errors)
+
+        private static bool CertificateCallback(object sender, X509Certificate cert, X509Chain chain,
+            SslPolicyErrors errors)
         {
             return true;
         }

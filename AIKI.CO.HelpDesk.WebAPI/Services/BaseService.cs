@@ -15,6 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
+
 // ReSharper disable All
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
@@ -46,7 +47,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             _protector = provider.CreateProtector("MemberService.CompanyId");
             if (_context.HttpContext.Request.Headers["CompanyID"].Any())
             {
-                _companyId = Guid.Parse(_protector.Unprotect(_context.HttpContext.Request.Headers["CompanyID"].ToString()));
+                _companyId =
+                    Guid.Parse(_protector.Unprotect(_context.HttpContext.Request.Headers["CompanyID"].ToString()));
             }
         }
 
@@ -62,7 +64,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, bool disableTracking = true,
             bool ignoreQueryFilters = false)
         {
-            return _map.Map<IEnumerable<V>>(await _repository.GetAllAsync(predicate, orderBy, include, disableTracking, ignoreQueryFilters));
+            return _map.Map<IEnumerable<V>>(await _repository.GetAllAsync(predicate, orderBy, include, disableTracking,
+                ignoreQueryFilters));
         }
 
         public virtual async Task<IList<V>> GetPagedList(Expression<Func<T, bool>> predicate = null,
@@ -89,13 +92,15 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             Func<IQueryable<S>, IIncludableQueryable<S, object>> include = null, bool disableTracking = true,
             bool ignoreQueryFilters = false) where S : BaseObject where SR : BaseResponse
         {
-            return _map.Map<IList<SR>>(await _unitofwork.GetRepository<S>().GetAllAsync(predicate, orderBy, include, disableTracking, ignoreQueryFilters));
+            return _map.Map<IList<SR>>(await _unitofwork.GetRepository<S>()
+                .GetAllAsync(predicate, orderBy, include, disableTracking, ignoreQueryFilters));
         }
 
         public virtual async Task<bool> isExists(Expression<Func<T, bool>> predicate)
         {
             return (await _repository.ExistsAsync(predicate));
         }
+
         public virtual async Task<int> AddRecord(V request)
         {
             request.id = Guid.NewGuid();
@@ -111,7 +116,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 
         public virtual async Task<int> DeleteRecord(Guid id)
         {
-            var founded = _map.Map<T>(await GetSingle(q=>q.id == id && q.companyid == _companyId));
+            var founded = _map.Map<T>(await GetSingle(q => q.id == id && q.companyid == _companyId));
             if (founded == null) return 0;
             _repository.Delete(founded);
             return await _unitofwork.SaveChangesAsync();
@@ -138,7 +143,5 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         {
             return _repository.FromSql(sqlQuery, parameters).ToList();
         }
-
-       
     }
 }

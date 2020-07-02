@@ -10,7 +10,7 @@ using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
-    public class TicketHistoryController: BaseCRUDApiController<TicketHistory, TicketHistoryResponse>
+    public class TicketHistoryController : BaseCRUDApiController<TicketHistory, TicketHistoryResponse>
     {
         public TicketHistoryController(
             IMapper map,

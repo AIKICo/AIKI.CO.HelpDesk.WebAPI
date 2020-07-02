@@ -10,7 +10,7 @@ using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
-    public class TicketsViewController: BaseRApiController<TicketsView, TicketsViewResponse>
+    public class TicketsViewController : BaseRApiController<TicketsView, TicketsViewResponse>
     {
         public TicketsViewController(
             IMapper map,
@@ -28,7 +28,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _service.GetAll(q=>q.registerdate.Year == DateTime.Now.Year));
+            return Ok(await _service.GetAll(q => q.registerdate.Year == DateTime.Now.Year));
         }
     }
 }

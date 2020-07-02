@@ -1,7 +1,8 @@
 using System;
+
 namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
 {
-    public class Asset:BaseObject
+    public class Asset : BaseObject
     {
         public Guid? employeeid { get; set; }
         public Guid? assetlocationid { get; set; }

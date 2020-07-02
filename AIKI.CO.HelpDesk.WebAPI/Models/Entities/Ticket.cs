@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
 {
-    public class Ticket:BaseObject
+    public class Ticket : BaseObject
     {
         public Ticket()
         {
             TicketHistories = new HashSet<TicketHistory>();
         }
+
         public DateTime registerdate { get; set; }
         public DateTime? enddate { get; set; }
         public string description { get; set; }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {
-    public class AssetConfiguration: BaseConfiguration<Asset>, IEntityTypeConfiguration<Asset>
+    public class AssetConfiguration : BaseConfiguration<Asset>, IEntityTypeConfiguration<Asset>
     {
         public AssetConfiguration(Guid companyid) : base(companyid)
         {
