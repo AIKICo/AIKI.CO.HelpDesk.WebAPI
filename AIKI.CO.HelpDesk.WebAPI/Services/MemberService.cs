@@ -49,11 +49,5 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                     .GetAllAsync(disableTracking: true))
                 .WithoutPasswords();
         }
-
-        public override Task<int> AddRecord(MemberResponse request)
-        {
-            request.password = request.password + "123";
-            return base.AddRecord(request);
-        }
     }
 }

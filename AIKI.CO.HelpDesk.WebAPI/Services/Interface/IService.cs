@@ -44,6 +44,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services.Interface
 
         Task<bool> isExists(Expression<Func<T, bool>> predicate);
         Task<int> AddRecord(V request);
+        Task<V> AddRecordWithReturnRequest(V request);
         Task<int> UpdateRecord(V request);
         Task<int> PartialUpdateRecord(V request);
         Task<int> DeleteRecord(Guid id);

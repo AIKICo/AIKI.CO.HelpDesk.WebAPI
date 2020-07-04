@@ -19,11 +19,12 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             _unitofwork = unitofwork;
             _map = map;
         }
-        public async Task<int> AddRecord(CompanyResponse request)
+        public async Task<CompanyResponse> AddRecord(CompanyResponse request)
         {
             request.id = Guid.NewGuid();
             await _unitofwork.GetRepository<Company>().InsertAsync(_map.Map<Company>(request));
-            return await _unitofwork.SaveChangesAsync();
+            await _unitofwork.SaveChangesAsync();
+            return request;
         }
     }
 }

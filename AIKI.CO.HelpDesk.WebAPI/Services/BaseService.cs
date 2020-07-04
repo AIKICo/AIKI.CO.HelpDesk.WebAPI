@@ -105,6 +105,14 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             return await _unitofwork.SaveChangesAsync();
         }
 
+        public virtual async Task<V> AddRecordWithReturnRequest(V request)
+        {
+            request.id = Guid.NewGuid();
+            await _repository.InsertAsync(_map.Map<T>(request));
+            await _unitofwork.SaveChangesAsync();
+            return request;
+        }
+        
         public virtual async Task<int> UpdateRecord(V request)
         {
             _repository.Update(_map.Map<T>(request));
