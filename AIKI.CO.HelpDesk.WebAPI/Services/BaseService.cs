@@ -115,8 +115,12 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         {
             var founded = _map.Map<T>(await GetSingle(q => q.id == id && q.companyid == _companyId));
             if (founded == null) return 0;
-            _repository.Delete(founded);
-            return await _unitofwork.SaveChangesAsync();
+            if (founded.allowdelete==null || (bool)founded.allowdelete)
+            {
+                _repository.Delete(founded);
+                return await _unitofwork.SaveChangesAsync();
+            }
+            else return 0;
         }
 
         public virtual async Task<int> PartialUpdateRecord(V request)

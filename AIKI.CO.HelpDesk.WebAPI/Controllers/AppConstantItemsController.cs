@@ -41,16 +41,5 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
                 return Ok(result);
             else return NotFound();
         }
-
-        public override async Task<IActionResult> Put(AppConstantItemResponse request)
-        {
-            return await base.Put(request);
-        }
-
-        [HttpDelete("{id:guid}")]
-        public override async Task<IActionResult> Delete([FromRoute] Guid id)
-        {
-            return await base.Delete(id);
-        }
     }
 }
