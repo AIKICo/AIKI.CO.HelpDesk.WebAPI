@@ -6,6 +6,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services.Interface
 {
     public interface ICompanyService
     {
-        Task<int> AddRecord(CompanyResponse request);
+        Task<CompanyResponse> AddRecord(CompanyResponse request);
     }
 }
