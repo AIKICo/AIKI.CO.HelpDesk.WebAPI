@@ -9,6 +9,10 @@ using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
+    [Authorize]
+    [Route("[controller]")]
+    [ApiController]
+    [ApiVersion("1.0")]
     public class CompanyController : ControllerBase
     {
         private readonly AppSettings _appSettings;
