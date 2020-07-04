@@ -57,7 +57,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             var result = await _service.GetSingle(q => q.id == id);
             if (result != null)
                 return Ok(result);
-            else return NotFound();
+            return NotFound();
         }
 
         [HttpPost]
@@ -69,7 +69,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             var result = await _service.AddRecord(request);
             if (result > 0)
                 return CreatedAtAction(nameof(Post), request);
-            else return BadRequest(ModelState);
+            return BadRequest(ModelState);
         }
 
         [HttpPut]
@@ -82,7 +82,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             if (existsRecord == null) return NotFound();
             var result = await _service.UpdateRecord(request);
             if (result > 0) return Ok(request);
-            else return BadRequest(ModelState);
+            return BadRequest(ModelState);
         }
 
         [HttpPatch("{id:guid}")]
@@ -100,7 +100,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             var result = await _service.PartialUpdateRecord(_map.Map(foundedToPatch, founded));
             if (result > 0)
                 return Ok(_map.Map(foundedToPatch, founded));
-            else return BadRequest(ModelState);
+            return BadRequest(ModelState);
         }
 
         [HttpDelete("{id:guid}")]
@@ -110,8 +110,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             var result = await _service.DeleteRecord(id);
             if (result > 0)
                 return Ok(id);
-            else
-                return BadRequest();
+            return BadRequest();
         }
     }
 }
