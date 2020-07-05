@@ -50,7 +50,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
                 password = new Password().Next(),
                 roles = "admin",
                 email = request.email,
-                companyid = request.id
+                companyid = request.id,
+                allowdelete = false
             });
             return CreatedAtAction(nameof(Post), request);
         }
