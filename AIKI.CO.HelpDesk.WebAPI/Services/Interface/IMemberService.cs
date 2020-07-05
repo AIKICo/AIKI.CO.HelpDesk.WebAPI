@@ -6,6 +6,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services.Interface
 {
     public interface IMemberService : IService<Member, MemberResponse>
     {
-        Task<MemberResponse> Authenticate(string username, string password);
+        MemberResponse Authenticate(string username, string password);
     }
 }
