@@ -101,7 +101,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         public virtual async Task<int> AddRecord(V request)
         {
             request.id = Guid.NewGuid();
-            request.companyid = _companyId;
             await _repository.InsertAsync(_map.Map<T>(request));
             return await _unitofwork.SaveChangesAsync();
         }
@@ -109,7 +108,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         public virtual async Task<V> AddRecordWithReturnRequest(V request)
         {
             request.id = Guid.NewGuid();
-            request.companyid = _companyId;
             await _repository.InsertAsync(_map.Map<T>(request));
             await _unitofwork.SaveChangesAsync();
             return request;
@@ -117,7 +115,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         
         public virtual async Task<int> UpdateRecord(V request)
         {
-            request.companyid = _companyId;
             _repository.Update(_map.Map<T>(request));
             return await _unitofwork.SaveChangesAsync();
         }
@@ -136,7 +133,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 
         public virtual async Task<int> PartialUpdateRecord(V request)
         {
-            request.companyid = _companyId;
             _repository.ChangeEntityState(_map.Map<T>(request), Microsoft.EntityFrameworkCore.EntityState.Modified);
             return await _unitofwork.SaveChangesAsync();
         }
