@@ -33,7 +33,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         public override async Task<int> AddRecord(TicketResponse request)
         {
             request.id = Guid.NewGuid();
-            request.companyid = _companyId;
             request.registerdate = DateTime.Now;
             request.enddate = null;
             await _unitofwork.GetRepository<Ticket>().InsertAsync(_map.Map<Ticket>(request));
@@ -44,7 +43,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         public override async Task<int> PartialUpdateRecord(TicketResponse request)
         {
             var ticketInfo = await _repository.FindAsync(request.id);
-            request.companyid = _companyId;
             if ((ticketInfo.ticketrate ?? 0.00) != (request.ticketrate ?? 0.00))
                 await AddHistory(request,
                     $"ارزیابی ناظر {new string('\x2605', Convert.ToInt32(request.ticketrate))} تعیین گردید", null);
@@ -74,7 +72,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         public override async Task<int> UpdateRecord(TicketResponse request)
         {
             var ticketInfo = await _repository.FindAsync(request.id);
-            request.companyid = _companyId;
             if (request.tickettype != ticketInfo.tickettype && request.tickettype != null)
             {
                 var ticketTypeinfo =
@@ -93,7 +90,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             {
                 id = Guid.NewGuid(),
                 ticketid = ticketInfo.id,
-                companyid = _companyId,
                 historycomment = comment,
                 agentname = agentName
             });
