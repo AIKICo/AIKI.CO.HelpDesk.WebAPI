@@ -15,7 +15,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.AutoMapperSettings
             AllowNullDestinationValues = true;
             CreateMap<string, string>().ConvertUsing(s => string.IsNullOrWhiteSpace(s) ? null : s);
             CreateMap<byte[], byte[]>().ConvertUsing(b => b.Length == 0 ? null : b);
-            CreateMap<bool?, bool?>().ConvertUsing(b => b ?? false);
+            CreateMap<bool?, bool?>().ConvertUsing(b => b ?? true);
             CreateMap<Customer, CustomerResponse>().ReverseMap();
             CreateMap<Member, MemberResponse>().ReverseMap();
             CreateMap<OperatingHour, OperatingHoureResponse>().ReverseMap();
