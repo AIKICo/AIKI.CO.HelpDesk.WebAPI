@@ -34,7 +34,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         public MemberResponse Authenticate(string username, string password)
         {
             var user = _map.Map<MemberResponse>(_unitofwork.GetRepository<Member>()
-                .GetFirstOrDefaultAsync(predicate: x => x.username == username && x.password == password, ignoreQueryFilters:true));
+                .GetFirstOrDefault(predicate: x => x.username == username && x.password == password, ignoreQueryFilters:true));
             if (user == null)
                 return null;
             user.token = _jwtService.GenerateSecurityToken(user);
