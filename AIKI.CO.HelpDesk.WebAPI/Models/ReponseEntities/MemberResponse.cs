@@ -16,6 +16,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
         public string roles { get; set; }
         [Required]
         public string email { get; set; }
-        public string token { get; set; }
+        [NotMapped] public string token { get; set; }
     }
 }
