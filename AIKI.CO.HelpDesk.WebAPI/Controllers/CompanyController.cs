@@ -40,11 +40,13 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         public async Task<IActionResult> Post([FromBody] CompanyResponse request)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
+            var duplicateRecord = await _memberService.GetSingle(q => q.username == request.email);
+            if (duplicateRecord != null) return BadRequest("نام کاربری تکراری است");
             var result = await _service.AddRecord(request);
             await _memberService.AddRecord(new MemberResponse
             {
                 membername = "مدیر",
-                username = "admin",
+                username =  request.email,
                 password = new Password().Next(),
                 roles = "admin",
                 email = request.email,
