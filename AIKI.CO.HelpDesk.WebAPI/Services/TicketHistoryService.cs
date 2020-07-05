@@ -24,6 +24,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         public override async Task<int> AddRecord(TicketHistoryResponse request)
         {
             request.id = Guid.NewGuid();
+            request.companyid = _companyId;
             var newRecord = _map.Map<TicketHistory>(request);
             newRecord.historydate = DateTime.Now;
             await _repository.InsertAsync(newRecord);
