@@ -24,6 +24,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using AIKI.CO.HelpDesk.WebAPI.HubController;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Raven.Client.Documents;
@@ -107,6 +108,8 @@ namespace AIKI.CO.HelpDesk.WebAPI
             services.AddControllers()
                 .AddNewtonsoftJson(x =>
                     x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            services.AddSignalR();
+            services.AddMemoryCache();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
@@ -144,7 +147,11 @@ namespace AIKI.CO.HelpDesk.WebAPI
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSerilogRequestLogging();
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers(); 
+                endpoints.MapHub<TicketAlarmHub>("/ticketalarmhub");
+            });
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
