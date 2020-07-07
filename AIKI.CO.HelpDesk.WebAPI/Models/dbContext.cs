@@ -33,6 +33,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
         public DbSet<TicketsView> TicketsView { get; set; }
         public DbSet<TicketHistory> TicketHistory { get; set; }
         public DbSet<Last30Ticket> Last30Ticket { get; set; }
+        public DbSet<TicketCountInfo> TicketCountInfo { get; set; }
 
         public dbContext(
             DbContextOptions options,
@@ -73,6 +74,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             modelBuilder.ApplyConfiguration<TicketsView>(new TicketsViewConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<TicketHistory>(new TicketHistoryConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<Last30Ticket>(new Last30TicketConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration<TicketCountInfo>(new TicketCountInfoConfiguration(_companyid));
 
             modelBuilder.Entity<Customer>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<OperatingHour>().HasQueryFilter(q => q.companyid == _companyid);
@@ -87,6 +89,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             modelBuilder.Entity<TicketsView>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<TicketHistory>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<Last30Ticket>().HasQueryFilter(q => q.companyid == _companyid);
+            modelBuilder.Entity<TicketCountInfo>().HasQueryFilter(q => q.companyid == _companyid);
         }
     }
 }

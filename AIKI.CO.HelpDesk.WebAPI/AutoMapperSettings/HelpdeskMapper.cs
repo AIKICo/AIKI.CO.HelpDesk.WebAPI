@@ -42,6 +42,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.AutoMapperSettings
                 .ReverseMap();
             CreateMap<Last30Ticket, Last30TicketResponse>().ReverseMap();
             CreateMap<Company, CompanyResponse>().ReverseMap();
+            CreateMap<TicketCountInfo, TicketCountInfoResponse>().ReverseMap();
         }
 
         private string ConvertToJalili(DateTime? date)

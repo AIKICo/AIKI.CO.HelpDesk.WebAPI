@@ -55,6 +55,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
                 .AddTransient<IService<TicketHistory, TicketHistoryResponse>,
                     TicketHistoryService>();
 
+            services
+                .AddTransient<IService<TicketCountInfo, TicketCountInfoResponse>,
+                    BaseService<TicketCountInfo, TicketCountInfoResponse>>();
+            
             services.AddTransient<ICompanyService, CompanyService>();
             services.AddHttpContextAccessor();
             return services;
