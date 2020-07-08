@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
 {
@@ -35,6 +36,19 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
                         RequireExpirationTime = true,
                         ValidateLifetime = true,
                         TokenDecryptionKey = new SymmetricSecurityKey(encryptKey)
+                    };
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            var accessToken = context.Request.Query["access_token"];
+                            if (string.IsNullOrEmpty(accessToken) == false) {
+                                context.Token = accessToken;
+                                context.HttpContext.Request.Headers.Add("CompanyID", context.Request.Query["CompanyID"]);
+                                context.HttpContext.Request.Headers.Add("AgentName", context.Request.Query["MemberID"]);
+                            }
+                            return Task.CompletedTask;
+                        }
                     };
                 });
 

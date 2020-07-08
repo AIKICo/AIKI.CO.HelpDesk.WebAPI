@@ -33,8 +33,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services.Interface
             CancellationToken cancellationToken = default(CancellationToken),
             bool ignoreQueryFilters = false);
 
-        Task<V> GetSingle(Expression<Func<T, bool>> predicate);
-        Task<K> GetSingle<K>(Expression<Func<K, bool>> predicate) where K : BaseObject;
+        Task<V> GetSingle(Expression<Func<T, bool>> predicate, bool ignoreQueryFilters=false);
+        Task<K> GetSingle<K>(Expression<Func<K, bool>> predicate, bool ignoreQueryFilters=false) where K : BaseObject;
         List<T> GetRawSQL(string sqlQuery, params object[] parameters);
 
         Task<IList<SR>> GetAnotherTableRecords<S, SR>(Expression<Func<S, bool>> predicate = null,

@@ -25,6 +25,7 @@ using System.IO.Compression;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using AIKI.CO.HelpDesk.WebAPI.HubController;
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Raven.Client.Documents;
@@ -62,13 +63,15 @@ namespace AIKI.CO.HelpDesk.WebAPI
             {
                 options.AddDefaultPolicy(policy =>
                 {
-                    policy.AllowAnyHeader();
-                    policy.AllowAnyMethod();
-                    policy.WithOrigins(
-                        "https://aiki-helpdesk-v1.firebaseapp.com", 
-                        "https://localhost:5001",
-                        "https://localhost:5002",
-                        "http://localhost:8080");
+                    policy
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .WithOrigins(
+                            "https://aiki-helpdesk-v1.firebaseapp.com",
+                            "https://localhost:5001",
+                            "https://localhost:5002",
+                            "http://localhost:8080")
+                        .AllowCredentials();
                 });
             });
 
@@ -150,7 +153,9 @@ namespace AIKI.CO.HelpDesk.WebAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers(); 
-                endpoints.MapHub<TicketAlarmHub>("/ticketalarmhub");
+                endpoints.MapHub<TicketAlarmHub>("/ticketalarmhub", options =>
+                {
+                });
             });
             app.UseSwagger();
             app.UseSwaggerUI(options =>

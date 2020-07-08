@@ -137,15 +137,14 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             return await _unitofwork.SaveChangesAsync();
         }
 
-        public virtual async Task<V> GetSingle(Expression<Func<T, bool>> predicate)
+        public virtual async Task<V> GetSingle(Expression<Func<T, bool>> predicate, bool ignoreQueryFilters=false)
         {
-            var record = await _repository.GetFirstOrDefaultAsync(predicate: predicate);
-            return _map.Map<V>(await _repository.GetFirstOrDefaultAsync(predicate: predicate));
+            return _map.Map<V>(await _repository.GetFirstOrDefaultAsync(predicate: predicate, ignoreQueryFilters:ignoreQueryFilters));
         }
 
-        public virtual async Task<K> GetSingle<K>(Expression<Func<K, bool>> predicate) where K : BaseObject
+        public virtual async Task<K> GetSingle<K>(Expression<Func<K, bool>> predicate, bool ignoreQueryFilters=false) where K : BaseObject
         {
-            return _map.Map<K>(await _unitofwork.GetRepository<K>().GetFirstOrDefaultAsync(predicate: predicate));
+            return _map.Map<K>(await _unitofwork.GetRepository<K>().GetFirstOrDefaultAsync(predicate: predicate, ignoreQueryFilters:ignoreQueryFilters));
         }
 
         public virtual List<T> GetRawSQL(string sqlQuery, params object[] parameters)

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.BuilderExtensions;
 using AIKI.CO.HelpDesk.WebAPI.HubController;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
@@ -46,7 +47,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             };
             return builder.ConnectionString;
         }
-        public void ListenForAlarmNotifications()
+        public async void ListenForAlarmNotifications()
         {
             
             NpgsqlConnection conn = new NpgsqlConnection(GetConnectionString());
@@ -56,14 +57,14 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             listenCommand.CommandText = $"listen notifyalarmticket;";
             listenCommand.ExecuteNonQuery();
             conn.Notification += PostgresNotificationReceived;
-            _hubContext.Clients.All.SendAsync(this.GetAlarmList());
+            await _hubContext.Clients.All.SendAsync(await this.GetAlarmList());
             while (true)
             {
-                conn.Wait();
+                await conn.WaitAsync();
             }
         }
 
-        private void PostgresNotificationReceived(object sender, NpgsqlNotificationEventArgs e)
+        private async void PostgresNotificationReceived(object sender, NpgsqlNotificationEventArgs e)
         {
             string actionName = e.Payload.ToString();
             //string actionType = string.Empty;
@@ -82,12 +83,12 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
                 //actionType = "Insert";
             }
 
-            _hubContext.Clients.All.SendAsync("ReceiveMessage", e.Payload);
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", e.Payload);
         }
 
-        public string GetAlarmList()
+        public async Task<string> GetAlarmList()
         {
-            var TicketInfo = _serviceTicket.GetAll(q => q.enddate == null).Result;
+            var TicketInfo = await _serviceTicket.GetAll();
             var AlarmList = TicketInfo.ToList().Select(q => new TicketAlarmResponse
             {
                 id = q.id,
