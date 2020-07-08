@@ -45,7 +45,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
                             if (string.IsNullOrEmpty(accessToken) == false) {
                                 context.Token = accessToken;
                                 context.HttpContext.Request.Headers.Add("CompanyID", context.Request.Query["CompanyID"]);
-                                context.HttpContext.Request.Headers.Add("AgentName", context.Request.Query["MemberID"]);
+                                context.HttpContext.Request.Headers.Add("MemberID", context.Request.Query["MemberID"]);
                             }
                             return Task.CompletedTask;
                         }
