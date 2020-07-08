@@ -58,28 +58,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.HubController
         private async void PostgresNotificationReceived(object sender, NpgsqlNotificationEventArgs e)
         {
             if (string.IsNullOrEmpty(e.Payload)) return;
-            
-            var actionName = e.Payload.ToString();
-            /*var recordid = Guid.Parse(actionName.Split(" ")[1]);
-            //string actionType = string.Empty;
-            if (actionName.Contains("DELETE"))
-            {
-                //actionType = "Delete";
-            }
-
-            if (actionName.Contains("UPDATE"))
-            {
-                //actionType = "Update";
-            }
-
-            if (actionName.Contains("INSERT"))
-            {
-                //actionType = "Insert";
-            }*/
-
             await _hubContext.Clients.All.SendAsync("ReceiveMessage",e.Payload);
         }
-        public static string SerializeObjectToJson(Object alarmticket)
+        public static string SerializeObjectToJson(object alarmticket)
         {
             try
             {
