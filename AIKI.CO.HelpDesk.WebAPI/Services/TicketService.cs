@@ -91,7 +91,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                 id = Guid.NewGuid(),
                 ticketid = ticketInfo.id,
                 historycomment = comment,
-                agentname = agentName
+                agentname = agentName,
+                companyid = ticketInfo.companyid
             });
         }
     }
