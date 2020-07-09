@@ -43,10 +43,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.HubController
             listenCommand.CommandText = $"listen notifyalarmticket;";
             listenCommand.ExecuteNonQuery();
             conn.Notification += PostgresNotificationReceived;
-            //while (true)
-            //{
+            while (true)
+            {
                 await conn.WaitAsync();
-            //}
+            }
             
         }
         private async void PostgresNotificationReceived(object sender, NpgsqlNotificationEventArgs e)
