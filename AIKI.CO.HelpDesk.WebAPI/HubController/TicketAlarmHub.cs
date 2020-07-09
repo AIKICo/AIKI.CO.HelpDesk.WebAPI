@@ -34,44 +34,26 @@ namespace AIKI.CO.HelpDesk.WebAPI.HubController
             _serviceTicket = serviceTicket;
         }
 
-        public void SendMessage()
+        public async void SendMessage()
         {
-            this.ListenForAlarmNotifications();
-        }
-        
-        public async void ListenForAlarmNotifications()
-        {
-            
-            NpgsqlConnection conn = new NpgsqlConnection(GetConnectionString());
+            var conn = new NpgsqlConnection(GetConnectionString());
             conn.StateChange += conn_StateChange;
             conn.Open();
             var listenCommand = conn.CreateCommand();
             listenCommand.CommandText = $"listen notifyalarmticket;";
             listenCommand.ExecuteNonQuery();
             conn.Notification += PostgresNotificationReceived;
-            while (true)
-            {
+            //while (true)
+            //{
                 await conn.WaitAsync();
-            }
+            //}
+            
         }
-        
         private async void PostgresNotificationReceived(object sender, NpgsqlNotificationEventArgs e)
         {
             if (string.IsNullOrEmpty(e.Payload)) return;
             await _hubContext.Clients.All.SendAsync("ReceiveMessage",e.Payload);
         }
-        public static string SerializeObjectToJson(object alarmticket)
-        {
-            try
-            {
-                return JsonConvert.SerializeObject(alarmticket);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
         private void conn_StateChange(object sender, System.Data.StateChangeEventArgs e)
         {
             _hubContext.Clients.All.SendAsync(
