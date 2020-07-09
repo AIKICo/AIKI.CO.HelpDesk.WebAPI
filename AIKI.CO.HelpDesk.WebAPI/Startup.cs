@@ -49,7 +49,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var builder = new PostgreSqlConnectionStringBuilder(Environment.GetEnvironmentVariable("DATABASE_URL"))
+            var builder = new PostgreSqlConnectionStringBuilder(Configuration["DATABASE_URL"])
             {
                 Pooling = true,
                 TrustServerCertificate = true,
@@ -68,10 +68,9 @@ namespace AIKI.CO.HelpDesk.WebAPI
                         .AllowAnyMethod()
                         .WithOrigins(
                             "https://aiki-helpdesk-v1.firebaseapp.com",
+                            "https://localhost:5001",
                             "https://localhost:5002",
-                            "http://localhost:5002",
-                            "https://test.mydomain.com:5002"
-                        )
+                            "http://localhost:8080")
                         .AllowCredentials();
                 });
             });
@@ -151,23 +150,20 @@ namespace AIKI.CO.HelpDesk.WebAPI
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSerilogRequestLogging();
-
-            if (env.IsDevelopment())
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI(options =>
-                {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "AIKI Co. Help Desk Web API");
-                    options.RoutePrefix = string.Empty;
-                });
-            }
-            
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
-                endpoints.MapHub<TicketAlarmHub>("/ticketalarmhub", options => { });
+                endpoints.MapControllers(); 
+                endpoints.MapHub<TicketAlarmHub>("/ticketalarmhub", options =>
+                {
+                    options.Transports = HttpTransportType.LongPolling;
+                });
             });
-            
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "AIKI Help Desk API");
+                options.RoutePrefix = string.Empty;
+            });
         }
 
         private static IDocumentStore CreateRavenDocStore(IWebHostEnvironment env)
@@ -175,11 +171,12 @@ namespace AIKI.CO.HelpDesk.WebAPI
             RequestExecutor.RemoteCertificateValidationCallback += CertificateCallback;
             if (env.IsDevelopment())
                 logServerCertificate =
-                    new X509Certificate2($"{Directory.GetCurrentDirectory()}/certificate/HelpDeskLog.pfx",Environment.GetEnvironmentVariable("cert_password"));
+                    new X509Certificate2($"{Directory.GetCurrentDirectory()}/certificate/HelpDeskLog.pfx",
+                        "Mveyma6303$");
             else
                 logServerCertificate =
                     new X509Certificate2($"{Directory.GetCurrentDirectory()}/certificate/HelpDeskLog.pfx",
-                        Environment.GetEnvironmentVariable("cert_password"));
+                        "Mveyma6303$");
             var docStore = new DocumentStore
             {
                 Urls = new[] {"https://a.free.aiki.ravendb.cloud"},
