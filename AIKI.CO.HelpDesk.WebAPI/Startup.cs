@@ -155,6 +155,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
                 endpoints.MapControllers(); 
                 endpoints.MapHub<TicketAlarmHub>("/ticketalarmhub", options =>
                 {
+                    options.Transports = HttpTransportType.LongPolling;
                 });
             });
             app.UseSwagger();
