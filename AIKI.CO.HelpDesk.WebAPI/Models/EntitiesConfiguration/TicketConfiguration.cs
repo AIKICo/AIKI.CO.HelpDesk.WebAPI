@@ -21,6 +21,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
             builder.HasOne(c => c.Company)
                 .WithMany(c => c.Tickets)
                 .HasForeignKey(c => c.companyid);
+            
+            builder.HasOne(c => c.Customer)
+                .WithMany(c => c.Tickets)
+                .HasForeignKey(c => c.customerid);
         }
     }
 }

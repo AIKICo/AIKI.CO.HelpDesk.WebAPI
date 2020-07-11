@@ -11,5 +11,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public Guid? customerid { get; set; }
         public AssetAdditionalInfo[] assetadditionalinfo { get; set; }
         public Company Company { get; set; }
+        public Customer Customer { get; set; }
     }
 }

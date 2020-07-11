@@ -26,6 +26,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public string requestpriority { get; set; }
         public Guid? customerid { get; set; }
         public Company Company { get; set; }
+        public Customer Customer { get; set; }
         public ICollection<TicketHistory> TicketHistories { get; set; }
     }
 }
