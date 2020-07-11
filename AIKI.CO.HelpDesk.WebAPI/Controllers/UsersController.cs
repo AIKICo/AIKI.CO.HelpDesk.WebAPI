@@ -40,5 +40,12 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
                 return BadRequest(new {message = "Username or password is incorrect"});
             return Ok(user);
         }
+        
+        [AllowAnonymous]
+        [HttpGet("IsEmailExists/{id}")]
+        public async Task<IActionResult> IsEmailExists(string id)
+        {
+            return Ok(await _service.isExists(q => q.email == id));
+        }
     }
 }
