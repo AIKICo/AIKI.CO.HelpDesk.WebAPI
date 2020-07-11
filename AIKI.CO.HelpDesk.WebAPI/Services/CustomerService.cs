@@ -36,7 +36,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                     companyid = customerInfo.companyid,
                     title = customerInfo.title,
                     allowdelete = false,
-                    titletype = "6014fa01-1bb4-4313-be26-c692ca4c2556"
+                    titletype = "6014fa01-1bb4-4313-be26-c692ca4c2556",
+                    customerid = customerInfo.id
                 });
             }
             return 0;
