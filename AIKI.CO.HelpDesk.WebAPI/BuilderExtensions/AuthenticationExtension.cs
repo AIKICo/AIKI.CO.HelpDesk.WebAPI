@@ -12,7 +12,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
 {
     public static class AuthenticationExtension
     {
-        public static IServiceCollection AddTokenAuthentication(this IServiceCollection services, IConfiguration config)
+        public static IServiceCollection AddTokenAuthentication(
+            this IServiceCollection services, 
+            IConfiguration config)
         {
             var secret = config.GetSection("JwtConfig").GetSection("secret").Value;
             var key = Encoding.ASCII.GetBytes(secret);

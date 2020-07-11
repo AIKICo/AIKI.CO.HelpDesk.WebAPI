@@ -46,7 +46,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             _appSettings = appSettings.Value;
             _protector = provider.CreateProtector("MemberService.CompanyId");
             if (_context.HttpContext.Request.Headers["CompanyID"].Any())
-                _companyid =  Guid.Parse(_context.HttpContext.Request.Headers["CompanyID"].ToString());
+                _companyid =
+                    Guid.Parse(_protector.Unprotect(_context.HttpContext.Request.Headers["CompanyID"].ToString()));
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
@@ -76,6 +77,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             modelBuilder.ApplyConfiguration<Last30Ticket>(new Last30TicketConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<TicketCountInfo>(new TicketCountInfoConfiguration(_companyid));
 
+            #region Query Filter
             modelBuilder.Entity<Customer>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<Member>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<OperatingHour>().HasQueryFilter(q => q.companyid == _companyid);
@@ -91,6 +93,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             modelBuilder.Entity<TicketHistory>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<Last30Ticket>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<TicketCountInfo>().HasQueryFilter(q => q.companyid == _companyid);
+            #endregion
+            
         }
     }
 }

@@ -17,6 +17,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
         public virtual void Configure(EntityTypeBuilder<T> builder)
         {
             builder.HasKey(c => c.id);
+            builder.Property(c => c.companyid).HasDefaultValue(_companyid);
             builder.Property(c => c.id)
                 .ValueGeneratedNever();
         }

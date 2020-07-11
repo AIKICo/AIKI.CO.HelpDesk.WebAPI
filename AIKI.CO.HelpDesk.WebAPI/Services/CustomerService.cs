@@ -34,7 +34,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             {
                 return await _serviceOrgChart.AddRecord(new OrganizeChartResponse
                 {
-                    companyid = customerInfo.companyid,
                     title = customerInfo.title,
                     allowdelete = false,
                     titletype = "6014fa01-1bb4-4313-be26-c692ca4c2556",
