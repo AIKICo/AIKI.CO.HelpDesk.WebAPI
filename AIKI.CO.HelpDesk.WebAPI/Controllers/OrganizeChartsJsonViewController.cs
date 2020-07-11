@@ -38,10 +38,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             }
         }
         
-        [HttpGet("GetByParentId/{id:guid}")]
-        public IActionResult GetByParentId(Guid id)
+        [HttpGet("GetByParentId/{id}")]
+        public IActionResult GetByParentId(string id)
         {
-            var result =  _service.GetRawSQL("SELECT * FROM organizecharts_jsonview({0})", id);
+            var result =  _service.GetRawSQL("SELECT * FROM organizecharts_jsonview({0})", Guid.Parse(id));
             if (result != null)
                 return Ok(result);
             else return NotFound();
