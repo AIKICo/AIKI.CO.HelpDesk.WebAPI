@@ -77,6 +77,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             modelBuilder.ApplyConfiguration<TicketCountInfo>(new TicketCountInfoConfiguration(_companyid));
 
             modelBuilder.Entity<Customer>().HasQueryFilter(q => q.companyid == _companyid);
+            modelBuilder.Entity<Member>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<OperatingHour>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<SLASetting>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<Group>().HasQueryFilter(q => q.companyid == _companyid);
