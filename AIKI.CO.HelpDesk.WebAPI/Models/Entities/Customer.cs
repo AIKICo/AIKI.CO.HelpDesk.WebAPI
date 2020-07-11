@@ -9,6 +9,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public Customer()
         {
             OrganizeCharts = new HashSet<OrganizeChart>();   
+            Assets = new HashSet<Asset>();
+            Tickets = new HashSet<Ticket>();
         }
         public string title { get; set; }
         public string description { get; set; }
@@ -19,5 +21,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
 
         public Company Company { get; set; }
         public ICollection<OrganizeChart> OrganizeCharts { get; set; }
+        public ICollection<Asset> Assets { get; set; }
+        public ICollection<Ticket> Tickets { get; set; }
     }
 }
