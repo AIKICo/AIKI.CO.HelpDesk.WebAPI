@@ -28,6 +28,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         }
         public override async Task<int> AddRecord(CustomerResponse request)
         {
+            request.disabled = false;
             var customerInfo = await base.AddRecordWithReturnRequest(request);
             if (customerInfo != null)
             {
