@@ -37,5 +37,14 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
                 return BadRequest();
             }
         }
+        
+        [HttpGet("GetByParentId/{id:guid}")]
+        public IActionResult GetByParentId(Guid id)
+        {
+            var result =  _service.GetRawSQL("SELECT * FROM organizecharts_jsonview({0})", id.ToString());
+            if (result != null)
+                return Ok(result);
+            else return NotFound();
+        }
     }
 }
