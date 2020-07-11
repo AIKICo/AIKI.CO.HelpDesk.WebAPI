@@ -93,9 +93,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                 .GetAllAsync(predicate, orderBy, include, disableTracking, ignoreQueryFilters));
         }
 
-        public virtual async Task<bool> isExists(Expression<Func<T, bool>> predicate)
+        public virtual async Task<bool> isExists(Expression<Func<T, bool>> predicate, bool ignoreQueryFilters = false)
         {
-            return (await _repository.ExistsAsync(predicate));
+            return (await _repository.ExistsAsync(predicate, ignoreQueryFilters));
         }
 
         public virtual async Task<int> AddRecord(V request)

@@ -42,7 +42,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services.Interface
             Func<IQueryable<S>, IIncludableQueryable<S, object>> include = null, bool disableTracking = true,
             bool ignoreQueryFilters = false) where S : BaseObject where SR : BaseResponse;
 
-        Task<bool> isExists(Expression<Func<T, bool>> predicate);
+        Task<bool> isExists(Expression<Func<T, bool>> predicate, bool ignoreQueryFilters = false);
         Task<int> AddRecord(V request);
         Task<V> AddRecordWithReturnRequest(V request);
         Task<int> UpdateRecord(V request);

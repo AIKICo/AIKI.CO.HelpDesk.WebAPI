@@ -45,7 +45,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [HttpGet("IsEmailExists/{id}")]
         public async Task<IActionResult> IsEmailExists(string id)
         {
-            return Ok(await _service.isExists(q => q.email == id));
+            return Ok(await _service.isExists(q => q.email == id, true));
         }
     }
 }
