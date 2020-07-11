@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Microsoft.OData.Edm.Vocabularies;
 using Microsoft.VisualBasic;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
@@ -35,7 +36,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             request.id = Guid.NewGuid();
             request.registerdate = DateTime.Now;
             request.enddate = null;
-            await _unitofwork.GetRepository<Ticket>().InsertAsync(_map.Map<Ticket>(request));
+            var record = _map.Map<Ticket>(request);
+            record.companyid = _companyId;
+            await _unitofwork.GetRepository<Ticket>().InsertAsync(record);
             await _unitofwork.SaveChangesAsync();
             return await AddHistory(request, "درخواست رفع ایراد رایانه ای دریافت گردید", null);
         }
@@ -92,7 +95,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                 ticketid = ticketInfo.id,
                 historycomment = comment,
                 agentname = agentName,
-                companyid = ticketInfo.companyid
             });
         }
     }

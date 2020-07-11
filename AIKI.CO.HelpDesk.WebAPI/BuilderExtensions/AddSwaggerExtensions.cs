@@ -32,11 +32,11 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
                         Url = new Uri("https://opensource.org/licenses/MIT")
                     }
                 };
-                var xmlCommentsFile =
+                /*var xmlCommentsFile =
                     $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlCommentsFullPath =
                     Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
-                options.IncludeXmlComments(xmlCommentsFullPath);
+                options.IncludeXmlComments(xmlCommentsFullPath);*/
                 options.SwaggerDoc("v1", apiinfo);
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {

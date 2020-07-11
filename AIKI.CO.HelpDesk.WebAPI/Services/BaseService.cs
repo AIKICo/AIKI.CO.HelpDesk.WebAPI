@@ -15,6 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 // ReSharper disable All
 
@@ -46,7 +47,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             _context = context;
             _protector = provider.CreateProtector("MemberService.CompanyId");
             if (_context.HttpContext.Request.Headers["CompanyID"].Any())
-                _companyId = Guid.Parse(_context.HttpContext.Request.Headers["CompanyID"].ToString());
+                _companyId =
+                    Guid.Parse(_protector.Unprotect(_context.HttpContext.Request.Headers["CompanyID"].ToString()));
         }
 
         public virtual async Task<IEnumerable<V>> GetAll()
@@ -101,14 +103,18 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         public virtual async Task<int> AddRecord(V request)
         {
             request.id = Guid.NewGuid();
-            await _repository.InsertAsync(_map.Map<T>(request));
+            var record = _map.Map<T>(request);
+            record.companyid = _companyId;
+            await _repository.InsertAsync(record);
             return await _unitofwork.SaveChangesAsync();
         }
 
         public virtual async Task<V> AddRecordWithReturnRequest(V request)
         {
             request.id = Guid.NewGuid();
-            await _repository.InsertAsync(_map.Map<T>(request));
+            var record = _map.Map<T>(request);
+            record.companyid = _companyId;
+            await _repository.InsertAsync();
             await _unitofwork.SaveChangesAsync();
             return request;
         }
@@ -121,7 +127,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 
         public virtual async Task<int> DeleteRecord(Guid id)
         {
-            var founded = _map.Map<T>(await GetSingle(q => q.id == id && q.companyid == _companyId));
+            var founded = _map.Map<T>(await GetSingle(q => q.id == id));
             if (founded == null) return 0;
             if (founded.allowdelete==null || (bool)founded.allowdelete)
             {
@@ -147,9 +153,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             return _map.Map<K>(await _unitofwork.GetRepository<K>().GetFirstOrDefaultAsync(predicate: predicate, ignoreQueryFilters:ignoreQueryFilters));
         }
 
-        public virtual List<T> GetRawSQL(string sqlQuery, params object[] parameters)
+        public virtual async Task<List<T>> GetRawSQL(string sqlQuery, params object[] parameters)
         {
-            return _repository.FromSql(sqlQuery, parameters).ToList();
+            return await _repository.FromSql(sqlQuery, parameters).ToListAsync();
         }
     }
 }

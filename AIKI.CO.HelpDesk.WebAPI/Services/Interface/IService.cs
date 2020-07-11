@@ -35,7 +35,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services.Interface
 
         Task<V> GetSingle(Expression<Func<T, bool>> predicate, bool ignoreQueryFilters=false);
         Task<K> GetSingle<K>(Expression<Func<K, bool>> predicate, bool ignoreQueryFilters=false) where K : BaseObject;
-        List<T> GetRawSQL(string sqlQuery, params object[] parameters);
+        Task<List<T>> GetRawSQL(string sqlQuery, params object[] parameters);
 
         Task<IList<SR>> GetAnotherTableRecords<S, SR>(Expression<Func<S, bool>> predicate = null,
             Func<IQueryable<S>, IOrderedQueryable<S>> orderBy = null,
