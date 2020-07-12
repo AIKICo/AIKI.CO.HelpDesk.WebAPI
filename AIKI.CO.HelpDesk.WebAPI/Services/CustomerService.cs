@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
@@ -26,7 +27,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         {
             _serviceOrgChart = serviceOrgChart;
         }
-        public override async Task<int> AddRecord(CustomerResponse request)
+        public override async Task<int> AddRecord(CustomerResponse request, Guid? companyId =null)
         {
             request.disabled = false;
             var customerInfo = await base.AddRecordWithReturnRequest(request);

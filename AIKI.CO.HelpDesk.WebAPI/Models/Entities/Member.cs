@@ -7,7 +7,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public string membername { get; set; }
         public string username { get; set; }
         
-        //[Encrypted]
+        [Encrypted]
         public string password { get; set; }
         public string roles { get; set; }
         public string email { get; set; }
