@@ -67,7 +67,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
-                        .SetIsOriginAllowed(origin => new Uri(origin).Host == "aiki-helpdesk-v1.firebaseapp")
+                        .SetIsOriginAllowed(origin => new Uri(origin).Host == "firebaseapp")
                         .AllowCredentials();
                 });
             });
