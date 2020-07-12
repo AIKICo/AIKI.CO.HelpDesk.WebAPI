@@ -43,7 +43,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services.Interface
             bool ignoreQueryFilters = false) where S : BaseObject where SR : BaseResponse;
 
         Task<bool> isExists(Expression<Func<T, bool>> predicate, bool ignoreQueryFilters = false);
-        Task<int> AddRecord(V request);
+        Task<int> AddRecord(V request, Guid? companyId = null);
         Task<V> AddRecordWithReturnRequest(V request);
         Task<int> UpdateRecord(V request);
         Task<int> PartialUpdateRecord(V request);

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
+using System.Text;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore.DataEncryption;
 using Microsoft.EntityFrameworkCore.DataEncryption.Providers;
@@ -49,12 +50,13 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             IConfiguration Configuration)
             : base(options)
         {
-            _encryptionKey = System.Convert.FromBase64String(Configuration["AESEncryptionKeys:encryptionKey"]);
-            _encryptionIV = System.Convert.FromBase64String(Configuration["AESEncryptionKeys:encryptionIV"]);
+            _encryptionKey = Encoding.Unicode.GetBytes(Configuration["AESEncryptionKeys:encryptionKey"]);
+            _encryptionIV = Encoding.Unicode.GetBytes(Configuration["AESEncryptionKeys:encryptionIV"]);
             _context = context;
             _appSettings = appSettings.Value;
             _protector = provider.CreateProtector("MemberService.CompanyId");
             _provider = new AesProvider(_encryptionKey, _encryptionIV);
+            
             if (_context.HttpContext.Request.Headers["CompanyID"].Any())
                 _companyid =
                     Guid.Parse(_protector.Unprotect(_context.HttpContext.Request.Headers["CompanyID"].ToString()));

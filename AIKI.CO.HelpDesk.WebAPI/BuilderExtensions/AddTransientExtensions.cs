@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Raven.Client;
 
 namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
 {
@@ -60,6 +61,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
                     BaseService<TicketCountInfo, TicketCountInfoResponse>>();
             
             services.AddTransient<ICompanyService, CompanyService>();
+            services.AddSingleton<IEmailConfiguration>(config.GetSection("EmailConfiguration").Get<EmailConfiguration>());
+
+            services.AddTransient<IEmailService, EmailService>();
             services.AddHttpContextAccessor();
             return services;
         }

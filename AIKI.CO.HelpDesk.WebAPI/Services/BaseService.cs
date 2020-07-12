@@ -9,8 +9,10 @@ using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.DataProtection;
@@ -100,11 +102,11 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             return (await _repository.ExistsAsync(predicate, ignoreQueryFilters));
         }
 
-        public virtual async Task<int> AddRecord(V request)
+        public virtual async Task<int> AddRecord(V request, Guid? companyId = null)
         {
             request.id = Guid.NewGuid();
             var record = _map.Map<T>(request);
-            record.companyid = _companyId;
+            record.companyid = companyId == null ? _companyId : companyId;
             await _repository.InsertAsync(record);
             return await _unitofwork.SaveChangesAsync();
         }
