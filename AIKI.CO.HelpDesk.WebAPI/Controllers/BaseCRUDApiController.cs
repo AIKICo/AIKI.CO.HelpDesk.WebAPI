@@ -19,6 +19,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
     [ApiController]
     [ApiVersion("1.0")]
     [Authorize]
+    [RequireHttps]
     public class BaseCRUDApiController<T, V> : ControllerBase
         where T : BaseObject
         where V : BaseResponse
