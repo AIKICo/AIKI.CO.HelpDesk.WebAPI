@@ -39,7 +39,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
                         RequireSignedTokens = true,
                         RequireExpirationTime = true,
                         ValidateLifetime = true,
-                        TokenDecryptionKey = new SymmetricSecurityKey(encryptKey)
+                        TokenDecryptionKey = new SymmetricSecurityKey(encryptKey),
                     };
                     options.Events = new JwtBearerEvents
                     {

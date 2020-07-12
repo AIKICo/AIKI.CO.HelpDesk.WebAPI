@@ -66,8 +66,10 @@ namespace AIKI.CO.HelpDesk.WebAPI
                     policy
                         .AllowAnyHeader()
                         .AllowAnyMethod()
-                        .SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
-                        .SetIsOriginAllowed(origin => new Uri(origin).Host == "firebaseapp")
+                        .WithOrigins(
+                            "https://aiki-helpdesk-v1.firebaseapp.com",
+                            "https://localhost:5002"
+                        )
                         .AllowCredentials();
                 });
             });
@@ -149,10 +151,8 @@ namespace AIKI.CO.HelpDesk.WebAPI
             app.UseSerilogRequestLogging();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers(); 
-                endpoints.MapHub<TicketAlarmHub>("/ticketalarmhub", options =>
-                {
-                });
+                endpoints.MapControllers();
+                endpoints.MapHub<TicketAlarmHub>("/ticketalarmhub", options => { });
             });
             app.UseSwagger();
             app.UseSwaggerUI(options =>
