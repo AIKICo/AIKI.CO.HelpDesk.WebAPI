@@ -7,7 +7,10 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.EntityFrameworkCore.DataEncryption;
+using Microsoft.EntityFrameworkCore.DataEncryption.Providers;
 using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.Extensions.Configuration;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models
 {
@@ -16,6 +19,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
         private readonly AppSettings _appSettings;
         private readonly IHttpContextAccessor _context;
         private readonly IDataProtector _protector;
+        private readonly byte[] _encryptionKey = null; 
+        private readonly byte[] _encryptionIV = null;
+        private readonly IEncryptionProvider _provider;
         private Guid _companyid { get; set; } = Guid.Empty;
         public DbSet<Company> Company { get; set; }
         public DbSet<Customer> Customer { get; private set; }
@@ -39,12 +45,16 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             DbContextOptions options,
             IOptions<AppSettings> appSettings,
             IHttpContextAccessor context,
-            IDataProtectionProvider provider)
+            IDataProtectionProvider provider,
+            IConfiguration Configuration)
             : base(options)
         {
+            _encryptionKey = System.Convert.FromBase64String(Configuration["AESEncryptionKeys:encryptionKey"]);
+            _encryptionIV = System.Convert.FromBase64String(Configuration["AESEncryptionKeys:encryptionIV"]);
             _context = context;
             _appSettings = appSettings.Value;
             _protector = provider.CreateProtector("MemberService.CompanyId");
+            _provider = new AesProvider(_encryptionKey, _encryptionIV);
             if (_context.HttpContext.Request.Headers["CompanyID"].Any())
                 _companyid =
                     Guid.Parse(_protector.Unprotect(_context.HttpContext.Request.Headers["CompanyID"].ToString()));
@@ -60,7 +70,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.UseEncryption(_provider);
             modelBuilder.HasDefaultSchema("public");
+            
+            #region Apply Configuration
             modelBuilder.ApplyConfiguration<Customer>(new CustomerConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<Member>(new MemberConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<OperatingHour>(new OperatingHourConfiguration(_companyid));
@@ -76,6 +89,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             modelBuilder.ApplyConfiguration<TicketHistory>(new TicketHistoryConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<Last30Ticket>(new Last30TicketConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<TicketCountInfo>(new TicketCountInfoConfiguration(_companyid));
+            #endregion
 
             #region Query Filter
             modelBuilder.Entity<Customer>().HasQueryFilter(q => q.companyid == _companyid);
