@@ -18,6 +18,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
             builder.Property(c => c.id)
                 .ValueGeneratedNever();
 
+            builder.HasIndex(c => c.username).IsUnique();
+            builder.HasIndex(c => c.email).IsUnique();
             builder.HasOne(c => c.Company)
                 .WithMany(c => c.Members)
                 .HasForeignKey(c => c.companyid);
