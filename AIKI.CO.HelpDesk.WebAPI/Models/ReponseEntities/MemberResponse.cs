@@ -9,7 +9,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
         [NotMapped] public string encryptedCompnayId { get; set; }
         public Guid? companyid { get; set; }
         [Required] public string membername { get; set; }
-        [Required] public string username { get; set; }
+        [Required] public string username => email;
         [Required] public string password { get; set; }
         [Required] public string roles { get; set; }
         [Required] public string email { get; set; }
