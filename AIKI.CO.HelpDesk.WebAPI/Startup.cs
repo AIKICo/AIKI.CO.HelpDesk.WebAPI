@@ -149,17 +149,23 @@ namespace AIKI.CO.HelpDesk.WebAPI
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSerilogRequestLogging();
+
+            if (env.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "AIKI Help Desk API");
+                    options.RoutePrefix = string.Empty;
+                });
+            }
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<TicketAlarmHub>("/ticketalarmhub", options => { });
             });
-            app.UseSwagger();
-            app.UseSwaggerUI(options =>
-            {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "AIKI Help Desk API");
-                options.RoutePrefix = string.Empty;
-            });
+            
         }
 
         private static IDocumentStore CreateRavenDocStore(IWebHostEnvironment env)
