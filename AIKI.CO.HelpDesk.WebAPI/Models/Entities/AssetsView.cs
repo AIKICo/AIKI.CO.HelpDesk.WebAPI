@@ -1,3 +1,5 @@
+using System;
+
 namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
 {
     public class AssetsView : BaseObject
@@ -6,5 +8,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public string title { get; set; }
         public string assetlocationid { get; set; }
         public string assettypeid { get; set; }
+        public Guid? customerid { get; set; }
     }
 }
