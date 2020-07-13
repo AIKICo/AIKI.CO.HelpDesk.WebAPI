@@ -19,5 +19,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
         public string requester { get; set; }
         public string requestpriority { get; set; }
         public string lasthistorycomment { get; set; }
+        public Guid? customerid { get; set; }
+        public string customertitle { get; set; }
     }
 }
