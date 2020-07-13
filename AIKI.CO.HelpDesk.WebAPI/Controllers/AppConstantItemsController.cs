@@ -34,7 +34,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         [Authorize(Roles = "admin, user")]
         [HttpGet("GetByParentId/{id:guid}")]
-        public async Task<IActionResult> GetByParentId(Guid id)
+        public async Task<IActionResult> GetByParentId([FromRoute]Guid id)
         {
             var result = await _service.GetAll(q => q.appconstantid == id);
             if (result != null)

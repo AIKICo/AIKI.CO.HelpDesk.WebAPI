@@ -43,13 +43,13 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         
         [AllowAnonymous]
         [HttpGet("IsEmailExists/{id}")]
-        public async Task<IActionResult> IsEmailExists(string id)
+        public async Task<IActionResult> IsEmailExists([FromRoute]string id)
         {
             return Ok(await _service.isExists(q => q.email == id, true));
         }
         
-        [HttpGet("IsEmailExists/{id}")]
-        public async Task<IActionResult> IsUserNameExists(string id)
+        [HttpGet("IsUserNameExists/{id}")]
+        public async Task<IActionResult> IsUserNameExists([FromRoute]string id)
         {
             return Ok(await _service.isExists(q => q.username == id));
         }

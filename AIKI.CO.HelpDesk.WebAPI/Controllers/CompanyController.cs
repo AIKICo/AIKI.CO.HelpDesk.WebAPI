@@ -52,7 +52,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             var adminUser = new MemberResponse
             {
                 membername = "مدیریت",
-                username = request.email,
                 password = new Password().Next(),
                 roles = "admin",
                 email = request.email,
