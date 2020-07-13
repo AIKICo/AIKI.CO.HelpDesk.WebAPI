@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
@@ -16,5 +18,12 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             IService<AssetsView, AssetsViewResponse> service) : base(map, appSettings, service)
         {
         }
+        
+        [HttpGet("GetByCustomerId/{id:guid}")]
+        public async Task<IActionResult> GetByCustomerId([FromRoute] Guid id)
+        {
+            return Ok(await _service.GetAll(q=>q.customerid==id));
+        }
+
     }
 }
