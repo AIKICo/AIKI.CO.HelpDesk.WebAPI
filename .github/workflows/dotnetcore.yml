@@ -28,7 +28,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
         dockerfile: ./AIKI.CO.HelpDesk.WebAPI/Dockerfile
         tag_names: true
-    - name: Upload WebAPI On Heroku
+    - name: Upload WebAPI On Heroku Site
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         HEROKU_APP_NAME: "aiki-co-helpdesk-webapi"
