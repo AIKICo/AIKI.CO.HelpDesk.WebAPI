@@ -13,7 +13,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
         [Required] public string password { get; set; }
         [Required] public string roles { get; set; }
         [Required] public string email { get; set; }
-        public bool disabled { get; set; }
+        public bool? disabled { get; set; }
         [NotMapped] public string token { get; set; }
     }
 }
