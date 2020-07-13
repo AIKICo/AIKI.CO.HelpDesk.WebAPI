@@ -19,7 +19,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             IMemberService userService,
             IMapper map,
             IOptions<AppSettings> appSettings,
-            IService<Member, MemberResponse> service) : base(map, appSettings, service)
+            IMemberService service) : base(map, appSettings, service)
         {
             _userService = userService;
         }
