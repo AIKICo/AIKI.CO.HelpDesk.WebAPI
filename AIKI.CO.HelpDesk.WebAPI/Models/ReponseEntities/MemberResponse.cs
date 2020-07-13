@@ -7,7 +7,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
     public sealed class MemberResponse : BaseResponse
     {
         [NotMapped] public string encryptedCompnayId { get; set; }
-        public Guid companyid { get; set; }
+        public Guid? companyid { get; set; }
         [Required] public string membername { get; set; }
         [Required] public string username { get; set; }
         [Required] public string password { get; set; }

@@ -8,9 +8,13 @@ using Arch.EntityFrameworkCore.UnitOfWork;
 using AutoMapper;
 using Microsoft.Extensions.Options;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
@@ -34,7 +38,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         public MemberResponse Authenticate(string username, string password)
         {
             var user = _map.Map<MemberResponse>(_unitofwork.GetRepository<Member>()
-                .GetFirstOrDefault(predicate: x => x.username == username && x.password == password, ignoreQueryFilters:true));
+                .GetFirstOrDefault(predicate: x => x.username == username && x.password == password,
+                    ignoreQueryFilters: true));
             if (user == null)
                 return null;
             user.token = _jwtService.GenerateSecurityToken(user);
@@ -47,7 +52,39 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         {
             return _map.Map<IEnumerable<MemberResponse>>(await _unitofwork.GetRepository<Member>()
                     .GetAllAsync(disableTracking: true))
-                .WithoutPasswords();
+                .WithoutPasswords().WithoutCompanyIds();
+        }
+
+        public override async Task<IEnumerable<MemberResponse>> GetAll(Expression<Func<Member, bool>> predicate = null,
+            Func<IQueryable<Member>, IOrderedQueryable<Member>> orderBy = null,
+            Func<IQueryable<Member>, IIncludableQueryable<Member, object>> include = null, bool disableTracking = true,
+            bool ignoreQueryFilters = false)
+        {
+            return _map.Map<IEnumerable<MemberResponse>>(await _repository.GetAllAsync(predicate, orderBy, include,
+                disableTracking,
+                ignoreQueryFilters)).WithoutPasswords().WithoutCompanyIds();
+        }
+
+        public override async Task<IList<MemberResponse>> GetPagedList(Expression<Func<Member, bool>> predicate = null,
+            Func<IQueryable<Member>, IOrderedQueryable<Member>> orderBy = null,
+            Func<IQueryable<Member>, IIncludableQueryable<Member, object>> include = null, int pageIndex = 0,
+            int pageSize = 20, bool disableTracking = true,
+            CancellationToken cancellationToken = default(CancellationToken),
+            bool ignoreQueryFilters = false)
+        {
+            return _map.Map<IList<MemberResponse>>((await _repository.GetPagedListAsync(predicate, orderBy,
+                    include, pageIndex, pageSize, disableTracking, cancellationToken, ignoreQueryFilters)).Items)
+                .WithoutPasswords().WithoutCompanyIds().ToList();
+        }
+
+        public override async Task<MemberResponse> GetById(Guid id)
+        {
+            return _map.Map<MemberResponse>(await _repository.FindAsync(id)).WithoutPassword().WithoutCompanyId();
+        }
+
+        public override async Task<MemberResponse> GetSingle(Expression<Func<Member, bool>> predicate, bool ignoreQueryFilters = false)
+        {
+            return _map.Map<MemberResponse>(await _repository.GetFirstOrDefaultAsync(predicate: predicate, ignoreQueryFilters:ignoreQueryFilters)).WithoutPassword().WithoutCompanyId();
         }
     }
 }
