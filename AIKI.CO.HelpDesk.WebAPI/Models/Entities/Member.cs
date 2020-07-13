@@ -6,12 +6,11 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
     {
         public string membername { get; set; }
         public string username { get; set; }
-        
-        [Encrypted]
-        public string password { get; set; }
+
+        [Encrypted] public string password { get; set; }
         public string roles { get; set; }
         public string email { get; set; }
-
+        public bool disabled { get; set; }
         public Company Company { get; set; }
     }
 }
