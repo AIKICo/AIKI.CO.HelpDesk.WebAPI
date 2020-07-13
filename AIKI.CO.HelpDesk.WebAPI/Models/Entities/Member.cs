@@ -10,7 +10,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         [Encrypted] public string password { get; set; }
         public string roles { get; set; }
         public string email { get; set; }
-        public bool disabled { get; set; }
+        public bool? disabled { get; set; }
         public Company Company { get; set; }
     }
 }
