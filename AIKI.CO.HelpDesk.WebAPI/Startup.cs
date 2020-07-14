@@ -155,7 +155,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(options =>
                 {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "AIKI Help Desk API");
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "AIKI Co. Help Desk Web API");
                     options.RoutePrefix = string.Empty;
                 });
             }
