@@ -68,7 +68,8 @@ namespace AIKI.CO.HelpDesk.WebAPI
                         .AllowAnyMethod()
                         .WithOrigins(
                             "https://aiki-helpdesk-v1.firebaseapp.com",
-                            "https://localhost:5002"
+                            "https://localhost:5002",
+                            "https://test.mydomain.com"
                         )
                         .AllowCredentials();
                 });
