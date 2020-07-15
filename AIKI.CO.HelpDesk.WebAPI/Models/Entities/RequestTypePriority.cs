@@ -9,6 +9,5 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
     {
         public string Title { get; set; }
         public string Priority { get; set; }
-        public string PriorityUnit { get; set; }
     }
 }
