@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using AIKI.CO.HelpDesk.WebAPI.Extensions;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
@@ -52,6 +53,19 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         public async Task<IActionResult> IsUserNameExists([FromRoute]string id)
         {
             return Ok(await _service.isExists(q => q.username == id));
+        }
+
+        [HttpPut]
+        [Produces("application/json")]
+        public override async Task<IActionResult> Put(MemberResponse request)
+        {
+            if (_isReadOnly) return BadRequest("Entity is ReadOnly");
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var existsRecord = await _service.GetSingle(q => q.id == request.id);
+            if (existsRecord == null) return NotFound();
+            var result = await _service.UpdateRecord(request);
+            if (result > 0) return Ok(request.WithoutPassword().WithoutCompanyId());
+            return BadRequest(ModelState);
         }
     }
 }
