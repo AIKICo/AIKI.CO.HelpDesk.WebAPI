@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Extensions;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
@@ -63,6 +64,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var existsRecord = await _service.GetSingle(q => q.id == request.id);
             if (existsRecord == null) return NotFound();
+            if (string.IsNullOrEmpty(request.password)) request.password = existsRecord.password;
             var result = await _service.UpdateRecord(request);
             if (result > 0) return Ok(request.WithoutPassword().WithoutCompanyId());
             return BadRequest(ModelState);
