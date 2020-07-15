@@ -7,6 +7,7 @@ using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -23,6 +24,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpGet("GetLast30Ticket")]
+        [Authorize(Roles = "admin, user")]
         public async Task<IActionResult> GetLast30Ticket()
         {
             return Ok(await _service.GetAnotherTableRecords<Last30Ticket, Last30TicketResponse>());
