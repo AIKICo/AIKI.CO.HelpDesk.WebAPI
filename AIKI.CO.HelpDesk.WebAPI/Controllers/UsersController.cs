@@ -62,7 +62,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         {
             if (_isReadOnly) return BadRequest("Entity is ReadOnly");
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            var existsRecord = await _service.GetSingle(q => q.id == request.id);
+            var existsRecord = await _userService.GetSingleWithPassword(q => q.id == request.id);
             if (existsRecord == null) return NotFound();
             if (string.IsNullOrEmpty(request.password)) request.password = existsRecord.password;
             var result = await _service.UpdateRecord(request);

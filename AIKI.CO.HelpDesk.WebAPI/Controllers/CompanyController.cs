@@ -56,7 +56,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
                 roles = "admin",
                 email = request.email,
                 companyid = request.id,
-                allowdelete = false
+                allowdelete = false,
+                disabled = false
             };
             await _memberService.AddRecord(adminUser, request.id);
             _emailService.Send(new EmailMessage

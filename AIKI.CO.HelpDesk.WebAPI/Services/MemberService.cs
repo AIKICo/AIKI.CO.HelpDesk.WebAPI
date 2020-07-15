@@ -86,5 +86,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         {
             return _map.Map<MemberResponse>(await _repository.GetFirstOrDefaultAsync(predicate: predicate, ignoreQueryFilters:ignoreQueryFilters)).WithoutPassword().WithoutCompanyId();
         }
+        
+        public async Task<MemberResponse> GetSingleWithPassword(Expression<Func<Member, bool>> predicate, bool ignoreQueryFilters = false)
+        {
+            return _map.Map<MemberResponse>(await _repository.GetFirstOrDefaultAsync(predicate: predicate, ignoreQueryFilters:ignoreQueryFilters)).WithoutCompanyId();
+        }
     }
 }
