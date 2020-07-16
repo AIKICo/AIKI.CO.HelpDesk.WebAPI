@@ -30,12 +30,11 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             };
 
             using var emailClient = new SmtpClient();
-            await emailClient.ConnectAsync(_emailConfiguration.SmtpServer, _emailConfiguration.SmtpPort, true);
+            await emailClient.ConnectAsync(_emailConfiguration.SmtpServer, _emailConfiguration.SmtpPort, false);
             emailClient.AuthenticationMechanisms.Remove("XOAUTH2");
             await emailClient.AuthenticateAsync(_emailConfiguration.SmtpUsername, _emailConfiguration.SmtpPassword);
             await emailClient.SendAsync(message);
             await emailClient.DisconnectAsync(true);
-            
         }
     }
 }
