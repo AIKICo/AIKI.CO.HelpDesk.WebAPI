@@ -52,7 +52,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             var adminUser = new MemberResponse
             {
                 membername = "مدیریت",
-                password = new Password().Next(),
+                password = new Password(includeLowercase: true, includeUppercase: true, includeNumeric: true, includeSpecial: false, passwordLength: 21).Next(),
                 roles = "admin",
                 email = request.email,
                 companyid = request.id,
