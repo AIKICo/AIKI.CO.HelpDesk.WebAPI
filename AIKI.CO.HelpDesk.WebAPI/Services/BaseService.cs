@@ -116,7 +116,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             request.id = Guid.NewGuid();
             var record = _map.Map<T>(request);
             record.companyid = _companyId;
-            await _repository.InsertAsync();
+            await _repository.InsertAsync(record);
             await _unitofwork.SaveChangesAsync();
             return request;
         }
