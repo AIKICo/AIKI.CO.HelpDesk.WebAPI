@@ -16,9 +16,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
             this IServiceCollection services, 
             IConfiguration config)
         {
-            var secret = config.GetSection("JwtConfig").GetSection("secret").Value;
+            var secret = Environment.GetEnvironmentVariable("jwt_secret") ?? throw new Exception();
             var key = Encoding.ASCII.GetBytes(secret);
-            var encryptKey = Encoding.UTF8.GetBytes(config.GetSection("JwtConfig").GetSection("encryptionKey").Value);
+            var encryptKey = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("jwt_encryptionKey") ?? throw new Exception());
 
             services.AddAuthentication(options =>
                 {

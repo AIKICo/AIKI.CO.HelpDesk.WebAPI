@@ -49,7 +49,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var builder = new PostgreSqlConnectionStringBuilder(Configuration["DATABASE_URL"])
+            var builder = new PostgreSqlConnectionStringBuilder(Environment.GetEnvironmentVariable("DATABASE_URL"))
             {
                 Pooling = true,
                 TrustServerCertificate = true,
@@ -175,12 +175,11 @@ namespace AIKI.CO.HelpDesk.WebAPI
             RequestExecutor.RemoteCertificateValidationCallback += CertificateCallback;
             if (env.IsDevelopment())
                 logServerCertificate =
-                    new X509Certificate2($"{Directory.GetCurrentDirectory()}/certificate/HelpDeskLog.pfx",
-                        "Mveyma6303$");
+                    new X509Certificate2($"{Directory.GetCurrentDirectory()}/certificate/HelpDeskLog.pfx",Environment.GetEnvironmentVariable("cert_password"));
             else
                 logServerCertificate =
                     new X509Certificate2($"{Directory.GetCurrentDirectory()}/certificate/HelpDeskLog.pfx",
-                        "Mveyma6303$");
+                        Environment.GetEnvironmentVariable("cert_password"));
             var docStore = new DocumentStore
             {
                 Urls = new[] {"https://a.free.aiki.ravendb.cloud"},

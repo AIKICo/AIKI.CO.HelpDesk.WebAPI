@@ -62,7 +62,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.HubController
         }
         private string GetConnectionString()
         {
-            var builder = new PostgreSqlConnectionStringBuilder(_Configuration["DATABASE_URL"])
+            var builder = new PostgreSqlConnectionStringBuilder(Environment.GetEnvironmentVariable("DATABASE_URL"))
             {
                 Pooling = true,
                 TrustServerCertificate = true,

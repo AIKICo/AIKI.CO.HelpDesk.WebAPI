@@ -17,8 +17,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 
         public JWTService(IConfiguration config)
         {
-            _secret = config.GetSection("JwtConfig").GetSection("secret").Value;
-            _encryptionkey = Encoding.UTF8.GetBytes(config.GetSection("JwtConfig").GetSection("encryptionKey").Value);
+            _secret = Environment.GetEnvironmentVariable("jwt_secret");
+            _encryptionkey = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("jwt_encryptionKey") ?? throw new Exception());
             _expDate = config.GetSection("JwtConfig").GetSection("expirationInMinutes").Value;
         }
 
