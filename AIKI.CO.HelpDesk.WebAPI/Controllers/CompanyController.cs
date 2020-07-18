@@ -63,7 +63,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             _emailService.Send(new EmailMessage
             {
                 Subject = "میز کار خدمات رایانه ای AiKi",
-                Content = $"<p dir='rtl' style='font-family:tahoma'> با سلام </br> رمز عبور شما جهت ورود به میزکار خدمات رایانه ای عبارت است از: {adminUser.password} <br/> جهت ورود <a href='https://aiki-helpdesk-v1.firebaseapp.com/'>اینجا</a> کلیک نمایید</p>",
+                Content = $"<p dir='rtl' style='font-family:tahoma'> با سلام </br> رمز عبور شما جهت ورود به میزکار خدمات رایانه ای عبارت است از: <span dir='ltr'><b>{adminUser.password}</b></span> <br/> جهت ورود <a href='https://aiki-helpdesk-v1.firebaseapp.com/'>اینجا</a> کلیک نمایید</p>",
                 FromAddresses = new List<EmailAddress>()
                     {new EmailAddress() {Name = "Mohammad Mehrnia", Address = "qermezkon@gmail.com"}},
                 ToAddresses = new List<EmailAddress>()
