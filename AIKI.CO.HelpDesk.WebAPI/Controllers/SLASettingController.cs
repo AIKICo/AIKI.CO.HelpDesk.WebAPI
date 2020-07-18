@@ -23,5 +23,16 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             IService<SLASetting, SLASettingResponse> service) : base(map, appSettings, service)
         {
         }
+
+        [HttpGet("GetByCustomerID/{id:guid}")]
+        [Authorize(Roles = "admin, user")]
+        public async Task<IActionResult> GetByCustomerID(Guid id)
+        {
+            var customerInfo = await _service.GetAnotherTableRecords<Customer, CustomerResponse>(q => q.id == id);
+            if (customerInfo == null) return NotFound();
+            var slaSetting = await _service.GetSingle(q => q.id == customerInfo.FirstOrDefault().operatinghourid);
+            if (slaSetting == null) return NotFound();
+            return Ok(slaSetting);
+        }
     }
 }
