@@ -39,7 +39,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         {
             var user = _userService.Authenticate(model.Username, model.Password);
             if (user == null)
-                return BadRequest(new {message = "Username or password is incorrect"});
+                return BadRequest(new {message = "نام کاربری و یا کلمه عبور اشتباه وارد شده اسا"});
             return Ok(user);
         }
         
@@ -60,14 +60,14 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [Produces("application/json")]
         public override async Task<IActionResult> Put(MemberResponse request)
         {
-            if (_isReadOnly) return BadRequest("Entity is ReadOnly");
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (_isReadOnly) return BadRequest(new {message = "اطلاعات قابل ویرایش نیستند"});
+            if (!ModelState.IsValid) return BadRequest(new {model=ModelState, message="خطا در ویرایش اطلاعات"});
             var existsRecord = await _userService.GetSingleWithPassword(q => q.id == request.id);
             if (existsRecord == null) return NotFound();
             if (string.IsNullOrEmpty(request.password)) request.password = existsRecord.password;
             var result = await _service.UpdateRecord(request);
             if (result > 0) return Ok(request.WithoutPassword().WithoutCompanyId());
-            return BadRequest(ModelState);
+            return BadRequest(new {model=ModelState, message="خطا در ویرایش اطلاعات"});
         }
     }
 }
