@@ -10,7 +10,7 @@ using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "admin, user")]
     public sealed class CustomersController : BaseCRUDApiController<Customer, CustomerResponse>
     {
         public CustomersController(
