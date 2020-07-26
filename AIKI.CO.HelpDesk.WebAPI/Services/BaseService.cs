@@ -107,6 +107,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             request.id = Guid.NewGuid();
             var record = _map.Map<T>(request);
             record.companyid = companyId == null ? _companyId : companyId;
+            record.allowdelete = true;
             await _repository.InsertAsync(record);
             return await _unitofwork.SaveChangesAsync();
         }
@@ -116,6 +117,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             request.id = Guid.NewGuid();
             var record = _map.Map<T>(request);
             record.companyid = _companyId;
+            record.allowdelete = true;
             await _repository.InsertAsync(record);
             await _unitofwork.SaveChangesAsync();
             return request;
