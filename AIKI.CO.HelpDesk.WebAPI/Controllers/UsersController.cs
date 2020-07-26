@@ -53,7 +53,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [HttpGet("IsUserNameExists/{id}")]
         public async Task<IActionResult> IsUserNameExists([FromRoute]string id)
         {
-            return Ok(await _service.isExists(q => q.username == id));
+            return Ok(await _service.isExists(q => q.username == id,ignoreQueryFilters:true));
         }
 
         [HttpPut]
