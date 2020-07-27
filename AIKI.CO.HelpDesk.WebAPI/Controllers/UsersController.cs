@@ -39,7 +39,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         {
             var user = _userService.Authenticate(model.Username, model.Password);
             if (user == null)
-                return BadRequest(new {message = "نام کاربری و یا کلمه عبور اشتباه وارد شده اسا"});
+                return BadRequest(new {message = "نام کاربری و یا کلمه عبور اشتباه وارد شده است"});
             return Ok(user);
         }
         
