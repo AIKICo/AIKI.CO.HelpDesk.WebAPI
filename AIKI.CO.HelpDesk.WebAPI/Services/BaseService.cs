@@ -133,14 +133,15 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 
         public virtual async Task<int> DeleteRecord(Guid id)
         {
-            var founded = _map.Map<T>(await GetSingle(q => q.id == id));
+            var founded = _map.Map<T>(await GetSingle(q => q.id == id && q.companyid==_companyId));
             if (founded == null) return 0;
             if (founded.allowdelete==null || (bool)founded.allowdelete)
             {
+                founded.companyid = _companyId;
                 _repository.Delete(founded);
                 return await _unitofwork.SaveChangesAsync();
             }
-            else return 0;
+            return 0;
         }
 
         public virtual async Task<int> PartialUpdateRecord(V request)
