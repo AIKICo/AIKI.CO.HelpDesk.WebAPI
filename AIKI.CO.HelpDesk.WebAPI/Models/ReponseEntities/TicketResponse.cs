@@ -16,7 +16,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
         public Guid? tickettype { get; set; }
         public Guid? ticketcategory { get; set; }
         public Guid? tickettags { get; set; }
-        [Required]
         public string asset { get; set; }
         public double? ticketrate { get; set; }
         public double? mandays { get; set; }

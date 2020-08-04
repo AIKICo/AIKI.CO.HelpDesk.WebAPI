@@ -18,6 +18,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
             Assets = new HashSet<Asset>();
             Tickets = new HashSet<Ticket>();
             TicketHistory = new List<TicketHistory>();
+            ProfilePictures = new HashSet<ProfilePicture>();
         }
 
         public Guid id { get; set; }
@@ -35,5 +36,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public ICollection<Asset> Assets { get; set; }
         public ICollection<Ticket> Tickets { get; set; }
         public ICollection<TicketHistory> TicketHistory { get; set; }
+        public ICollection<ProfilePicture> ProfilePictures { get; set; }
     }
 }

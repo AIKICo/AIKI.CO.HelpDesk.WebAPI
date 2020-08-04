@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
 using System.Text;
+using AutoMapper;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore.DataEncryption;
 using Microsoft.EntityFrameworkCore.DataEncryption.Providers;
@@ -41,6 +42,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
         public DbSet<TicketHistory> TicketHistory { get; set; }
         public DbSet<Last30Ticket> Last30Ticket { get; set; }
         public DbSet<TicketCountInfo> TicketCountInfo { get; set; }
+        public DbSet<ProfilePicture> ProfilePicture { get; set; }
 
         public dbContext(
             DbContextOptions options,
@@ -94,6 +96,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             modelBuilder.ApplyConfiguration<TicketHistory>(new TicketHistoryConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<Last30Ticket>(new Last30TicketConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<TicketCountInfo>(new TicketCountInfoConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration<ProfilePicture>(new ProfilePictureConfiguration(_companyid));
 
             #endregion
 
@@ -114,6 +117,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             modelBuilder.Entity<TicketHistory>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<Last30Ticket>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<TicketCountInfo>().HasQueryFilter(q => q.companyid == _companyid);
+            modelBuilder.Entity<ProfilePicture>().HasQueryFilter(q => q.companyid == _companyid);
 
             #endregion
         }
