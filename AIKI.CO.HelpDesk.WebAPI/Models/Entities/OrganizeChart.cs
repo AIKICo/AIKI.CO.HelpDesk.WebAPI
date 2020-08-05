@@ -16,6 +16,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public string titletype { get; set; }
         public Guid customerid { get; set; }
         public OrganizeChartAdditionalInfo[] additionalinfo { get; set; }
+        public string email { get; set; }
 
         public Company Company { get; set; }
         public Customer Customer { get; set; }
