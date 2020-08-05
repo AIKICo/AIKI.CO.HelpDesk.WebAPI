@@ -22,6 +22,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
         public Guid? operateid { get; set; }
         public string requestpriority { get; set; }
         public Guid? customerid { get; set; }
-        public string requester { get; set; }
+        public Guid? requester { get; set; }
     }
 }
