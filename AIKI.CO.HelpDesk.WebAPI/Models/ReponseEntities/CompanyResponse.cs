@@ -8,5 +8,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
         public Guid companyid { get; set; }
         public string title { get; set; }
         public string email { get; set; }
+        public bool? allowdelete { get; set; }
     }
 }

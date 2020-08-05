@@ -24,6 +24,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public Guid id { get; set; }
         public string title { get; set; }
         public string email { get; set; }
+        public bool? allowdelete { get; set; }
 
         public ICollection<Customer> Customers { get; set; }
         public ICollection<Member> Members { get; set; }
