@@ -24,10 +24,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         {
         }
 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(string), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Post(
+        [HttpPost(nameof(PostProfilePicture))]
+        public async Task<IActionResult> PostProfilePicture(
             IFormFile profilePic,
             [FromBody] ProfilePictureResponse request,
             CancellationToken cancellationToken)

@@ -56,6 +56,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                 q => q.companyid == Guid.Parse("997afb89-9abf-4889-8e43-cc301a311a9f"), ignoreQueryFilters: true);
             operatingHourRecords.ForAll(async (record) =>
             {
+                record.id = Guid.NewGuid();
                 record.companyid = request.id;
                 await operatingHourRepo.InsertAsync(record);
             });
@@ -67,6 +68,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                 q => q.companyid == Guid.Parse("997afb89-9abf-4889-8e43-cc301a311a9f"), ignoreQueryFilters: true);
             SLARecords.ForAll(async (record) =>
             {
+                record.id = Guid.NewGuid();
                 record.companyid = request.id;
                 await SLARepo.InsertAsync(record);
             });
@@ -77,6 +79,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                 q => q.companyid == Guid.Parse("997afb89-9abf-4889-8e43-cc301a311a9f"), ignoreQueryFilters: true);
             GroupRecords.ForAll(async (record) =>
             {
+                record.id = Guid.NewGuid();
                 record.companyid = request.id;
                 await GroupsRepo.InsertAsync(record);
             });
