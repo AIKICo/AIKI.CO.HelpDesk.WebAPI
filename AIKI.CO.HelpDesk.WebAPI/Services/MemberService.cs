@@ -44,6 +44,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                 return null;
             user.token = _jwtService.GenerateSecurityToken(user);
             user.encryptedCompnayId = _protector.Protect(user.companyid.ToString());
+            user.CompanyName = _unitofwork.GetRepository<Company>().Find(user.companyid).title;
             user.companyid = Guid.Empty;
             return user.WithoutPassword();
         }
