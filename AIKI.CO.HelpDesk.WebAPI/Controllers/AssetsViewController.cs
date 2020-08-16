@@ -5,8 +5,10 @@ using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Raven.Client.Http;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
@@ -24,6 +26,5 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         {
             return Ok(await _service.GetAll(q=>q.customerid==id));
         }
-
     }
 }

@@ -14,7 +14,7 @@ using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
-    [Authorize(Roles = "admin, user")]
+    [Authorize]
     public class ProfilePictureController : BaseCRUDApiController<ProfilePicture, ProfilePictureResponse>
     {
         public ProfilePictureController(

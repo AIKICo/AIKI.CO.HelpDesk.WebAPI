@@ -27,7 +27,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin, user")]
         public override async Task<IActionResult> Get()
         {
             return await base.Get();
