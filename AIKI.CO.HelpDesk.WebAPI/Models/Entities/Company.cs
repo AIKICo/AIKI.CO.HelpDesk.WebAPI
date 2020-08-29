@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+// ReSharper disable All
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
 {
@@ -25,6 +26,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public string title { get; set; }
         public string email { get; set; }
         public bool? allowdelete { get; set; }
+        public string subdomain { get; set; }    
 
         public ICollection<Customer> Customers { get; set; }
         public ICollection<Member> Members { get; set; }
