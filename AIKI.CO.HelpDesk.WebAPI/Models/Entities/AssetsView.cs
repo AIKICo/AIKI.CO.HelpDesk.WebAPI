@@ -1,4 +1,5 @@
 using System;
+// ReSharper disable All
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
 {
@@ -10,5 +11,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public string assettypeid { get; set; }
         public DateTime? deliverydate { get; set; }
         public Guid? customerid { get; set; }
+        public string additionalinfo { get; set; }
     }
 }
