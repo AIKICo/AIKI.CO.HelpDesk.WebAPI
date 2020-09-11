@@ -48,7 +48,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
                 orderBy: q => q.OrderBy(c => c.value1).ThenBy(c => c.value2));
             if (result != null)
                 return Ok(result);
-            else return NotFound();
+            return NotFound();
         }
 
         [HttpPost]
