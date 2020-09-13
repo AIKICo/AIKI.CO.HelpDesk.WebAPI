@@ -80,7 +80,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
                 .PersistKeysToFileSystem(new DirectoryInfo(@"DataProtectionKeys/"))
                 .SetApplicationName("AIKI.CO.HelpDesk")
                 .SetDefaultKeyLifetime(TimeSpan.FromDays(14));
-            ;
+            
             services.AddResponseCaching();
             services.Configure<GzipCompressionProviderOptions>(options =>
             {
@@ -118,11 +118,19 @@ namespace AIKI.CO.HelpDesk.WebAPI
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
-            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "AIKI Help Desk API");
+                    options.RoutePrefix = string.Empty;
+                    Serilog.Debugging.SelfLog.Enable(msg => Debug.WriteLine(msg));
+                    Serilog.Debugging.SelfLog.Enable(Console.Error);
+                });
+            }
             else app.UseHsts();
-
-            Serilog.Debugging.SelfLog.Enable(msg => Debug.WriteLine(msg));
-            Serilog.Debugging.SelfLog.Enable(Console.Error);
 
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
@@ -141,8 +149,6 @@ namespace AIKI.CO.HelpDesk.WebAPI
             });
 
             loggerFactory.AddSerilog();
-            Log.Information("Startup");
-
             app.UseHttpsRedirection();
             app.UseResponseCompression();
             app.UseResponseCaching();
@@ -153,16 +159,8 @@ namespace AIKI.CO.HelpDesk.WebAPI
             app.UseSerilogRequestLogging();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers(); 
-                endpoints.MapHub<TicketAlarmHub>("/ticketalarmhub", options =>
-                {
-                });
-            });
-            app.UseSwagger();
-            app.UseSwaggerUI(options =>
-            {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "AIKI Help Desk API");
-                options.RoutePrefix = string.Empty;
+                endpoints.MapControllers();
+                endpoints.MapHub<TicketAlarmHub>("/ticketalarmhub", options => { });
             });
         }
 

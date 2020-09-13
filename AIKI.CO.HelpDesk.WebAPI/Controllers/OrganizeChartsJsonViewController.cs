@@ -11,37 +11,21 @@ using Microsoft.Extensions.Options;
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
     public class
-        OrganizeChartsJsonViewController : BaseRApiController<OrganizeCharts_JsonView, OrganizeCharts_JsonViewResponse>
+        OrganizeChartsJsonViewController : BaseRApiController<OrganizeChartView, OrganizeChartViewResponse>
     {
         public OrganizeChartsJsonViewController(
             IMapper map,
             IOptions<AppSettings> appSettings,
-            IService<OrganizeCharts_JsonView, OrganizeCharts_JsonViewResponse> service) : base(map, appSettings,
+            IService<OrganizeChartView, OrganizeChartViewResponse> service) : base(map, appSettings,
             service)
         {
         }
 
-        [HttpGet("GetByCompanyId")]
-        public async Task<IActionResult> GetByCompanyId()
-        {
-            var parent = await _service.GetSingle<OrganizeChart>(q => q.parent_id == null);
-            if (parent != null)
-            {
-                var result = _service.GetRawSQL("SELECT * FROM organizecharts_jsonview({0})", parent.id);
-                if (result != null)
-                    return Ok(result);
-                else return NotFound();
-            }
-            else
-            {
-                return BadRequest();
-            }
-        }
-        
+
         [HttpGet("GetByCustomerId/{id}")]
-        public async Task<IActionResult>GetByCustomerId([FromRoute] string id)
+        public async Task<IActionResult> GetByCustomerId([FromRoute] Guid id)
         {
-            var result =  await _service.GetRawSQL("SELECT * FROM organizecharts_jsonview({0})", Guid.Parse(id));
+            var result = await _service.GetSingle(q => q.customerid == id);
             if (result != null)
                 return Ok(result);
             else return NotFound();

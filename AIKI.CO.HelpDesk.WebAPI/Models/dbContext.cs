@@ -34,7 +34,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
         public DbSet<AppConstant> AppConstant { get; set; }
         public DbSet<AppConstantItem> AppConstantItem { get; set; }
         public DbSet<OrganizeChart> OrganizeChart { get; set; }
-        public DbSet<OrganizeCharts_JsonView> OrganizeCharts_JsonView { get; set; }
         public DbSet<Asset> Asset { get; set; }
         public DbSet<Ticket> Ticket { get; set; }
         public DbSet<AssetsView> AssetsView { get; set; }
@@ -43,6 +42,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
         public DbSet<Last30Ticket> Last30Ticket { get; set; }
         public DbSet<TicketCountInfo> TicketCountInfo { get; set; }
         public DbSet<ProfilePicture> ProfilePicture { get; set; }
+        public DbSet<OrganizeChartView> OrganizeChartView { get; set; }
 
         public dbContext(
             DbContextOptions options,
@@ -97,6 +97,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             modelBuilder.ApplyConfiguration<Last30Ticket>(new Last30TicketConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<TicketCountInfo>(new TicketCountInfoConfiguration(_companyid));
             modelBuilder.ApplyConfiguration<ProfilePicture>(new ProfilePictureConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration<OrganizeChartView>(new OrganizeChartViewConfiguration(_companyid));
 
             #endregion
 
@@ -118,6 +119,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             modelBuilder.Entity<Last30Ticket>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<TicketCountInfo>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<ProfilePicture>().HasQueryFilter(q => q.companyid == _companyid);
+            modelBuilder.Entity<OrganizeChartView>().HasQueryFilter(q => q.companyid == _companyid);
+
 
             #endregion
         }

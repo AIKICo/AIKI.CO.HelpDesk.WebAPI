@@ -37,7 +37,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                 {
                     title = customerInfo.title,
                     allowdelete = false,
-                    titletype = "6014fa01-1bb4-4313-be26-c692ca4c2556",
+                    titletype = Guid.Parse("6014fa01-1bb4-4313-be26-c692ca4c2556"),
                     customerid = customerInfo.id,
                 });
             }

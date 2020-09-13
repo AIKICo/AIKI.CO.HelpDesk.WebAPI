@@ -34,9 +34,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
             services
                 .AddTransient<IService<OrganizeChart, OrganizeChartResponse>,
                     BaseService<OrganizeChart, OrganizeChartResponse>>();
-            services
-                .AddTransient<IService<OrganizeCharts_JsonView, OrganizeCharts_JsonViewResponse>,
-                    BaseService<OrganizeCharts_JsonView, OrganizeCharts_JsonViewResponse>>();
             services.AddTransient<IJWTService, JWTService>();
             services
                 .AddTransient<IService<Asset, AssetResponse>,
@@ -59,6 +56,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
             services
                 .AddTransient<IService<TicketCountInfo, TicketCountInfoResponse>,
                     BaseService<TicketCountInfo, TicketCountInfoResponse>>();
+            
+            services
+                .AddTransient<IService<OrganizeChartView, OrganizeChartViewResponse>,
+                    BaseService<OrganizeChartView, OrganizeChartViewResponse>>();
             
             services.AddTransient<ICompanyService, CompanyService>();
             services.AddSingleton<IEmailConfiguration>(config.GetSection("EmailConfiguration").Get<EmailConfiguration>());

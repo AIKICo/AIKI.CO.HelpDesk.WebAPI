@@ -10,7 +10,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
         [Required]
         public string title { get; set; }
         [Required]
-        public string titletype { get; set; }
+        public Guid? titletype { get; set; }
         public OrganizeChartAdditionalInfo[] additionalinfo { get; set; }
         public string email { get; set; }
         public Guid customerid { get; set; }

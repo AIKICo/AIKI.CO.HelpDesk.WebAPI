@@ -24,7 +24,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.AutoMapperSettings
             CreateMap<AppConstant, AppConstantResponse>().ReverseMap();
             CreateMap<AppConstantItem, AppConstantItemResponse>().ReverseMap();
             CreateMap<OrganizeChart, OrganizeChartResponse>().ReverseMap();
-            CreateMap<OrganizeCharts_JsonView, OrganizeCharts_JsonViewResponse>().ReverseMap();
             CreateMap<Asset, AssetResponse>().ReverseMap();
             CreateMap<AssetsView, AssetsViewResponse>().ReverseMap();
             CreateMap<Ticket, TicketResponse>().ReverseMap();
@@ -43,6 +42,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.AutoMapperSettings
             CreateMap<Last30Ticket, Last30TicketResponse>().ReverseMap();
             CreateMap<Company, CompanyResponse>().ReverseMap();
             CreateMap<TicketCountInfo, TicketCountInfoResponse>().ReverseMap();
+            CreateMap<OrganizeChartView, OrganizeChartViewResponse>().ReverseMap();
+
         }
 
         private string ConvertToJalili(DateTime? date)
