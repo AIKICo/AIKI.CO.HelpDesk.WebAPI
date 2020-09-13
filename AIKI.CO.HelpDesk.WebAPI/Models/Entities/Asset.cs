@@ -13,5 +13,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public AssetAdditionalInfo[] assetadditionalinfo { get; set; }
         public Company Company { get; set; }
         public Customer Customer { get; set; }
+        public string employees { get; set; }
     }
 }

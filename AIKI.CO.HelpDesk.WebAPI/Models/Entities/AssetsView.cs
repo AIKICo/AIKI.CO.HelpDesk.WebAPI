@@ -12,5 +12,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public DateTime? deliverydate { get; set; }
         public Guid? customerid { get; set; }
         public string additionalinfo { get; set; }
+        public string employees { get; set; }
     }
 }
