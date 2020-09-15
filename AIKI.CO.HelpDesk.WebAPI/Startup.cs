@@ -72,7 +72,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
                             "https://localhost:5002",
                             "http://localhost:5002",
                             "http://localhost:8080",
-                            "https://app.aiki-ticket.ir/")
+                            "https://app.aiki-ticket.ir")
                         .AllowCredentials();
                 });
             });
