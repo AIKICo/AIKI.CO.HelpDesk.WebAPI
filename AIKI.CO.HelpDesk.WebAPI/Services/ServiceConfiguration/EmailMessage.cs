@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace AIKI.CO.HelpDesk.WebAPI.Services
+namespace AIKI.CO.HelpDesk.WebAPI.Services.ServiceConfiguration
 {
     public class EmailMessage
     {

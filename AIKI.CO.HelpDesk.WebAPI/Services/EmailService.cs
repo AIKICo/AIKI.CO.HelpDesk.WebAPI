@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
+using AIKI.CO.HelpDesk.WebAPI.Services.ServiceConfiguration;
 using MailKit.Net.Smtp;
 using MimeKit;
 using MimeKit.Text;

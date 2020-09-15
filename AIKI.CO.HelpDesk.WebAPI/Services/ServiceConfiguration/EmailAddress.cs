@@ -1,4 +1,4 @@
-namespace AIKI.CO.HelpDesk.WebAPI.Services
+namespace AIKI.CO.HelpDesk.WebAPI.Services.ServiceConfiguration
 {
     public class EmailAddress
     {

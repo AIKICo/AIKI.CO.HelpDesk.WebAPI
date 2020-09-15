@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AIKI.CO.HelpDesk.WebAPI.Services.ServiceConfiguration;
 using Raven.Client;
 
 namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
@@ -56,15 +57,22 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
             services
                 .AddTransient<IService<TicketCountInfo, TicketCountInfoResponse>,
                     BaseService<TicketCountInfo, TicketCountInfoResponse>>();
-            
+
             services
                 .AddTransient<IService<OrganizeChartView, OrganizeChartViewResponse>,
                     BaseService<OrganizeChartView, OrganizeChartViewResponse>>();
-            
+
             services.AddTransient<ICompanyService, CompanyService>();
-            services.AddSingleton<IEmailConfiguration>(config.GetSection("EmailConfiguration").Get<EmailConfiguration>());
+            
+            services.AddSingleton<IEmailConfiguration>(
+                config.GetSection("EmailConfiguration").Get<EmailConfiguration>());
+            
+            services.AddSingleton<ICloudFlareConfiguration>(config.GetSection("CloudFlareConfiguration")
+                .Get<CloudFlareConfiguration>());
 
             services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<ICloudFlareService, CloudFlareService>();
+
             services.AddHttpContextAccessor();
             return services;
         }

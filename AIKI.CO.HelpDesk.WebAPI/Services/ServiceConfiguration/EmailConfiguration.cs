@@ -1,6 +1,6 @@
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 
-namespace AIKI.CO.HelpDesk.WebAPI.Services
+namespace AIKI.CO.HelpDesk.WebAPI.Services.ServiceConfiguration
 {
     public class EmailConfiguration:IEmailConfiguration
     {

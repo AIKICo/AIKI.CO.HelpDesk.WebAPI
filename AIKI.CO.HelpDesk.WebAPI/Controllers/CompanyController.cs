@@ -4,6 +4,7 @@ using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
+using AIKI.CO.HelpDesk.WebAPI.Services.ServiceConfiguration;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
 using AutoMapper;
 using MailKit;
@@ -45,14 +46,16 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Post([FromBody] CompanyResponse request)
         {
-            if (!ModelState.IsValid) return BadRequest(new {model=ModelState, message="خطا در ویرایش اطلاعات"});
+            if (!ModelState.IsValid) return BadRequest(new {model = ModelState, message = "خطا در ویرایش اطلاعات"});
             var duplicateRecord = await _memberService.GetSingle(q => q.username == request.email);
             if (duplicateRecord != null) return BadRequest("نام کاربری تکراری است");
             var result = await _service.AddRecord(request);
+            if (result == null) return BadRequest("شرکت شما به ثبت نرسید");
             var adminUser = new MemberResponse
             {
                 membername = "مدیریت",
-                password = new Password(includeLowercase: true, includeUppercase: true, includeNumeric: true, includeSpecial: true, passwordLength: 21).Next(),
+                password = new Password(includeLowercase: true, includeUppercase: true, includeNumeric: true,
+                    includeSpecial: true, passwordLength: 21).Next(),
                 roles = "admin",
                 email = request.email,
                 companyid = request.id,
@@ -63,7 +66,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             _emailService.Send(new EmailMessage
             {
                 Subject = "میز کار خدمات رایانه ای AiKi",
-                Content = $"<p dir='rtl' style='font-family:tahoma'> با سلام </br> رمز عبور شما جهت ورود به میزکار خدمات رایانه ای عبارت است از: <span dir='ltr'><b>{adminUser.password}</b></span> <br/> جهت ورود <a href='https://aiki-helpdesk-v1.firebaseapp.com/'>اینجا</a> کلیک نمایید</p>",
+                Content =
+                    $"<p dir='rtl' style='font-family:tahoma'> با سلام </br> رمز عبور شما جهت ورود به میزکار خدمات رایانه ای عبارت است از: <span dir='ltr'><b>{adminUser.password}</b></span> <br/> جهت ورود <a href='https://aiki-helpdesk-v1.firebaseapp.com/'>اینجا</a> کلیک نمایید</p>",
                 FromAddresses = new List<EmailAddress>()
                     {new EmailAddress() {Name = "Mohammad Mehrnia", Address = "qermezkon@gmail.com"}},
                 ToAddresses = new List<EmailAddress>()

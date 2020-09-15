@@ -9,22 +9,23 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.0.1" />
+    <PackageReference Include="CloudFlare.Client" Version="1.1.11" />
     <PackageReference Include="EntityFrameworkCore.DataEncryption" Version="1.1.0" />
-    <PackageReference Include="MailKit" Version="2.8.0" />
+    <PackageReference Include="MailKit" Version="2.9.0" />
     <PackageReference Include="MD.PersianDateTime.Standard" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.OData" Version="7.4.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.7">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.7">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.UnitOfWork" Version="3.1.21" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.UnitOfWork" Version="3.1.22" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
@@ -32,11 +33,11 @@
     <PackageReference Include="Sentry.AspNetCore" Version="2.1.6" />
     <PackageReference Include="Serilog.AspNetCore" Version="3.4.0" />
     <PackageReference Include="Serilog.Sinks.RavenDB" Version="3.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="5.5.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.5.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.5.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.5.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="5.6.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.6.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.6.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.6.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.7.1" />
   </ItemGroup>
 
