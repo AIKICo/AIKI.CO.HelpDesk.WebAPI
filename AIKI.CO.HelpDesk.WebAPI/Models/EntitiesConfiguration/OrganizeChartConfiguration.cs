@@ -22,7 +22,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
             builder.HasOne(c => c.Customer)
                 .WithMany(c => c.OrganizeCharts)
                 .HasForeignKey(c => c.customerid);
-            
+
             builder.HasOne(c => c.ParentOrganizeChart)
                 .WithMany(c => c.OrganizeCharts)
                 .HasForeignKey(c => c.parent_id);

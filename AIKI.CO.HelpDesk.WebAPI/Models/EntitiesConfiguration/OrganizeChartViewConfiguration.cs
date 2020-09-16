@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {
-    public class OrganizeChartViewConfiguration: BaseViewConfiguration<OrganizeChartView>
+    public class OrganizeChartViewConfiguration : BaseViewConfiguration<OrganizeChartView>
     {
         public OrganizeChartViewConfiguration(Guid companyid) : base(companyid)
         {

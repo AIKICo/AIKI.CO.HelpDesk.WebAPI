@@ -1,4 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Extensions;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
@@ -6,15 +11,10 @@ using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
 using Arch.EntityFrameworkCore.UnitOfWork;
 using AutoMapper;
-using Microsoft.Extensions.Options;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
@@ -70,7 +70,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             Func<IQueryable<Member>, IOrderedQueryable<Member>> orderBy = null,
             Func<IQueryable<Member>, IIncludableQueryable<Member, object>> include = null, int pageIndex = 0,
             int pageSize = 20, bool disableTracking = true,
-            CancellationToken cancellationToken = default(CancellationToken),
+            CancellationToken cancellationToken = default,
             bool ignoreQueryFilters = false)
         {
             return _map.Map<IList<MemberResponse>>((await _repository.GetPagedListAsync(predicate, orderBy,
@@ -83,14 +83,18 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             return _map.Map<MemberResponse>(await _repository.FindAsync(id)).WithoutPassword().WithoutCompanyId();
         }
 
-        public override async Task<MemberResponse> GetSingle(Expression<Func<Member, bool>> predicate, bool ignoreQueryFilters = false)
+        public override async Task<MemberResponse> GetSingle(Expression<Func<Member, bool>> predicate,
+            bool ignoreQueryFilters = false)
         {
-            return _map.Map<MemberResponse>(await _repository.GetFirstOrDefaultAsync(predicate: predicate, ignoreQueryFilters:ignoreQueryFilters)).WithoutPassword().WithoutCompanyId();
+            return _map.Map<MemberResponse>(await _repository.GetFirstOrDefaultAsync(predicate: predicate,
+                ignoreQueryFilters: ignoreQueryFilters)).WithoutPassword().WithoutCompanyId();
         }
-        
-        public async Task<MemberResponse> GetSingleWithPassword(Expression<Func<Member, bool>> predicate, bool ignoreQueryFilters = false)
+
+        public async Task<MemberResponse> GetSingleWithPassword(Expression<Func<Member, bool>> predicate,
+            bool ignoreQueryFilters = false)
         {
-            return _map.Map<MemberResponse>(await _repository.GetFirstOrDefaultAsync(predicate: predicate, ignoreQueryFilters:ignoreQueryFilters)).WithoutCompanyId();
+            return _map.Map<MemberResponse>(await _repository.GetFirstOrDefaultAsync(predicate: predicate,
+                ignoreQueryFilters: ignoreQueryFilters)).WithoutCompanyId();
         }
     }
 }

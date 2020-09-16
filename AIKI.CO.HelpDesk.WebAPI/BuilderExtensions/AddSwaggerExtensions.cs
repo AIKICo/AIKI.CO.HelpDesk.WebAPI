@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
@@ -14,7 +11,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
         {
             services.AddSwaggerGen(options =>
             {
-                
                 var apiinfo = new OpenApiInfo
                 {
                     Title = "AIKI Help Desk Web API",
@@ -23,10 +19,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
                     Contact = new OpenApiContact
                     {
                         Email = "qermezkon@gmail.com",
-                        Name = "Mohammad Mehrnia", 
+                        Name = "Mohammad Mehrnia",
                         Url = new Uri("https://github.com/AIKICo/AIKI.CO.HelpDesk.WebAPI")
                     },
-                    License = new OpenApiLicense()
+                    License = new OpenApiLicense
                     {
                         Name = "MIT License",
                         Url = new Uri("https://opensource.org/licenses/MIT")

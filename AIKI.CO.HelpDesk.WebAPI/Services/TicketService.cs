@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
@@ -10,10 +9,7 @@ using Arch.EntityFrameworkCore.UnitOfWork;
 using AutoMapper;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Microsoft.OData.Edm.Vocabularies;
-using Microsoft.VisualBasic;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
@@ -94,7 +90,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                 id = Guid.NewGuid(),
                 ticketid = ticketInfo.id,
                 historycomment = comment,
-                agentname = agentName,
+                agentname = agentName
             });
         }
     }

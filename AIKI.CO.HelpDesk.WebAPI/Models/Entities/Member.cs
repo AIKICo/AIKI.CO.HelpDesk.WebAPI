@@ -9,6 +9,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         {
             ProfilePictures = new HashSet<ProfilePicture>();
         }
+
         public string membername { get; set; }
         public string username { get; set; }
 
@@ -17,8 +18,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public string email { get; set; }
         public bool? disabled { get; set; }
         public Company Company { get; set; }
-        
-        public ICollection<ProfilePicture> ProfilePictures { get; set; }
 
+        public ICollection<ProfilePicture> ProfilePictures { get; set; }
     }
 }

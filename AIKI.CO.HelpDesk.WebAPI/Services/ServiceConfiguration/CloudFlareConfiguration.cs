@@ -2,7 +2,7 @@ using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services.ServiceConfiguration
 {
-    public class CloudFlareConfiguration:ICloudFlareConfiguration
+    public class CloudFlareConfiguration : ICloudFlareConfiguration
     {
         public string EmailAddress { get; set; }
         public string ApiKey { get; set; }

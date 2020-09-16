@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,21 +39,17 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
                     request.filecontent = fileBytes;
                     return await base.Post(request);
                 }
-                else
-                {
-                    return BadRequest(new {message = "فایل حاوی محتوی نمی باشد"});
-                }
+
+                return BadRequest(new {message = "فایل حاوی محتوی نمی باشد"});
             }
-            else
-            {
-                return BadRequest(new {message = "پسوند فایل مورد تایید نمی باشد"});
-            }
+
+            return BadRequest(new {message = "پسوند فایل مورد تایید نمی باشد"});
         }
 
         private bool CheckIfExcelFile(IFormFile file)
         {
             var extension = "." + file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
-            return (extension == ".jpg" || extension == ".png"); // Change the extension based on your need
+            return extension == ".jpg" || extension == ".png"; // Change the extension based on your need
         }
     }
 }

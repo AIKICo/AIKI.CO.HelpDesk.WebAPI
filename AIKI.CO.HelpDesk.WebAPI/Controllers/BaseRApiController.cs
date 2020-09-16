@@ -1,15 +1,13 @@
-﻿using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
+﻿using System;
+using System.Threading.Tasks;
+using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
 using AutoMapper;
-using Microsoft.AspNet.OData;
-using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {

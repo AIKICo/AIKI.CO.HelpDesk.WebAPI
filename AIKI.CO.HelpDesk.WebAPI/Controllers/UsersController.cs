@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Extensions;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
-using AIKI.CO.HelpDesk.WebAPI.Services;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Services.ServiceConfiguration;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
@@ -19,8 +16,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
     [Authorize]
     public sealed class UsersController : BaseCRUDApiController<Member, MemberResponse>
     {
-        private readonly IMemberService _userService;
         private readonly IEmailService _emailService;
+        private readonly IMemberService _userService;
 
         public UsersController(
             IMemberService userService,
@@ -58,7 +55,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [HttpGet("IsUserNameExists/{id}")]
         public async Task<IActionResult> IsUserNameExists([FromRoute] string id)
         {
-            return Ok(await _service.isExists(q => q.username == id, ignoreQueryFilters: true));
+            return Ok(await _service.isExists(q => q.username == id, true));
         }
 
         [HttpPut]
@@ -81,7 +78,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         {
             if (!string.IsNullOrEmpty(id))
             {
-                var userInfo = await _userService.GetSingleWithPassword(q => q.email == id, ignoreQueryFilters: true);
+                var userInfo = await _userService.GetSingleWithPassword(q => q.email == id, true);
                 if (userInfo != null)
                 {
                     _emailService.Send(new EmailMessage
@@ -89,22 +86,18 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
                         Subject = "میز کار خدمات رایانه ای AiKi",
                         Content =
                             $"<p dir='rtl' style='font-family:tahoma'> با سلام </br> رمز عبور شما جهت ورود به میزکار خدمات رایانه ای عبارت است از: <span dir='ltr'><b>{userInfo.password}</b></span> <br/> جهت ورود <a href='https://aiki-helpdesk-v1.firebaseapp.com/'>اینجا</a> کلیک نمایید</p>",
-                        FromAddresses = new List<EmailAddress>()
-                            {new EmailAddress() {Name = "Mohammad Mehrnia", Address = "qermezkon@gmail.com"}},
-                        ToAddresses = new List<EmailAddress>()
-                            {new EmailAddress() {Name = userInfo.CompanyName, Address = userInfo.email}},
+                        FromAddresses = new List<EmailAddress>
+                            {new EmailAddress {Name = "Mohammad Mehrnia", Address = "qermezkon@gmail.com"}},
+                        ToAddresses = new List<EmailAddress>
+                            {new EmailAddress {Name = userInfo.CompanyName, Address = userInfo.email}}
                     });
                     return Ok();
                 }
-                else
-                {
-                    return BadRequest("آدرس ایمیل شما به ثبت نرسیده است");
-                }
+
+                return BadRequest("آدرس ایمیل شما به ثبت نرسیده است");
             }
-            else
-            {
-                return BadRequest("آدرس ایمیل ثبت نشده است");
-            }
+
+            return BadRequest("آدرس ایمیل ثبت نشده است");
         }
     }
 }

@@ -2,14 +2,9 @@
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
+using AIKI.CO.HelpDesk.WebAPI.Services.ServiceConfiguration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AIKI.CO.HelpDesk.WebAPI.Services.ServiceConfiguration;
-using Raven.Client;
 
 namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
 {
@@ -62,16 +57,16 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
                 .AddTransient<IService<OrganizeChartView, OrganizeChartViewResponse>,
                     BaseService<OrganizeChartView, OrganizeChartViewResponse>>();
 
-            services.AddTransient<ICompanyService, CompanyService>();
-            
             services.AddSingleton<IEmailConfiguration>(
                 config.GetSection("EmailConfiguration").Get<EmailConfiguration>());
-            
+
             services.AddSingleton<ICloudFlareConfiguration>(config.GetSection("CloudFlareConfiguration")
                 .Get<CloudFlareConfiguration>());
 
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<ICloudFlareService, CloudFlareService>();
+
+            services.AddTransient<ICompanyService, CompanyService>();
 
             services.AddHttpContextAccessor();
             return services;

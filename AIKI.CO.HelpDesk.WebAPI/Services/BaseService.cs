@@ -1,23 +1,20 @@
-﻿using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
+using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
 using Arch.EntityFrameworkCore.UnitOfWork;
-using Arch.EntityFrameworkCore.UnitOfWork.Collections;
 using AutoMapper;
-using Microsoft.EntityFrameworkCore.Query;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.Extensions.Options;
 
 // ReSharper disable All
 
@@ -27,13 +24,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         where T : BaseObject
         where V : BaseResponse
     {
-        private readonly IHttpContextAccessor _context;
         protected readonly Guid _companyId;
+        private readonly IHttpContextAccessor _context;
         private readonly IDataProtector _protector;
-        protected AppSettings _appSettings { get; private set; }
-        protected IUnitOfWork _unitofwork { get; private set; }
-        protected IRepository<T> _repository { get; private set; }
-        protected IMapper _map { get; private set; }
 
         public BaseService(
             IMapper map,
@@ -52,6 +45,11 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                 _companyId =
                     Guid.Parse(_protector.Unprotect(_context.HttpContext.Request.Headers["CompanyID"].ToString()));
         }
+
+        protected AppSettings _appSettings { get; private set; }
+        protected IUnitOfWork _unitofwork { get; private set; }
+        protected IRepository<T> _repository { get; private set; }
+        protected IMapper _map { get; private set; }
 
         public virtual async Task<IEnumerable<V>> GetAll()
         {
@@ -122,7 +120,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             await _unitofwork.SaveChangesAsync();
             return request;
         }
-        
+
         public virtual async Task<int> UpdateRecord(V request)
         {
             var record = _map.Map<T>(request);
@@ -133,14 +131,15 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 
         public virtual async Task<int> DeleteRecord(Guid id)
         {
-            var founded = _map.Map<T>(await GetSingle(q => q.id == id && q.companyid==_companyId));
+            var founded = _map.Map<T>(await GetSingle(q => q.id == id && q.companyid == _companyId));
             if (founded == null) return 0;
-            if (founded.allowdelete==null || (bool)founded.allowdelete)
+            if (founded.allowdelete == null || (bool) founded.allowdelete)
             {
                 founded.companyid = _companyId;
                 _repository.Delete(founded);
                 return await _unitofwork.SaveChangesAsync();
             }
+
             return 0;
         }
 
@@ -148,18 +147,21 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         {
             var record = _map.Map<T>(request);
             record.companyid = _companyId;
-            _repository.ChangeEntityState(record, Microsoft.EntityFrameworkCore.EntityState.Modified);
+            _repository.ChangeEntityState(record, EntityState.Modified);
             return await _unitofwork.SaveChangesAsync();
         }
 
-        public virtual async Task<V> GetSingle(Expression<Func<T, bool>> predicate, bool ignoreQueryFilters=false)
+        public virtual async Task<V> GetSingle(Expression<Func<T, bool>> predicate, bool ignoreQueryFilters = false)
         {
-            return _map.Map<V>(await _repository.GetFirstOrDefaultAsync(predicate: predicate, ignoreQueryFilters:ignoreQueryFilters));
+            return _map.Map<V>(await _repository.GetFirstOrDefaultAsync(predicate: predicate,
+                ignoreQueryFilters: ignoreQueryFilters));
         }
 
-        public virtual async Task<K> GetSingle<K>(Expression<Func<K, bool>> predicate, bool ignoreQueryFilters=false) where K : BaseObject
+        public virtual async Task<K> GetSingle<K>(Expression<Func<K, bool>> predicate, bool ignoreQueryFilters = false)
+            where K : BaseObject
         {
-            return _map.Map<K>(await _unitofwork.GetRepository<K>().GetFirstOrDefaultAsync(predicate: predicate, ignoreQueryFilters:ignoreQueryFilters));
+            return _map.Map<K>(await _unitofwork.GetRepository<K>()
+                .GetFirstOrDefaultAsync(predicate: predicate, ignoreQueryFilters: ignoreQueryFilters));
         }
 
         public virtual async Task<List<T>> GetRawSQL(string sqlQuery, params object[] parameters)

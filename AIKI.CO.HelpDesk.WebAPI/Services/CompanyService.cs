@@ -1,33 +1,27 @@
 using System;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using Arch.EntityFrameworkCore.UnitOfWork;
 using AutoMapper;
-using AutoMapper.Configuration;
 using AutoMapper.Internal;
-using Microsoft.AspNetCore.Authorization;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
     public class CompanyService : ICompanyService
     {
-        private readonly IUnitOfWork _unitofwork;
-        private readonly IMapper _map;
-        private readonly IConfiguration _configuration;
-        private readonly ICloudFlareService _cloudFlareService;
         private readonly ICloudFlareConfiguration _cloudFlareConfiguration;
+        private readonly ICloudFlareService _cloudFlareService;
+        private readonly IMapper _map;
+        private readonly IUnitOfWork _unitofwork;
 
-        public CompanyService(IUnitOfWork unitofwork, IMapper map, IConfiguration configuration,
+        public CompanyService(IUnitOfWork unitofwork, IMapper map,
             ICloudFlareService cloudFlareService,
             ICloudFlareConfiguration cloudFlareConfiguration)
         {
             _unitofwork = unitofwork;
             _map = map;
-            _configuration = configuration;
             _cloudFlareService = cloudFlareService;
             _cloudFlareConfiguration = cloudFlareConfiguration;
         }
@@ -38,86 +32,84 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             request.allowdelete = false;
             await _unitofwork.GetRepository<Company>().InsertAsync(_map.Map<Company>(request));
             var effectedRow = await _unitofwork.SaveChangesAsync();
-            if (effectedRow > 0)
+            if (effectedRow <= 0) return null;
+
+            #region Add Constant
+
+            var appConstantRepo = _unitofwork.GetRepository<AppConstant>();
+            var appContants = await appConstantRepo.GetAllAsync(
+                q => q.companyid == Guid.Parse("997afb89-9abf-4889-8e43-cc301a311a9f"), ignoreQueryFilters: true);
+            appContants.ForAll(async record =>
             {
-                #region Add Constant
+                record.companyid = request.id;
+                await appConstantRepo.InsertAsync(record);
+            });
+            await _unitofwork.SaveChangesAsync();
 
-                var AppConstantRepo = _unitofwork.GetRepository<AppConstant>();
-                var AppContants = await AppConstantRepo.GetAllAsync(
-                    q => q.companyid == Guid.Parse("997afb89-9abf-4889-8e43-cc301a311a9f"), ignoreQueryFilters: true);
-                AppContants.ForAll(async (record) =>
-                {
-                    record.companyid = request.id;
-                    await AppConstantRepo.InsertAsync(record);
-                });
-                await _unitofwork.SaveChangesAsync();
+            var appConstantItemRepo = _unitofwork.GetRepository<AppConstantItem>();
+            var appContantItems = await appConstantItemRepo.GetAllAsync(
+                q => q.companyid == Guid.Parse("997afb89-9abf-4889-8e43-cc301a311a9f"), ignoreQueryFilters: true);
+            appContantItems.ForAll(async record =>
+            {
+                record.companyid = request.id;
+                await appConstantItemRepo.InsertAsync(record);
+            });
+            await _unitofwork.SaveChangesAsync();
 
-                var AppConstantItemRepo = _unitofwork.GetRepository<AppConstantItem>();
-                var AppContantItems = await AppConstantItemRepo.GetAllAsync(
-                    q => q.companyid == Guid.Parse("997afb89-9abf-4889-8e43-cc301a311a9f"), ignoreQueryFilters: true);
-                AppContantItems.ForAll(async (record) =>
-                {
-                    record.companyid = request.id;
-                    await AppConstantItemRepo.InsertAsync(record);
-                });
-                await _unitofwork.SaveChangesAsync();
+            #endregion
 
-                #endregion
+            #region Add Operating Hours
 
-                #region Add Operating Hours
+            var operatingHourRepo = _unitofwork.GetRepository<OperatingHour>();
+            var operatingHourRecords = await operatingHourRepo.GetAllAsync(
+                q => q.companyid == Guid.Parse("997afb89-9abf-4889-8e43-cc301a311a9f"), ignoreQueryFilters: true);
+            operatingHourRecords.ForAll(async record =>
+            {
+                record.id = Guid.NewGuid();
+                record.companyid = request.id;
+                await operatingHourRepo.InsertAsync(record);
+            });
+            await _unitofwork.SaveChangesAsync();
 
-                var operatingHourRepo = _unitofwork.GetRepository<OperatingHour>();
-                var operatingHourRecords = await operatingHourRepo.GetAllAsync(
-                    q => q.companyid == Guid.Parse("997afb89-9abf-4889-8e43-cc301a311a9f"), ignoreQueryFilters: true);
-                operatingHourRecords.ForAll(async (record) =>
-                {
-                    record.id = Guid.NewGuid();
-                    record.companyid = request.id;
-                    await operatingHourRepo.InsertAsync(record);
-                });
-                await _unitofwork.SaveChangesAsync();
+            #endregion
 
-                #endregion
+            #region Add SLA
 
-                #region Add SLA
+            var slaRepo = _unitofwork.GetRepository<SLASetting>();
+            var slaRecords = await slaRepo.GetAllAsync(
+                q => q.companyid == Guid.Parse("997afb89-9abf-4889-8e43-cc301a311a9f"), ignoreQueryFilters: true);
+            slaRecords.ForAll(async record =>
+            {
+                record.id = Guid.NewGuid();
+                record.companyid = request.id;
+                await slaRepo.InsertAsync(record);
+            });
 
-                var SLARepo = _unitofwork.GetRepository<SLASetting>();
-                var SLARecords = await SLARepo.GetAllAsync(
-                    q => q.companyid == Guid.Parse("997afb89-9abf-4889-8e43-cc301a311a9f"), ignoreQueryFilters: true);
-                SLARecords.ForAll(async (record) =>
-                {
-                    record.id = Guid.NewGuid();
-                    record.companyid = request.id;
-                    await SLARepo.InsertAsync(record);
-                });
+            #endregion
 
-                #endregion
+            #region Add Groups
 
-                #region Add Groups
+            var groupsRepo = _unitofwork.GetRepository<Group>();
+            var groupRecords = await groupsRepo.GetAllAsync(
+                q => q.companyid == Guid.Parse("997afb89-9abf-4889-8e43-cc301a311a9f"), ignoreQueryFilters: true);
+            groupRecords.ForAll(async record =>
+            {
+                record.id = Guid.NewGuid();
+                record.companyid = request.id;
+                await groupsRepo.InsertAsync(record);
+            });
+            await _unitofwork.SaveChangesAsync();
 
-                var GroupsRepo = _unitofwork.GetRepository<Group>();
-                var GroupRecords = await GroupsRepo.GetAllAsync(
-                    q => q.companyid == Guid.Parse("997afb89-9abf-4889-8e43-cc301a311a9f"), ignoreQueryFilters: true);
-                GroupRecords.ForAll(async (record) =>
-                {
-                    record.id = Guid.NewGuid();
-                    record.companyid = request.id;
-                    await GroupsRepo.InsertAsync(record);
-                });
-                await _unitofwork.SaveChangesAsync();
+            #endregion
 
-                #endregion
+            #region Add subDomain To CloudFlare DNS Zone
 
-                #region Add subDomain To CloudFlare DNS Zone
+            await _cloudFlareService.AddDnsRecord(request.subdomain, _cloudFlareConfiguration.IPAddress1);
+            await _cloudFlareService.AddDnsRecord(request.subdomain, _cloudFlareConfiguration.IPAddress2);
 
-                await _cloudFlareService.AddDnsRecord(request.subdomain, _cloudFlareConfiguration.IPAddress1);
-                await _cloudFlareService.AddDnsRecord(request.subdomain, _cloudFlareConfiguration.IPAddress2);
+            #endregion
 
-                #endregion
-
-                return request;
-            }
-            return null;
+            return request;
         }
     }
 }

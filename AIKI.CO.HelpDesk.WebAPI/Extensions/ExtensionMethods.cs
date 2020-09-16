@@ -1,7 +1,6 @@
-﻿using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.DataProtection;
+using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Extensions
 {
@@ -16,12 +15,13 @@ namespace AIKI.CO.HelpDesk.WebAPI.Extensions
         {
             return members.Select(x => x.WithoutCompanyId());
         }
+
         public static MemberResponse WithoutPassword(this MemberResponse user)
         {
             user.password = string.Empty;
             return user;
         }
-        
+
         public static MemberResponse WithoutCompanyId(this MemberResponse user)
         {
             user.companyid = null;

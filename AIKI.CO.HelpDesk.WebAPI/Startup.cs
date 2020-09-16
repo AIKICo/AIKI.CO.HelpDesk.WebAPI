@@ -1,16 +1,15 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.IO.Compression;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using AIKI.CO.HelpDesk.WebAPI.AutoMapperSettings;
 using AIKI.CO.HelpDesk.WebAPI.BuilderExtensions;
+using AIKI.CO.HelpDesk.WebAPI.HubController;
 using AIKI.CO.HelpDesk.WebAPI.Models;
-using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
-using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
-using AIKI.CO.HelpDesk.WebAPI.Services;
-using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using Arch.EntityFrameworkCore.UnitOfWork;
 using AutoMapper;
-using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
@@ -19,20 +18,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using System.IO;
-using System.IO.Compression;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
-using AIKI.CO.HelpDesk.WebAPI.HubController;
-using Microsoft.AspNetCore.Http.Connections;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Raven.Client.Documents;
 using Raven.Client.Http;
 using Serilog;
 using Serilog.Context;
-using Serilog.Events;
+using Serilog.Debugging;
 
 namespace AIKI.CO.HelpDesk.WebAPI
 {
@@ -81,7 +73,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
                 .PersistKeysToFileSystem(new DirectoryInfo(@"DataProtectionKeys/"))
                 .SetApplicationName("AIKI.CO.HelpDesk")
                 .SetDefaultKeyLifetime(TimeSpan.FromDays(14));
-            
+
             services.AddResponseCaching();
             services.Configure<GzipCompressionProviderOptions>(options =>
             {
@@ -112,7 +104,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
             services.AddAuthorization();
             services.AddControllers()
                 .AddNewtonsoftJson(x =>
-                    x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+                    x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             services.AddSignalR();
             services.AddMemoryCache();
         }
@@ -127,11 +119,14 @@ namespace AIKI.CO.HelpDesk.WebAPI
                 {
                     options.SwaggerEndpoint("/swagger/v1/swagger.json", "AIKI Help Desk API");
                     options.RoutePrefix = string.Empty;
-                    Serilog.Debugging.SelfLog.Enable(msg => Debug.WriteLine(msg));
-                    Serilog.Debugging.SelfLog.Enable(Console.Error);
+                    SelfLog.Enable(msg => Debug.WriteLine(msg));
+                    SelfLog.Enable(Console.Error);
                 });
             }
-            else app.UseHsts();
+            else
+            {
+                app.UseHsts();
+            }
 
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()

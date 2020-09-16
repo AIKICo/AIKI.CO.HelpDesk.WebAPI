@@ -1,16 +1,7 @@
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Raven.Client;
-using Raven.Client.Documents;
-using Raven.Client.Http;
 using Serilog;
-using Serilog.Events;
 
 namespace AIKI.CO.HelpDesk.WebAPI
 {

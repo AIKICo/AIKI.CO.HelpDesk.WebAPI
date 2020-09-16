@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
 {

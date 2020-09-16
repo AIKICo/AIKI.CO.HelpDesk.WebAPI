@@ -3,7 +3,6 @@ using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AutoMapper;
 using MD.PersianDateTime.Standard;
-using Microsoft.AspNetCore.Mvc;
 
 namespace AIKI.CO.HelpDesk.WebAPI.AutoMapperSettings
 {
@@ -43,7 +42,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.AutoMapperSettings
             CreateMap<Company, CompanyResponse>().ReverseMap();
             CreateMap<TicketCountInfo, TicketCountInfoResponse>().ReverseMap();
             CreateMap<OrganizeChartView, OrganizeChartViewResponse>().ReverseMap();
-
         }
 
         private string ConvertToJalili(DateTime? date)

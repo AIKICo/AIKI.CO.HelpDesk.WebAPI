@@ -1,24 +1,26 @@
-﻿using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using System;
+﻿using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
+using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
     public class JWTService : IJWTService
     {
-        private readonly string _secret;
-        private readonly string _expDate;
         private readonly byte[] _encryptionkey;
+        private readonly string _expDate;
+        private readonly string _secret;
 
         public JWTService(IConfiguration config)
         {
             _secret = Environment.GetEnvironmentVariable("jwt_secret");
-            _encryptionkey = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("jwt_encryptionKey") ?? throw new Exception());
+            _encryptionkey =
+                Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("jwt_encryptionKey") ??
+                                       throw new Exception());
             _expDate = config.GetSection("JwtConfig").GetSection("expirationInMinutes").Value;
         }
 
@@ -30,7 +32,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.username),
-                new Claim("firstName", user.membername.ToString()),
+                new Claim("firstName", user.membername),
                 new Claim("role", user.roles),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
@@ -41,7 +43,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                 {
                     new Claim(ClaimTypes.Name, user.id.ToString()),
                     new Claim(JwtRegisteredClaimNames.Sub, user.username),
-                    new Claim("firstName", user.membername.ToString()),
+                    new Claim("firstName", user.membername),
                     new Claim(ClaimTypes.Role, user.roles),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
                 }),

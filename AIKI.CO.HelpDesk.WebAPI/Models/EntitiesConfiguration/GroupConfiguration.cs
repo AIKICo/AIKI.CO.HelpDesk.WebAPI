@@ -1,20 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {
-    public sealed class GroupConfiguration : BaseConfiguration<Entities.Group>, IEntityTypeConfiguration<Entities.Group>
+    public sealed class GroupConfiguration : BaseConfiguration<Group>, IEntityTypeConfiguration<Group>
     {
         public GroupConfiguration(Guid companyid) : base(companyid)
         {
         }
 
-        public override void Configure(EntityTypeBuilder<Entities.Group> builder)
+        public override void Configure(EntityTypeBuilder<Group> builder)
         {
             base.Configure(builder);
 

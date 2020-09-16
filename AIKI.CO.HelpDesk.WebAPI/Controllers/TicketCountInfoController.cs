@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
-    public class TicketCountInfoController: BaseRApiController<TicketCountInfo, TicketCountInfoResponse>
+    public class TicketCountInfoController : BaseRApiController<TicketCountInfo, TicketCountInfoResponse>
     {
         public TicketCountInfoController(
             IMapper map,

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
 {
@@ -11,8 +7,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
     {
         public DateTime? registerdate { get; set; }
         public DateTime? enddate { get; set; }
-        [Required]
-        public string description { get; set; }
+
+        [Required] public string description { get; set; }
+
         public Guid? tickettype { get; set; }
         public Guid? ticketcategory { get; set; }
         public Guid? tickettags { get; set; }

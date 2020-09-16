@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
@@ -22,7 +21,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             IService<Customer, CustomerResponse> service) : base(map, appSettings, service)
         {
         }
-        
+
         [HttpPost]
         [Authorize(Roles = "admin")]
         [Produces("application/json")]
@@ -45,7 +44,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         {
             return base.Patch(id, patchDoc);
         }
-        
+
         [HttpDelete("{id:guid}")]
         [Authorize(Roles = "admin")]
         public override Task<IActionResult> Delete(Guid id)

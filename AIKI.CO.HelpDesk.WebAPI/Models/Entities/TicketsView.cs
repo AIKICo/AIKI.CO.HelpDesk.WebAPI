@@ -1,5 +1,4 @@
 using System;
-using Microsoft.OData.Edm;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
 {

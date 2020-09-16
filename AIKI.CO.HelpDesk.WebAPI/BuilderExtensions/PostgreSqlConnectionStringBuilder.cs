@@ -17,9 +17,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
         private string _password;
         private bool _pooling;
         private int _port;
-        private string _username;
-        private bool _trustServerCertificate;
         private SslMode _sslMode;
+        private bool _trustServerCertificate;
+        private string _username;
 
         public PostgreSqlConnectionStringBuilder(string uriString)
         {

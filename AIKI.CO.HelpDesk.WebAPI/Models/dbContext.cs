@@ -1,18 +1,16 @@
-﻿using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
-using AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration;
-using AIKI.CO.HelpDesk.WebAPI.Settings;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using System;
+﻿using System;
 using System.Linq;
 using System.Text;
-using AutoMapper;
+using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
+using AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration;
+using AIKI.CO.HelpDesk.WebAPI.Settings;
 using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.DataEncryption;
 using Microsoft.EntityFrameworkCore.DataEncryption.Providers;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models
 {
@@ -20,29 +18,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
     {
         private readonly AppSettings _appSettings;
         private readonly IHttpContextAccessor _context;
+        private readonly byte[] _encryptionIV;
+        private readonly byte[] _encryptionKey;
         private readonly IDataProtector _protector;
-        private readonly byte[] _encryptionKey = null;
-        private readonly byte[] _encryptionIV = null;
         private readonly IEncryptionProvider _provider;
-        private Guid _companyid { get; set; } = Guid.Empty;
-        public DbSet<Company> Company { get; set; }
-        public DbSet<Customer> Customer { get; private set; }
-        public DbSet<Member> Member { get; private set; }
-        public DbSet<OperatingHour> OperatingHour { get; private set; }
-        public DbSet<SLASetting> SLASetting { get; set; }
-        public DbSet<Group> Group { get; set; }
-        public DbSet<AppConstant> AppConstant { get; set; }
-        public DbSet<AppConstantItem> AppConstantItem { get; set; }
-        public DbSet<OrganizeChart> OrganizeChart { get; set; }
-        public DbSet<Asset> Asset { get; set; }
-        public DbSet<Ticket> Ticket { get; set; }
-        public DbSet<AssetsView> AssetsView { get; set; }
-        public DbSet<TicketsView> TicketsView { get; set; }
-        public DbSet<TicketHistory> TicketHistory { get; set; }
-        public DbSet<Last30Ticket> Last30Ticket { get; set; }
-        public DbSet<TicketCountInfo> TicketCountInfo { get; set; }
-        public DbSet<ProfilePicture> ProfilePicture { get; set; }
-        public DbSet<OrganizeChartView> OrganizeChartView { get; set; }
 
         public dbContext(
             DbContextOptions options,
@@ -67,10 +46,30 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
+        private Guid _companyid { get; } = Guid.Empty;
+        public DbSet<Company> Company { get; set; }
+        public DbSet<Customer> Customer { get; private set; }
+        public DbSet<Member> Member { get; private set; }
+        public DbSet<OperatingHour> OperatingHour { get; private set; }
+        public DbSet<SLASetting> SLASetting { get; set; }
+        public DbSet<Group> Group { get; set; }
+        public DbSet<AppConstant> AppConstant { get; set; }
+        public DbSet<AppConstantItem> AppConstantItem { get; set; }
+        public DbSet<OrganizeChart> OrganizeChart { get; set; }
+        public DbSet<Asset> Asset { get; set; }
+        public DbSet<Ticket> Ticket { get; set; }
+        public DbSet<AssetsView> AssetsView { get; set; }
+        public DbSet<TicketsView> TicketsView { get; set; }
+        public DbSet<TicketHistory> TicketHistory { get; set; }
+        public DbSet<Last30Ticket> Last30Ticket { get; set; }
+        public DbSet<TicketCountInfo> TicketCountInfo { get; set; }
+        public DbSet<ProfilePicture> ProfilePicture { get; set; }
+        public DbSet<OrganizeChartView> OrganizeChartView { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.EnableSensitiveDataLogging(true);
+            optionsBuilder.EnableSensitiveDataLogging();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -81,23 +80,23 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
 
             #region Apply Configuration
 
-            modelBuilder.ApplyConfiguration<Customer>(new CustomerConfiguration(_companyid));
-            modelBuilder.ApplyConfiguration<Member>(new MemberConfiguration(_companyid));
-            modelBuilder.ApplyConfiguration<OperatingHour>(new OperatingHourConfiguration(_companyid));
-            modelBuilder.ApplyConfiguration<SLASetting>(new SLASettingConfiguration(_companyid));
-            modelBuilder.ApplyConfiguration<Group>(new GroupConfiguration(_companyid));
-            modelBuilder.ApplyConfiguration<AppConstant>(new AppConstantConfiguration(_companyid));
-            modelBuilder.ApplyConfiguration<AppConstantItem>(new AppConstantItemConfiguration(_companyid));
-            modelBuilder.ApplyConfiguration<OrganizeChart>(new OrganizeChartConfiguration(_companyid));
-            modelBuilder.ApplyConfiguration<Asset>(new AssetConfiguration(_companyid));
-            modelBuilder.ApplyConfiguration<AssetsView>(new AssetsViewConfiguration(_companyid));
-            modelBuilder.ApplyConfiguration<Ticket>(new TicketConfiguration(_companyid));
-            modelBuilder.ApplyConfiguration<TicketsView>(new TicketsViewConfiguration(_companyid));
-            modelBuilder.ApplyConfiguration<TicketHistory>(new TicketHistoryConfiguration(_companyid));
-            modelBuilder.ApplyConfiguration<Last30Ticket>(new Last30TicketConfiguration(_companyid));
-            modelBuilder.ApplyConfiguration<TicketCountInfo>(new TicketCountInfoConfiguration(_companyid));
-            modelBuilder.ApplyConfiguration<ProfilePicture>(new ProfilePictureConfiguration(_companyid));
-            modelBuilder.ApplyConfiguration<OrganizeChartView>(new OrganizeChartViewConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration(new CustomerConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration(new MemberConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration(new OperatingHourConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration(new SLASettingConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration(new GroupConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration(new AppConstantConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration(new AppConstantItemConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration(new OrganizeChartConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration(new AssetConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration(new AssetsViewConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration(new TicketConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration(new TicketsViewConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration(new TicketHistoryConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration(new Last30TicketConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration(new TicketCountInfoConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration(new ProfilePictureConfiguration(_companyid));
+            modelBuilder.ApplyConfiguration(new OrganizeChartViewConfiguration(_companyid));
 
             #endregion
 
@@ -120,7 +119,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
             modelBuilder.Entity<TicketCountInfo>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<ProfilePicture>().HasQueryFilter(q => q.companyid == _companyid);
             modelBuilder.Entity<OrganizeChartView>().HasQueryFilter(q => q.companyid == _companyid);
-
 
             #endregion
         }

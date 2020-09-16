@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Services.ServiceConfiguration;
@@ -10,7 +8,7 @@ using MimeKit.Text;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
-    public class EmailService:IEmailService
+    public class EmailService : IEmailService
     {
         private readonly IEmailConfiguration _emailConfiguration;
 
@@ -18,7 +16,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         {
             _emailConfiguration = emailConfiguration;
         }
-        
+
         public async void Send(EmailMessage emailMessage)
         {
             var message = new MimeMessage();
@@ -33,7 +31,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             using var emailClient = new SmtpClient();
             await emailClient.ConnectAsync(_emailConfiguration.SmtpServer, _emailConfiguration.SmtpPort, false);
             emailClient.AuthenticationMechanisms.Remove("XOAUTH2");
-            await emailClient.AuthenticateAsync(_emailConfiguration.SmtpUsername, Environment.GetEnvironmentVariable("SmtpPassword"));
+            await emailClient.AuthenticateAsync(_emailConfiguration.SmtpUsername,
+                Environment.GetEnvironmentVariable("SmtpPassword"));
             await emailClient.SendAsync(message);
             await emailClient.DisconnectAsync(true);
         }

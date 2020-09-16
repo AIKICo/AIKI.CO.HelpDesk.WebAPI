@@ -1,7 +1,7 @@
-﻿using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
+﻿using System;
+using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {

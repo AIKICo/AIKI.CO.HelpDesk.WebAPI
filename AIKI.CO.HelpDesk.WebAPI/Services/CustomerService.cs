@@ -12,7 +12,7 @@ using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
-    public class CustomerService: BaseService<Customer, CustomerResponse>
+    public class CustomerService : BaseService<Customer, CustomerResponse>
     {
         private readonly IService<OrganizeChart, OrganizeChartResponse> _serviceOrgChart;
 
@@ -27,20 +27,19 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         {
             _serviceOrgChart = serviceOrgChart;
         }
-        public override async Task<int> AddRecord(CustomerResponse request, Guid? companyId =null)
+
+        public override async Task<int> AddRecord(CustomerResponse request, Guid? companyId = null)
         {
             request.disabled = false;
             var customerInfo = await base.AddRecordWithReturnRequest(request);
             if (customerInfo != null)
-            {
                 return await _serviceOrgChart.AddRecord(new OrganizeChartResponse
                 {
                     title = customerInfo.title,
                     allowdelete = false,
                     titletype = Guid.Parse("6014fa01-1bb4-4313-be26-c692ca4c2556"),
-                    customerid = customerInfo.id,
+                    customerid = customerInfo.id
                 });
-            }
             return 0;
         }
     }

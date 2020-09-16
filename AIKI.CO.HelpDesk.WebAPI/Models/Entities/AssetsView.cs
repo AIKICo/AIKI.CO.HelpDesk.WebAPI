@@ -1,4 +1,5 @@
 using System;
+
 // ReSharper disable All
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities

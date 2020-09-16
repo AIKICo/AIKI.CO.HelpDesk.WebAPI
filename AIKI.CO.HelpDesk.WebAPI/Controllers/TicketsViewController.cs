@@ -30,10 +30,11 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         {
             return Ok(await _service.GetAll(q => q.registerdate.Year == DateTime.Now.Year));
         }
+
         [HttpGet("GetAll/{id:guid}")]
-        public async Task<IActionResult> GetAll([FromRoute]Guid id)
+        public async Task<IActionResult> GetAll([FromRoute] Guid id)
         {
-            return Ok(await _service.GetAll(q => q.customerid==id && q.registerdate.Year == DateTime.Now.Year));
+            return Ok(await _service.GetAll(q => q.customerid == id && q.registerdate.Year == DateTime.Now.Year));
         }
     }
 }

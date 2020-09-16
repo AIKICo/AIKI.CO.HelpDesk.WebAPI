@@ -25,8 +25,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             var response = await _service.GetAll(q => q.ticketid == id);
             if (response != null)
                 return Ok(response);
-            else
-                return BadRequest();
+            return BadRequest();
         }
     }
 }

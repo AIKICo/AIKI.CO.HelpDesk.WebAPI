@@ -28,7 +28,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             var result = await _service.GetSingle(q => q.customerid == id);
             if (result != null)
                 return Ok(result);
-            else return NotFound();
+            return NotFound();
         }
     }
 }

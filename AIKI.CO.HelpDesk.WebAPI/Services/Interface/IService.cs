@@ -1,13 +1,12 @@
-﻿using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
-using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
-using Arch.EntityFrameworkCore.UnitOfWork.Collections;
-using Microsoft.EntityFrameworkCore.Query;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
+using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services.Interface
 {
@@ -30,11 +29,11 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services.Interface
             int pageIndex = 0,
             int pageSize = 20,
             bool disableTracking = true,
-            CancellationToken cancellationToken = default(CancellationToken),
+            CancellationToken cancellationToken = default,
             bool ignoreQueryFilters = false);
 
-        Task<V> GetSingle(Expression<Func<T, bool>> predicate, bool ignoreQueryFilters=false);
-        Task<K> GetSingle<K>(Expression<Func<K, bool>> predicate, bool ignoreQueryFilters=false) where K : BaseObject;
+        Task<V> GetSingle(Expression<Func<T, bool>> predicate, bool ignoreQueryFilters = false);
+        Task<K> GetSingle<K>(Expression<Func<K, bool>> predicate, bool ignoreQueryFilters = false) where K : BaseObject;
         Task<List<T>> GetRawSQL(string sqlQuery, params object[] parameters);
 
         Task<IList<SR>> GetAnotherTableRecords<S, SR>(Expression<Func<S, bool>> predicate = null,
