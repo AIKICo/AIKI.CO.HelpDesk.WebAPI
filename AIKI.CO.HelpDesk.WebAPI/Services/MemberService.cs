@@ -35,16 +35,15 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             _protector = provider.CreateProtector("MemberService.CompanyId");
         }
 
-        public async Task<MemberResponse> Authenticate(string username, string password)
+        public MemberResponse Authenticate(string username, string password)
         {
-            var user = _map.Map<MemberResponse>(await _unitofwork.GetRepository<Member>()
-                .GetFirstOrDefaultAsync(predicate: x => x.username == username && x.password == password,
+            var user = _map.Map<MemberResponse>(_unitofwork.GetRepository<Member>()
+                .GetFirstOrDefault(predicate: x => x.username == username && x.password == password,
                     ignoreQueryFilters: true));
-            if (user == null)
-                return null;
+            if (user == null) return null;
             user.token = _jwtService.GenerateSecurityToken(user);
             user.encryptedCompnayId = _protector.Protect(user.companyid.ToString());
-            user.CompanyName = (await _unitofwork.GetRepository<Company>().FindAsync(user.companyid)).title;
+            user.CompanyName = (_unitofwork.GetRepository<Company>().Find(user.companyid)).title;
             user.companyid = Guid.Empty;
             return user.WithoutPassword();
         }
