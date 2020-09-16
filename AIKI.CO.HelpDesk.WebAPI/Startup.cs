@@ -30,14 +30,14 @@ namespace AIKI.CO.HelpDesk.WebAPI
 {
     public sealed class Startup
     {
-        private static X509Certificate2 logServerCertificate;
+        private static X509Certificate2 _logServerCertificate;
 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -64,7 +64,8 @@ namespace AIKI.CO.HelpDesk.WebAPI
                             "https://localhost:5002",
                             "http://localhost:5002",
                             "http://localhost:8080",
-                            "https://app.aiki-ticket.ir")
+                            "https://aiki-ticket.ir/",
+                            "https://www.aiki-ticket.ir/")
                         .AllowCredentials();
                 });
             });
@@ -164,18 +165,18 @@ namespace AIKI.CO.HelpDesk.WebAPI
         {
             RequestExecutor.RemoteCertificateValidationCallback += CertificateCallback;
             if (env.IsDevelopment())
-                logServerCertificate =
+                _logServerCertificate =
                     new X509Certificate2($"{Directory.GetCurrentDirectory()}/certificate/HelpDeskLog.pfx",
                         "Mveyma6303$");
             else
-                logServerCertificate =
+                _logServerCertificate =
                     new X509Certificate2($"{Directory.GetCurrentDirectory()}/certificate/HelpDeskLog.pfx",
                         "Mveyma6303$");
             var docStore = new DocumentStore
             {
                 Urls = new[] {"https://a.free.aiki.ravendb.cloud"},
                 Database = "HelpDeskLog",
-                Certificate = logServerCertificate
+                Certificate = _logServerCertificate
             };
             docStore.Initialize();
             return docStore;
