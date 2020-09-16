@@ -23,27 +23,19 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         [HttpGet("GetByCustomerId/{id}")]
         public async Task<IActionResult> GetByCustomerId(Guid id)
-        {
-            return Ok(await _service.GetAll(q => q.customerid == id));
-        }
+            => Ok(await _service.GetAll(q => q.customerid == id));
 
 
         [Authorize(Roles = "admin")]
-        public override Task<IActionResult> Put(OrganizeChartResponse request)
-        {
-            return base.Put(request);
-        }
+        public override async Task<IActionResult> Put(OrganizeChartResponse request)
+            => await base.Put(request);
 
         [Authorize(Roles = "admin")]
-        public override Task<IActionResult> Patch(Guid id, JsonPatchDocument<OrganizeChartResponse> patchDoc)
-        {
-            return base.Patch(id, patchDoc);
-        }
+        public override async Task<IActionResult> Patch(Guid id, JsonPatchDocument<OrganizeChartResponse> patchDoc)
+            => await base.Patch(id, patchDoc);
 
         [Authorize(Roles = "admin")]
-        public override Task<IActionResult> Delete(Guid id)
-        {
-            return base.Delete(id);
-        }
+        public override async Task<IActionResult> Delete(Guid id)
+            => await base.Delete(id);
     }
 }

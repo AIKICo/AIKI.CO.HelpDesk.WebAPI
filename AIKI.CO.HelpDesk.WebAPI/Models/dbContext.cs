@@ -80,6 +80,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models
 
             #region Apply Configuration
 
+            modelBuilder.ApplyConfiguration(new CompanyConfiguration());
             modelBuilder.ApplyConfiguration(new CustomerConfiguration(_companyid));
             modelBuilder.ApplyConfiguration(new MemberConfiguration(_companyid));
             modelBuilder.ApplyConfiguration(new OperatingHourConfiguration(_companyid));

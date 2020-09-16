@@ -21,8 +21,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         [HttpGet("GetByCustomerId/{id:guid}")]
         public async Task<IActionResult> GetByCustomerId([FromRoute] Guid id)
-        {
-            return Ok(await _service.GetAll(q => q.customerid == id));
-        }
+            => Ok(await _service.GetAll(q => q.customerid == id));
     }
 }

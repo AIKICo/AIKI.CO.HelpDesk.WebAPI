@@ -31,9 +31,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         [HttpGet]
         public override async Task<IActionResult> Get()
-        {
-            return await base.Get();
-        }
+            => await base.Get();
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
@@ -48,15 +46,11 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [AllowAnonymous]
         [HttpGet("IsEmailExists/{id}")]
         public async Task<IActionResult> IsEmailExists([FromRoute] string id)
-        {
-            return Ok(await _service.isExists(q => q.email == id, true));
-        }
+            => Ok(await _service.isExists(q => q.email == id, true));
 
         [HttpGet("IsUserNameExists/{id}")]
         public async Task<IActionResult> IsUserNameExists([FromRoute] string id)
-        {
-            return Ok(await _service.isExists(q => q.username == id, true));
-        }
+            => Ok(await _service.isExists(q => q.username == id, true));
 
         [HttpPut]
         [Produces("application/json")]

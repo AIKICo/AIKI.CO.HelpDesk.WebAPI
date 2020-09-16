@@ -19,8 +19,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         where T : BaseObject
         where V : BaseResponse
     {
-        protected readonly AppSettings _appSettings;
-        protected readonly IMapper _map;
+        private readonly AppSettings _appSettings;
+        private readonly IMapper _map;
         protected readonly IService<T, V> _service;
 
         public BaseRApiController(
@@ -35,15 +35,11 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         [HttpGet]
         public virtual async Task<IActionResult> Get()
-        {
-            return Ok(await _service.GetAll());
-        }
+            => Ok(await _service.GetAll());
 
         [HttpGet("{pageSize:int}/{pageIndex:int}")]
         public virtual async Task<IActionResult> Get([FromRoute] int pageSize, [FromRoute] int pageIndex)
-        {
-            return Ok(await _service.GetPagedList(pageSize: pageSize, pageIndex: pageIndex));
-        }
+            => Ok(await _service.GetPagedList(pageSize: pageSize, pageIndex: pageIndex));
 
         [HttpGet("{id:guid}")]
         public virtual async Task<IActionResult> Get([FromRoute] Guid id)

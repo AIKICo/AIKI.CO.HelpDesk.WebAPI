@@ -1,4 +1,5 @@
 using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
@@ -9,21 +10,15 @@ using AutoMapper.Internal;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Services
 {
-    public class CompanyService : ICompanyService
+    public sealed class CompanyService : ICompanyService
     {
-        private readonly ICloudFlareConfiguration _cloudFlareConfiguration;
-        private readonly ICloudFlareService _cloudFlareService;
         private readonly IMapper _map;
         private readonly IUnitOfWork _unitofwork;
 
-        public CompanyService(IUnitOfWork unitofwork, IMapper map,
-            ICloudFlareService cloudFlareService,
-            ICloudFlareConfiguration cloudFlareConfiguration)
+        public CompanyService(IUnitOfWork unitofwork, IMapper map)
         {
             _unitofwork = unitofwork;
             _map = map;
-            _cloudFlareService = cloudFlareService;
-            _cloudFlareConfiguration = cloudFlareConfiguration;
         }
 
         public async Task<CompanyResponse> AddRecord(CompanyResponse request)
@@ -102,14 +97,13 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 
             #endregion
 
-            #region Add subDomain To CloudFlare DNS Zone
-
-            await _cloudFlareService.AddDnsRecord(request.subdomain, _cloudFlareConfiguration.IPAddress1);
-            await _cloudFlareService.AddDnsRecord(request.subdomain, _cloudFlareConfiguration.IPAddress2);
-
-            #endregion
-
             return request;
         }
+
+        public async Task<CompanyResponse> GetSingle(Expression<Func<Company, bool>> predicate,
+            bool ignoreQueryFilters = false)
+            => _map.Map<CompanyResponse>(await _unitofwork.GetRepository<Company>().GetFirstOrDefaultAsync(
+                predicate: predicate,
+                ignoreQueryFilters: ignoreQueryFilters));
     }
 }

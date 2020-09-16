@@ -7,17 +7,16 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {
     public class BaseConfiguration<T> : IEntityTypeConfiguration<T> where T : BaseObject
     {
+        protected Guid companyid { get; }
+
         public BaseConfiguration(Guid companyid)
         {
-            _companyid = companyid;
+            this.companyid = companyid;
         }
-
-        protected Guid _companyid { get; set; }
-
         public virtual void Configure(EntityTypeBuilder<T> builder)
         {
             builder.HasKey(c => c.id);
-            builder.Property(c => c.companyid).HasDefaultValue(_companyid);
+            builder.Property(c => c.companyid).HasDefaultValue(companyid);
             builder.Property(c => c.id)
                 .ValueGeneratedNever();
         }

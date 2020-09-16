@@ -35,36 +35,32 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             _protector = provider.CreateProtector("MemberService.CompanyId");
         }
 
-        public MemberResponse Authenticate(string username, string password)
+        public async Task<MemberResponse> Authenticate(string username, string password)
         {
-            var user = _map.Map<MemberResponse>(_unitofwork.GetRepository<Member>()
-                .GetFirstOrDefault(predicate: x => x.username == username && x.password == password,
+            var user = _map.Map<MemberResponse>(await _unitofwork.GetRepository<Member>()
+                .GetFirstOrDefaultAsync(predicate: x => x.username == username && x.password == password,
                     ignoreQueryFilters: true));
             if (user == null)
                 return null;
             user.token = _jwtService.GenerateSecurityToken(user);
             user.encryptedCompnayId = _protector.Protect(user.companyid.ToString());
-            user.CompanyName = _unitofwork.GetRepository<Company>().Find(user.companyid).title;
+            user.CompanyName = (await _unitofwork.GetRepository<Company>().FindAsync(user.companyid)).title;
             user.companyid = Guid.Empty;
             return user.WithoutPassword();
         }
 
         public override async Task<IEnumerable<MemberResponse>> GetAll()
-        {
-            return _map.Map<IEnumerable<MemberResponse>>(await _unitofwork.GetRepository<Member>()
+            => _map.Map<IEnumerable<MemberResponse>>(await _unitofwork.GetRepository<Member>()
                     .GetAllAsync(disableTracking: true))
                 .WithoutPasswords().WithoutCompanyIds();
-        }
 
         public override async Task<IEnumerable<MemberResponse>> GetAll(Expression<Func<Member, bool>> predicate = null,
             Func<IQueryable<Member>, IOrderedQueryable<Member>> orderBy = null,
             Func<IQueryable<Member>, IIncludableQueryable<Member, object>> include = null, bool disableTracking = true,
             bool ignoreQueryFilters = false)
-        {
-            return _map.Map<IEnumerable<MemberResponse>>(await _repository.GetAllAsync(predicate, orderBy, include,
+            => _map.Map<IEnumerable<MemberResponse>>(await _repository.GetAllAsync(predicate, orderBy, include,
                 disableTracking,
                 ignoreQueryFilters)).WithoutPasswords().WithoutCompanyIds();
-        }
 
         public override async Task<IList<MemberResponse>> GetPagedList(Expression<Func<Member, bool>> predicate = null,
             Func<IQueryable<Member>, IOrderedQueryable<Member>> orderBy = null,
@@ -72,29 +68,21 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             int pageSize = 20, bool disableTracking = true,
             CancellationToken cancellationToken = default,
             bool ignoreQueryFilters = false)
-        {
-            return _map.Map<IList<MemberResponse>>((await _repository.GetPagedListAsync(predicate, orderBy,
+            => _map.Map<IList<MemberResponse>>((await _repository.GetPagedListAsync(predicate, orderBy,
                     include, pageIndex, pageSize, disableTracking, cancellationToken, ignoreQueryFilters)).Items)
                 .WithoutPasswords().WithoutCompanyIds().ToList();
-        }
 
         public override async Task<MemberResponse> GetById(Guid id)
-        {
-            return _map.Map<MemberResponse>(await _repository.FindAsync(id)).WithoutPassword().WithoutCompanyId();
-        }
+            => _map.Map<MemberResponse>(await _repository.FindAsync(id)).WithoutPassword().WithoutCompanyId();
 
         public override async Task<MemberResponse> GetSingle(Expression<Func<Member, bool>> predicate,
             bool ignoreQueryFilters = false)
-        {
-            return _map.Map<MemberResponse>(await _repository.GetFirstOrDefaultAsync(predicate: predicate,
+            => _map.Map<MemberResponse>(await _repository.GetFirstOrDefaultAsync(predicate: predicate,
                 ignoreQueryFilters: ignoreQueryFilters)).WithoutPassword().WithoutCompanyId();
-        }
 
         public async Task<MemberResponse> GetSingleWithPassword(Expression<Func<Member, bool>> predicate,
             bool ignoreQueryFilters = false)
-        {
-            return _map.Map<MemberResponse>(await _repository.GetFirstOrDefaultAsync(predicate: predicate,
+            => _map.Map<MemberResponse>(await _repository.GetFirstOrDefaultAsync(predicate: predicate,
                 ignoreQueryFilters: ignoreQueryFilters)).WithoutCompanyId();
-        }
     }
 }

@@ -26,16 +26,12 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [HttpGet]
         [Authorize(Roles = "admin, backupuser")]
         public override async Task<IActionResult> Get()
-        {
-            return await base.Get();
-        }
+            => await base.Get();
 
         [HttpGet("{id:guid}")]
         [Authorize(Roles = "admin, backupuser")]
-        public override Task<IActionResult> Get(Guid id)
-        {
-            return base.Get(id);
-        }
+        public override async Task<IActionResult> Get(Guid id)
+            => await base.Get(id);
 
         [Authorize(Roles = "admin, backupuser")]
         [HttpGet("GetByParentId/{id:guid}")]
@@ -51,31 +47,23 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [HttpPost]
         [Authorize(Roles = "admin, backupuser")]
         [Produces("application/json")]
-        public override Task<IActionResult> Post(AppConstantItemResponse request)
-        {
-            return base.Post(request);
-        }
+        public override async Task<IActionResult> Post(AppConstantItemResponse request)
+            => await base.Post(request);
 
         [HttpPut]
         [Authorize(Roles = "admin, backupuser")]
         [Produces("application/json")]
-        public override Task<IActionResult> Put(AppConstantItemResponse request)
-        {
-            return base.Put(request);
-        }
+        public override async Task<IActionResult> Put(AppConstantItemResponse request)
+            => await base.Put(request);
 
         [HttpPatch("{id:guid}")]
         [Authorize(Roles = "admin, backupuser")]
-        public override Task<IActionResult> Patch(Guid id, JsonPatchDocument<AppConstantItemResponse> patchDoc)
-        {
-            return base.Patch(id, patchDoc);
-        }
+        public override async Task<IActionResult> Patch(Guid id, JsonPatchDocument<AppConstantItemResponse> patchDoc)
+            => await base.Patch(id, patchDoc);
 
         [HttpDelete("{id:guid}")]
         [Authorize(Roles = "admin, backupuser")]
-        public override Task<IActionResult> Delete(Guid id)
-        {
-            return base.Delete(id);
-        }
+        public override async Task<IActionResult> Delete(Guid id)
+            => await base.Delete(id);
     }
 }

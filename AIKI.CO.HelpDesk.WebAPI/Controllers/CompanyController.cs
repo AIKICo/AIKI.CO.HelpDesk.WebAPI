@@ -4,11 +4,8 @@ using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Services.ServiceConfiguration;
-using AIKI.CO.HelpDesk.WebAPI.Settings;
-using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
 using PasswordGenerator;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
@@ -19,21 +16,15 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
     [ApiVersion("1.0")]
     public class CompanyController : ControllerBase
     {
-        private readonly AppSettings _appSettings;
         private readonly IEmailService _emailService;
-        private readonly IMapper _map;
         private readonly IService<Member, MemberResponse> _memberService;
         private readonly ICompanyService _service;
 
         public CompanyController(
-            IMapper map,
-            IOptions<AppSettings> appSettings,
             ICompanyService service,
             IService<Member, MemberResponse> memberService,
             IEmailService emailService)
         {
-            _map = map;
-            _appSettings = appSettings.Value;
             _service = service;
             _memberService = memberService;
             _emailService = emailService;
@@ -44,9 +35,13 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Post([FromBody] CompanyResponse request)
         {
-            if (!ModelState.IsValid) return BadRequest(new {model = ModelState, message = "خطا در ویرایش اطلاعات"});
-            var duplicateRecord = await _memberService.GetSingle(q => q.username == request.email);
-            if (duplicateRecord != null) return BadRequest("نام کاربری تکراری است");
+            if (!ModelState.IsValid) return BadRequest(new {model = ModelState, message = "خطا در ثبت اطلاعات"});
+            var duplicateRecord = await _service.GetSingle(q => q.email == request.email);
+            if (duplicateRecord != null) return BadRequest("آدرس پست الکترونیک تکراری است");
+
+            duplicateRecord = await _service.GetSingle(q => q.subdomain == request.subdomain);
+            if (duplicateRecord != null) return BadRequest("عنوان زیر دامنه تکراری است");
+
             var result = await _service.AddRecord(request);
             if (result == null) return BadRequest("شرکت شما به ثبت نرسید");
             var adminUser = new MemberResponse

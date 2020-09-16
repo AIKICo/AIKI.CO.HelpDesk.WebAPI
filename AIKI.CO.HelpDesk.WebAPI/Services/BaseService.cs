@@ -51,21 +51,16 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         protected IRepository<T> _repository { get; private set; }
         protected IMapper _map { get; private set; }
 
-        public virtual async Task<IEnumerable<V>> GetAll()
-        {
-            return _map.Map<IEnumerable<V>>(await _repository.GetAllAsync());
-        }
-
+        public virtual async Task<IEnumerable<V>> GetAll() =>
+            _map.Map<IEnumerable<V>>(await _repository.GetAllAsync());
 
         public virtual async Task<IEnumerable<V>> GetAll(
             Expression<Func<T, bool>> predicate = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
             Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, bool disableTracking = true,
-            bool ignoreQueryFilters = false)
-        {
-            return _map.Map<IEnumerable<V>>(await _repository.GetAllAsync(predicate, orderBy, include, disableTracking,
+            bool ignoreQueryFilters = false) =>
+            _map.Map<IEnumerable<V>>(await _repository.GetAllAsync(predicate, orderBy, include, disableTracking,
                 ignoreQueryFilters));
-        }
 
         public virtual async Task<IList<V>> GetPagedList(Expression<Func<T, bool>> predicate = null,
             Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
@@ -74,31 +69,22 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             int pageSize = 20,
             bool disableTracking = true,
             CancellationToken cancellationToken = default(CancellationToken),
-            bool ignoreQueryFilters = false)
-        {
-            return _map.Map<IList<V>>((await _repository.GetPagedListAsync(predicate, orderBy,
+            bool ignoreQueryFilters = false) =>
+            _map.Map<IList<V>>((await _repository.GetPagedListAsync(predicate, orderBy,
                 include, pageIndex, pageSize, disableTracking, cancellationToken, ignoreQueryFilters)).Items);
-        }
 
-        public virtual async Task<V> GetById(Guid id)
-        {
-            return _map.Map<V>(await _repository.FindAsync(id));
-        }
+        public virtual async Task<V> GetById(Guid id) => _map.Map<V>(await _repository.FindAsync(id));
 
         public virtual async Task<IList<SR>> GetAnotherTableRecords<S, SR>(
             Expression<Func<S, bool>> predicate = null,
             Func<IQueryable<S>, IOrderedQueryable<S>> orderBy = null,
             Func<IQueryable<S>, IIncludableQueryable<S, object>> include = null, bool disableTracking = true,
             bool ignoreQueryFilters = false) where S : BaseObject where SR : BaseResponse
-        {
-            return _map.Map<IList<SR>>(await _unitofwork.GetRepository<S>()
+            => _map.Map<IList<SR>>(await _unitofwork.GetRepository<S>()
                 .GetAllAsync(predicate, orderBy, include, disableTracking, ignoreQueryFilters));
-        }
 
         public virtual async Task<bool> isExists(Expression<Func<T, bool>> predicate, bool ignoreQueryFilters = false)
-        {
-            return (await _repository.ExistsAsync(predicate, ignoreQueryFilters));
-        }
+            => await _repository.ExistsAsync(predicate, ignoreQueryFilters);
 
         public virtual async Task<int> AddRecord(V request, Guid? companyId = null)
         {
@@ -152,21 +138,15 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         }
 
         public virtual async Task<V> GetSingle(Expression<Func<T, bool>> predicate, bool ignoreQueryFilters = false)
-        {
-            return _map.Map<V>(await _repository.GetFirstOrDefaultAsync(predicate: predicate,
+            => _map.Map<V>(await _repository.GetFirstOrDefaultAsync(predicate: predicate,
                 ignoreQueryFilters: ignoreQueryFilters));
-        }
 
         public virtual async Task<K> GetSingle<K>(Expression<Func<K, bool>> predicate, bool ignoreQueryFilters = false)
             where K : BaseObject
-        {
-            return _map.Map<K>(await _unitofwork.GetRepository<K>()
+            => _map.Map<K>(await _unitofwork.GetRepository<K>()
                 .GetFirstOrDefaultAsync(predicate: predicate, ignoreQueryFilters: ignoreQueryFilters));
-        }
 
         public virtual async Task<List<T>> GetRawSQL(string sqlQuery, params object[] parameters)
-        {
-            return await _repository.FromSql(sqlQuery, parameters).ToListAsync();
-        }
+            => await _repository.FromSql(sqlQuery, parameters).ToListAsync();
     }
 }

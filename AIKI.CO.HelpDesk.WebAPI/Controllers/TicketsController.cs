@@ -20,8 +20,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         [HttpGet("GetLast30Ticket")]
         public async Task<IActionResult> GetLast30Ticket()
-        {
-            return Ok(await _service.GetAnotherTableRecords<Last30Ticket, Last30TicketResponse>());
-        }
+            => Ok(await _service.GetAnotherTableRecords<Last30Ticket, Last30TicketResponse>());
     }
 }

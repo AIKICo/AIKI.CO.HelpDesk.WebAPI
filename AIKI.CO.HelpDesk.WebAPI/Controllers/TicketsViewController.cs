@@ -21,20 +21,14 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         [HttpGet]
         public override async Task<IActionResult> Get()
-        {
-            return Ok(await _service.GetAll(q => q.enddate == null));
-        }
+            => Ok(await _service.GetAll(q => q.enddate == null));
 
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
-        {
-            return Ok(await _service.GetAll(q => q.registerdate.Year == DateTime.Now.Year));
-        }
+            => Ok(await _service.GetAll(q => q.registerdate.Year == DateTime.Now.Year));
 
         [HttpGet("GetAll/{id:guid}")]
         public async Task<IActionResult> GetAll([FromRoute] Guid id)
-        {
-            return Ok(await _service.GetAll(q => q.customerid == id && q.registerdate.Year == DateTime.Now.Year));
-        }
+            => Ok(await _service.GetAll(q => q.customerid == id && q.registerdate.Year == DateTime.Now.Year));
     }
 }
