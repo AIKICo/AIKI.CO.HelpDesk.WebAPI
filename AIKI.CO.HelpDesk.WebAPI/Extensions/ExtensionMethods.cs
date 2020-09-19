@@ -18,12 +18,14 @@ namespace AIKI.CO.HelpDesk.WebAPI.Extensions
 
         public static MemberResponse WithoutPassword(this MemberResponse user)
         {
+            if (user == null) return user;
             user.password = string.Empty;
             return user;
         }
 
         public static MemberResponse WithoutCompanyId(this MemberResponse user)
         {
+            if (user == null) return user;
             user.companyid = null;
             return user;
         }

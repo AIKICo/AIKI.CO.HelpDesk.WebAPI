@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Extensions;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
@@ -70,7 +71,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [HttpGet("ResendPassword/{id}")]
         public async Task<IActionResult> ResendPassword([FromRoute] string id)
         {
-            if (string.IsNullOrEmpty(id)) return BadRequest("آدری ایمیل را وارد نمایید");
+            if (string.IsNullOrEmpty(id)) return BadRequest("آدرس ایمیل را وارد نمایید");
             var userInfo = await _userService.GetSingleWithPassword(q => q.email == id, true);
             if (userInfo == null) return BadRequest(new {message = "آدرس ایمیل ثبت نشده است"});
             _emailService.Send(new EmailMessage
