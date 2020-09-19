@@ -70,28 +70,20 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [HttpGet("ResendPassword/{id}")]
         public async Task<IActionResult> ResendPassword([FromRoute] string id)
         {
-            if (!string.IsNullOrEmpty(id))
+            if (string.IsNullOrEmpty(id)) return BadRequest("آدری ایمیل را وارد نمایید");
+            var userInfo = await _userService.GetSingleWithPassword(q => q.email == id, true);
+            if (userInfo == null) return BadRequest(new {message = "آدرس ایمیل ثبت نشده است"});
+            _emailService.Send(new EmailMessage
             {
-                var userInfo = await _userService.GetSingleWithPassword(q => q.email == id, true);
-                if (userInfo != null)
-                {
-                    _emailService.Send(new EmailMessage
-                    {
-                        Subject = "میز کار خدمات رایانه ای AiKi",
-                        Content =
-                            $"<p dir='rtl' style='font-family:tahoma'> با سلام </br> رمز عبور شما جهت ورود به میزکار خدمات رایانه ای عبارت است از: <span dir='ltr'><b>{userInfo.password}</b></span> <br/> جهت ورود <a href='https://aiki-helpdesk-v1.firebaseapp.com/'>اینجا</a> کلیک نمایید</p>",
-                        FromAddresses = new List<EmailAddress>
-                            {new EmailAddress {Name = "Mohammad Mehrnia", Address = "qermezkon@gmail.com"}},
-                        ToAddresses = new List<EmailAddress>
-                            {new EmailAddress {Name = userInfo.CompanyName, Address = userInfo.email}}
-                    });
-                    return Ok();
-                }
-
-                return BadRequest("آدرس ایمیل شما به ثبت نرسیده است");
-            }
-
-            return BadRequest("آدرس ایمیل ثبت نشده است");
+                Subject = "میز کار خدمات رایانه ای AiKi",
+                Content =
+                    $"<p dir='rtl' style='font-family:tahoma'> با سلام </br> رمز عبور شما جهت ورود به میزکار خدمات رایانه ای عبارت است از: <span dir='ltr'><b>{userInfo.password}</b></span> <br/> جهت ورود <a href='https://aiki-helpdesk-v1.firebaseapp.com/'>اینجا</a> کلیک نمایید</p>",
+                FromAddresses = new List<EmailAddress>
+                    {new EmailAddress {Name = "Mohammad Mehrnia", Address = "qermezkon@gmail.com"}},
+                ToAddresses = new List<EmailAddress>
+                    {new EmailAddress {Name = userInfo.CompanyName, Address = userInfo.email}}
+            });
+            return Ok();
         }
     }
 }
