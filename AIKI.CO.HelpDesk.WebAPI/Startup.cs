@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.IO.Compression;
 using System.Net.Security;
@@ -56,14 +57,11 @@ namespace AIKI.CO.HelpDesk.WebAPI
                 options.AddDefaultPolicy(policy =>
                 {
                     policy
+                        .SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost")
                         .AllowAnyHeader()
                         .AllowAnyMethod()
                         .WithOrigins(
                             "https://aiki-helpdesk-v1.firebaseapp.com",
-                            "https://localhost:5001",
-                            "https://localhost:5002",
-                            "http://localhost:5002",
-                            "http://localhost:8080",
                             "https://aiki-ticket.ir",
                             "https://www.aiki-ticket.ir")
                         .AllowCredentials();
