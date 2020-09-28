@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net;
+using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
@@ -19,6 +20,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpGet("GetLast30Ticket")]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
         public async Task<IActionResult> GetLast30Ticket()
             => Ok(await _service.GetAnotherTableRecords<Last30Ticket, Last30TicketResponse>());
     }

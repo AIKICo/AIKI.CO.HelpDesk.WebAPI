@@ -42,6 +42,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         public override async Task<int> PartialUpdateRecord(TicketResponse request)
         {
             var ticketInfo = await _repository.FindAsync(request.id);
+            if (ticketInfo == null) return 0;
             if ((ticketInfo.ticketrate ?? 0.00) != (request.ticketrate ?? 0.00))
                 await AddHistory(request,
                     $"ارزیابی ناظر {new string('\x2605', Convert.ToInt32(request.ticketrate))} تعیین گردید", null);
@@ -61,6 +62,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                 else if (request.tickettype == new Guid("e6c7460f-de37-4a0e-8790-bbfe5a5e8ac9")) //مجدد باز شده
                 {
                     request.enddate = null;
+                    request.ticketrate = null;
+                    
                     await AddHistory(request, "درخواست مجدد باز گردید", null);
                 }
             }

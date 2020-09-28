@@ -1,4 +1,5 @@
 using System.IO;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
@@ -24,6 +25,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpPost(nameof(PostProfilePicture))]
+        [ProducesResponseType((int) HttpStatusCode.Created)]
+        [ProducesResponseType((int) HttpStatusCode.BadRequest)]
         public async Task<IActionResult> PostProfilePicture(
             IFormFile profilePic,
             [FromBody] ProfilePictureResponse request,

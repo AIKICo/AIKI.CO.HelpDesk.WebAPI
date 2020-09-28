@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
@@ -20,6 +21,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpGet("TicketHistoryByTicketID/{id:guid}")]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
         public async Task<IActionResult> TicketHistoryByTicketID([FromRoute] Guid id)
         {
             var response = await _service.GetAll(q => q.ticketid == id);

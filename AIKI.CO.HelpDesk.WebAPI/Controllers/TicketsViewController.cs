@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
@@ -24,10 +25,13 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             => Ok(await _service.GetAll(q => q.enddate == null));
 
         [HttpGet("GetAll")]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
         public async Task<IActionResult> GetAll()
             => Ok(await _service.GetAll(q => q.registerdate.Year == DateTime.Now.Year));
 
         [HttpGet("GetAll/{id:guid}")]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
+
         public async Task<IActionResult> GetAll([FromRoute] Guid id)
             => Ok(await _service.GetAll(q => q.customerid == id && q.registerdate.Year == DateTime.Now.Year));
     }

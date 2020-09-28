@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
@@ -23,6 +24,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
 
         [HttpGet("GetByCustomerId/{id}")]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
         public async Task<IActionResult> GetByCustomerId([FromRoute] Guid id)
         {
             var result = await _service.GetSingle(q => q.customerid == id);
