@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
@@ -34,14 +35,17 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         public virtual async Task<IActionResult> Get()
             => Ok(await _service.GetAll());
 
         [HttpGet("{pageSize:int}/{pageIndex:int}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         public virtual async Task<IActionResult> Get([FromRoute] int pageSize, [FromRoute] int pageIndex)
             => Ok(await _service.GetPagedList(pageSize: pageSize, pageIndex: pageIndex));
 
         [HttpGet("{id:guid}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         public virtual async Task<IActionResult> Get([FromRoute] Guid id)
         {
             var result = await _service.GetSingle(q => q.id == id);

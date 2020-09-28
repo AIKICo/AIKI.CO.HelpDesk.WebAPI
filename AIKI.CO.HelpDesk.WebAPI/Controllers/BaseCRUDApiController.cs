@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
@@ -37,6 +38,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
         public virtual async Task<IActionResult> Get()
             => Ok(await _service.GetAll());
 
@@ -45,6 +47,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             => Ok(await _service.GetPagedList(pageSize: pageSize, pageIndex: pageIndex));
 
         [HttpGet("{id:guid}")]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
         public virtual async Task<IActionResult> Get([FromRoute] Guid id)
         {
             var result = await _service.GetSingle(q => q.id == id);
@@ -55,6 +58,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         [HttpPost]
         [Produces("application/json")]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public virtual async Task<IActionResult> Post([FromBody] V request)
         {
             if (_isReadOnly) return BadRequest(new {message = "اطلاعات قابل ویرایش نیستند"});
@@ -67,6 +71,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         [HttpPut]
         [Produces("application/json")]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public virtual async Task<IActionResult> Put([FromBody] V request)
         {
             if (_isReadOnly) return BadRequest(new {message = "اطلاعات قابل ویرایش نیستند"});
@@ -79,6 +85,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpPatch("{id:guid}")]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public virtual async Task<IActionResult> Patch([FromRoute] Guid id, [FromBody] JsonPatchDocument<V> patchDoc)
         {
             if (_isReadOnly) return BadRequest(new {message = "اطلاعات قابل ویرایش نیستند"});
@@ -97,9 +105,13 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpDelete("{id:guid}")]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public virtual async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             if (_isReadOnly) return BadRequest(new {model = ModelState, message = "خطا در ویرایش اطلاعات"});
+            var exists = await _service.isExists(q => q.id == id);
+            if (!exists) return NotFound();
             var result = await _service.DeleteRecord(id);
             if (result > 0)
                 return Ok(id);

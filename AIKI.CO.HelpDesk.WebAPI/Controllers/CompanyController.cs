@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
@@ -32,18 +33,21 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         [HttpPost]
         [Produces("application/json")]
+        [ProducesResponseType((int)HttpStatusCode.Conflict)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.Created)]
         [AllowAnonymous]
         public async Task<IActionResult> Post([FromBody] CompanyResponse request)
         {
             if (!ModelState.IsValid) return BadRequest(new {model = ModelState, message = "خطا در ثبت اطلاعات"});
             var duplicateRecord = await _service.GetSingle(q => q.email == request.email);
-            if (duplicateRecord != null) return BadRequest("آدرس پست الکترونیک تکراری است");
+            if (duplicateRecord != null) return Conflict("آدرس پست الکترونیک تکراری است");
 
             duplicateRecord = await _service.GetSingle(q => q.subdomain == request.subdomain);
-            if (duplicateRecord != null) return BadRequest("عنوان زیر دامنه تکراری است");
+            if (duplicateRecord != null) return Conflict("عنوان زیر دامنه تکراری است");
 
             var result = await _service.AddRecord(request);
-            if (result == null) return BadRequest("شرکت شما به ثبت نرسید");
+            if (result == null) return NotFound("شرکت شما به ثبت نرسید");
             var adminUser = new MemberResponse
             {
                 membername = "مدیریت",
