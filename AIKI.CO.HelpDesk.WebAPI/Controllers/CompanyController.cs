@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using AIKI.CO.HelpDesk.WebAPI.CustomActionFilters;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
@@ -37,9 +38,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.Created)]
         [AllowAnonymous]
+        [ModelValidation]
         public async Task<IActionResult> Post([FromBody] CompanyResponse request)
         {
-            if (!ModelState.IsValid) return BadRequest(new {model = ModelState, message = "خطا در ثبت اطلاعات"});
             var duplicateRecord = await _service.GetSingle(q => q.email == request.email);
             if (duplicateRecord != null) return Conflict("آدرس پست الکترونیک تکراری است");
 

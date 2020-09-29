@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AIKI.CO.HelpDesk.WebAPI.CustomActionFilters;
 using AIKI.CO.HelpDesk.WebAPI.Extensions;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
@@ -55,10 +56,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         [HttpPut]
         [Produces("application/json")]
+        [ModelValidation]
         public override async Task<IActionResult> Put(MemberResponse request)
         {
             if (_isReadOnly) return BadRequest(new {message = "اطلاعات قابل ویرایش نیستند"});
-            if (!ModelState.IsValid) return BadRequest(new {model = ModelState, message = "خطا در ویرایش اطلاعات"});
             var existsRecord = await _userService.GetSingleWithPassword(q => q.id == request.id);
             if (existsRecord == null) return NotFound();
             if (string.IsNullOrEmpty(request.password)) request.password = existsRecord.password;

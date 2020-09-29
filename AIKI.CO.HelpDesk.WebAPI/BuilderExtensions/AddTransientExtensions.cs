@@ -1,4 +1,5 @@
-﻿using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
+﻿using AIKI.CO.HelpDesk.WebAPI.CustomActionFilters;
+using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
@@ -69,6 +70,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
             services.AddTransient<ICompanyService, CompanyService>();
 
             services.AddHttpContextAccessor();
+            services.AddScoped<ModelValidationAttribute>();
             return services;
         }
     }

@@ -32,21 +32,14 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             [FromBody] ProfilePictureResponse request,
             CancellationToken cancellationToken)
         {
-            if (CheckIfExcelFile(profilePic))
-            {
-                if (profilePic.Length > 0)
-                {
-                    await using var ms = new MemoryStream();
-                    await profilePic.CopyToAsync(ms, cancellationToken);
-                    var fileBytes = ms.ToArray();
-                    request.filecontent = fileBytes;
-                    return await base.Post(request);
-                }
+            if (!CheckIfExcelFile(profilePic)) return BadRequest(new {message = "پسوند فایل مورد تایید نمی باشد"});
+            if (profilePic.Length <= 0) return BadRequest(new {message = "فایل حاوی محتوی نمی باشد"});
+            await using var ms = new MemoryStream();
+            await profilePic.CopyToAsync(ms, cancellationToken);
+            var fileBytes = ms.ToArray();
+            request.filecontent = fileBytes;
+            return await base.Post(request);
 
-                return BadRequest(new {message = "فایل حاوی محتوی نمی باشد"});
-            }
-
-            return BadRequest(new {message = "پسوند فایل مورد تایید نمی باشد"});
         }
 
         private bool CheckIfExcelFile(IFormFile file)
