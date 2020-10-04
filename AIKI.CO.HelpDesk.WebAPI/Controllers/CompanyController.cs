@@ -34,21 +34,21 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         [HttpPost]
         [Produces("application/json")]
-        [ProducesResponseType((int)HttpStatusCode.Conflict)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType((int)HttpStatusCode.Created)]
+        [ProducesResponseType((int) HttpStatusCode.Conflict)]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
+        [ProducesResponseType((int) HttpStatusCode.Created)]
         [AllowAnonymous]
         [ModelValidation]
         public async Task<IActionResult> Post([FromBody] CompanyResponse request)
         {
             var duplicateRecord = await _service.GetSingle(q => q.email == request.email);
-            if (duplicateRecord != null) return Conflict("آدرس پست الکترونیک تکراری است");
+            if (duplicateRecord != null) return Conflict(new {message = "آدرس پست الکترونیک قبلا به ثبت رسیده است"});
 
             duplicateRecord = await _service.GetSingle(q => q.subdomain == request.subdomain);
-            if (duplicateRecord != null) return Conflict("عنوان زیر دامنه تکراری است");
+            if (duplicateRecord != null) return Conflict(new {message = "عنوان زیردامنه قبلا به ثبت رسیده است"});
 
             var result = await _service.AddRecord(request);
-            if (result == null) return NotFound("شرکت شما به ثبت نرسید");
+            if (result == null) return NotFound(new {message = "شرکت ثبت نشده است"});
             var adminUser = new MemberResponse
             {
                 membername = "مدیریت",
