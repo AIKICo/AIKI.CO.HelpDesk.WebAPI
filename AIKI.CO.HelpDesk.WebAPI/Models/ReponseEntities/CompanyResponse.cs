@@ -10,5 +10,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
         public string email { get; set; }
         public bool? allowdelete { get; set; }
         public string subdomain { get; set; }
+        public string lang { get; set; }
     }
 }

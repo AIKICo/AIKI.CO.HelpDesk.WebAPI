@@ -28,6 +28,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
         public string email { get; set; }
         public bool? allowdelete { get; set; }
         public string subdomain { get; set; }
+        public string lang { get; set; }
 
         public ICollection<Customer> Customers { get; set; }
         public ICollection<Member> Members { get; set; }
