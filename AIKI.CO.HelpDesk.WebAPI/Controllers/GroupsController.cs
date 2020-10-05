@@ -8,6 +8,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
@@ -18,7 +19,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         public GroupsController(
             IMapper map,
             IOptions<AppSettings> appSettings,
-            IService<Group, GroupResponse> service) : base(map, appSettings, service)
+            IService<Group, GroupResponse> service,
+            IStringLocalizer<GroupsController> localizer) : base(map, appSettings, service, localizer)
         {
         }
 

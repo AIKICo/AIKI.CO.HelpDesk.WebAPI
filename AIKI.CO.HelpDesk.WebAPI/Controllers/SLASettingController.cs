@@ -9,6 +9,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
@@ -19,7 +20,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         public SLASettingController(
             IMapper map,
             IOptions<AppSettings> appSettings,
-            IService<SLASetting, SLASettingResponse> service) : base(map, appSettings, service)
+            IService<SLASetting, SLASettingResponse> service,
+            IStringLocalizer<SLASettingController> localizer) : base(map, appSettings, service, localizer)
         {
         }
 

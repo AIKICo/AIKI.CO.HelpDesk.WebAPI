@@ -10,12 +10,14 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
+
 // ReSharper disable All
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
-    [Route("[controller]")]
+    [Route("{culture:culture}/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
     [Authorize]
@@ -27,16 +29,20 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         private readonly IMapper _map;
         protected readonly IService<T, V> _service;
         protected readonly bool _isReadOnly;
+        protected readonly IStringLocalizer<BaseCRUDApiController<T, V>> _localizer;
 
         public BaseCRUDApiController(
             IMapper map,
             IOptions<AppSettings> appSettings,
-            IService<T, V> service, bool isReadOnly = false)
+            IService<T, V> service,
+            IStringLocalizer<BaseCRUDApiController<T, V>> localizer,
+            bool isReadOnly = false)
         {
             _map = map;
             _appSettings = appSettings.Value;
             _service = service;
             _isReadOnly = isReadOnly;
+            _localizer = localizer;
         }
 
         [HttpGet]
@@ -60,7 +66,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         [HttpPost]
         [Produces("application/json")]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int) HttpStatusCode.BadRequest)]
         [ModelValidation]
         public virtual async Task<IActionResult> Post([FromBody] V request)
         {
@@ -73,8 +79,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         [HttpPut]
         [Produces("application/json")]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int) HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
         [ModelValidation]
         public virtual async Task<IActionResult> Put([FromBody] V request)
         {
@@ -87,8 +93,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpPatch("{id:guid}")]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int) HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
         [ModelValidation]
         public virtual async Task<IActionResult> Patch([FromRoute] Guid id, [FromBody] JsonPatchDocument<V> patchDoc)
         {
@@ -106,8 +112,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         }
 
         [HttpDelete("{id:guid}")]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int) HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
         public virtual async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             if (_isReadOnly) return BadRequest(new {model = ModelState, message = "خطا در ویرایش اطلاعات"});

@@ -1,11 +1,16 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.IO.Compression;
+using Microsoft.AspNetCore.Localization.Routing;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.AspNetCore.Localization;
 using AIKI.CO.HelpDesk.WebAPI.AutoMapperSettings;
 using AIKI.CO.HelpDesk.WebAPI.BuilderExtensions;
+using AIKI.CO.HelpDesk.WebAPI.Extensions;
 using AIKI.CO.HelpDesk.WebAPI.HubController;
 using AIKI.CO.HelpDesk.WebAPI.Models;
 using Arch.EntityFrameworkCore.UnitOfWork;
@@ -14,11 +19,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Raven.Client.Documents;
 using Raven.Client.Http;
@@ -100,11 +107,35 @@ namespace AIKI.CO.HelpDesk.WebAPI
             });
             services.AddTokenAuthentication(Configuration);
             services.AddAuthorization();
+            services.AddSignalR();
+            services.AddMemoryCache();
+
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
+            services.Configure<RequestLocalizationOptions>(
+                options =>
+                {
+                    var supportCultures = new List<CultureInfo>
+                    {
+                        new CultureInfo("en-US"),
+                        new CultureInfo("fa-IR")
+                    };
+                    options.DefaultRequestCulture = new RequestCulture(culture: "fa-IR", uiCulture: "fa-IR");
+                    options.SupportedCultures = supportCultures;
+                    options.SupportedUICultures = supportCultures;
+                    options.RequestCultureProviders = new[]
+                    {
+                        new AIKI.CO.HelpDesk.WebAPI.Extensions.RouteDataRequestCultureProvider
+                            {IndexOfCulture = 1, IndexofUICulture = 1}
+                    };
+                }
+            );
+            services.Configure<RouteOptions>(options =>
+            {
+                options.ConstraintMap.Add("culture", typeof(LanguageRouteConstraint));
+            });
             services.AddControllers()
                 .AddNewtonsoftJson(x =>
                     x.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
-            services.AddSignalR();
-            services.AddMemoryCache();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
@@ -125,7 +156,6 @@ namespace AIKI.CO.HelpDesk.WebAPI
             {
                 app.UseHsts();
             }
-
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .MinimumLevel.Debug()
@@ -144,15 +174,19 @@ namespace AIKI.CO.HelpDesk.WebAPI
 
             loggerFactory.AddSerilog();
             app.UseHttpsRedirection();
+            
             app.UseResponseCompression();
             app.UseResponseCaching();
             app.UseCors();
+            var localizeOptions = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(localizeOptions.Value);
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSerilogRequestLogging();
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute("default", "{culture:culture}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllers();
                 endpoints.MapHub<TicketAlarmHub>("/ticketalarmhub", options => { });
             });

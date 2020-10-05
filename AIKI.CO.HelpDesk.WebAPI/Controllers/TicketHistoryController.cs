@@ -7,6 +7,7 @@ using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
@@ -16,7 +17,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         public TicketHistoryController(
             IMapper map,
             IOptions<AppSettings> appSettings,
-            IService<TicketHistory, TicketHistoryResponse> service) : base(map, appSettings, service)
+            IService<TicketHistory, TicketHistoryResponse> service,
+            IStringLocalizer<TicketHistoryController> localizer) : base(map, appSettings, service, localizer)
         {
         }
 

@@ -8,12 +8,13 @@ using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Services.ServiceConfiguration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using PasswordGenerator;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
     [Authorize]
-    [Route("[controller]")]
+    [Route("{culture:culture}/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
     public class CompanyController : ControllerBase
@@ -21,15 +22,19 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         private readonly IEmailService _emailService;
         private readonly IService<Member, MemberResponse> _memberService;
         private readonly ICompanyService _service;
+        private readonly IStringLocalizer<CompanyController> _localizer;
+
 
         public CompanyController(
             ICompanyService service,
             IService<Member, MemberResponse> memberService,
-            IEmailService emailService)
+            IEmailService emailService,
+            IStringLocalizer<CompanyController> localizer)
         {
             _service = service;
             _memberService = memberService;
             _emailService = emailService;
+            _localizer = localizer;
         }
 
         [HttpPost]

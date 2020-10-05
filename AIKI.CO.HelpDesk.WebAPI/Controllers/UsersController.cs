@@ -11,6 +11,7 @@ using AIKI.CO.HelpDesk.WebAPI.Settings;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
@@ -25,7 +26,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             IMemberService userService,
             IMapper map,
             IOptions<AppSettings> appSettings,
-            IMemberService service, IEmailService emailService) : base(map, appSettings, service)
+            IMemberService service, IEmailService emailService,
+            IStringLocalizer<UsersController> localizer) : base(map, appSettings, service, localizer)
         {
             _userService = userService;
             _emailService = emailService;

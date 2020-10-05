@@ -8,11 +8,12 @@ using AIKI.CO.HelpDesk.WebAPI.Settings;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 {
-    [Route("[controller]")]
+    [Route("{culture:culture}/[controller]")]
     [ApiController]
     [ApiVersion("1.0")]
     [Authorize]
@@ -23,11 +24,13 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         private readonly AppSettings _appSettings;
         private readonly IMapper _map;
         protected readonly IService<T, V> _service;
+        protected readonly IStringLocalizer<BaseRApiController<T, V>> _localizer;
 
         public BaseRApiController(
             IMapper map,
             IOptions<AppSettings> appSettings,
-            IService<T, V> service)
+            IService<T, V> service,
+            IStringLocalizer<BaseRApiController<T, V>> localizer)
         {
             _map = map;
             _appSettings = appSettings.Value;

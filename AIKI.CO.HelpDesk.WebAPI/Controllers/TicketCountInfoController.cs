@@ -3,6 +3,7 @@ using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using AIKI.CO.HelpDesk.WebAPI.Settings;
 using AutoMapper;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
@@ -12,7 +13,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         public TicketCountInfoController(
             IMapper map,
             IOptions<AppSettings> appSettings,
-            IService<TicketCountInfo, TicketCountInfoResponse> service) : base(map, appSettings, service)
+            IService<TicketCountInfo, TicketCountInfoResponse> service,
+            IStringLocalizer<TicketCountInfoController> localizer) : base(map, appSettings, service, localizer)
         {
         }
     }

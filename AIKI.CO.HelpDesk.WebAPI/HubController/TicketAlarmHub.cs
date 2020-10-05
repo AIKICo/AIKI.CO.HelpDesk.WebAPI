@@ -5,6 +5,7 @@ using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
@@ -14,6 +15,7 @@ using SslMode = AIKI.CO.HelpDesk.WebAPI.BuilderExtensions.SslMode;
 namespace AIKI.CO.HelpDesk.WebAPI.HubController
 {
     [Authorize]
+    [Route("{culture:culture}/[controller]")]
     public class TicketAlarmHub : Hub
     {
         private readonly IMemoryCache _cache;

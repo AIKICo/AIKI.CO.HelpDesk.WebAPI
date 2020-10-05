@@ -9,6 +9,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
@@ -19,7 +20,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         public AppConstantItemsController(
             IMapper map,
             IOptions<AppSettings> appSettings,
-            IService<AppConstantItem, AppConstantItemResponse> service) : base(map, appSettings, service)
+            IService<AppConstantItem, AppConstantItemResponse> service,
+            IStringLocalizer<AppConstantItemsController> localizer) : base(map, appSettings, service, localizer)
         {
         }
 

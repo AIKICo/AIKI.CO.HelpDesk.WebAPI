@@ -10,6 +10,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Options;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Controllers
@@ -20,7 +21,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         public ProfilePictureController(
             IMapper map,
             IOptions<AppSettings> appSettings,
-            IService<ProfilePicture, ProfilePictureResponse> service) : base(map, appSettings, service)
+            IService<ProfilePicture, ProfilePictureResponse> service,
+            IStringLocalizer<ProfilePictureController> localizer) : base(map, appSettings, service, localizer)
         {
         }
 
