@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.IO.Compression;
-using Microsoft.AspNetCore.Localization.Routing;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.Localization;
@@ -122,9 +121,9 @@ namespace AIKI.CO.HelpDesk.WebAPI
                     options.DefaultRequestCulture = new RequestCulture(culture: "fa-IR", uiCulture: "fa-IR");
                     options.SupportedCultures = supportCultures;
                     options.SupportedUICultures = supportCultures;
-                    options.RequestCultureProviders = new[]
+                    options.RequestCultureProviders = new IRequestCultureProvider[]
                     {
-                        new AIKI.CO.HelpDesk.WebAPI.Extensions.RouteDataRequestCultureProvider
+                        new RouteDataRequestCultureProvider
                             {IndexOfCulture = 1, IndexofUICulture = 1}
                     };
                 }
@@ -188,7 +187,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
             {
                 endpoints.MapControllerRoute("default", "{culture:culture}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllers();
-                endpoints.MapHub<TicketAlarmHub>("/ticketalarmhub", options => { });
+                endpoints.MapHub<TicketAlarmHub>("/ticketalarmhub", options => {  });
             });
         }
 
