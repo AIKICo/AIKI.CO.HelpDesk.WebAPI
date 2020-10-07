@@ -18,7 +18,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         public CompanyService(IUnitOfWork unitofwork, IMapper map)
         {
             _unitofwork = unitofwork;
-            _map = map;
+            _map = map ?? throw new NullReferenceException(nameof(map));
         }
 
         public async Task<CompanyResponse> AddRecord(CompanyResponse request)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -31,7 +32,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             IEmailService emailService,
             IStringLocalizer<CompanyController> localizer)
         {
-            _service = service;
+            _service = service ?? throw new NullReferenceException(nameof(service));
             _memberService = memberService;
             _emailService = emailService;
             _localizer = localizer;

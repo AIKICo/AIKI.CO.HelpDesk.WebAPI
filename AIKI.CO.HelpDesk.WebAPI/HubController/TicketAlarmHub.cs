@@ -20,18 +20,15 @@ namespace AIKI.CO.HelpDesk.WebAPI.HubController
         private readonly IMemoryCache _cache;
         private readonly IConfiguration _Configuration;
         private readonly IHubContext<TicketAlarmHub> _hubContext;
-        private readonly IService<Ticket, TicketResponse> _serviceTicket;
 
         public TicketAlarmHub(
             IMemoryCache cache,
             IHubContext<TicketAlarmHub> hubContext,
-            IConfiguration Configuration,
-            IService<Ticket, TicketResponse> serviceTicket)
+            IConfiguration Configuration)
         {
             _cache = cache;
             _hubContext = hubContext;
             _Configuration = Configuration;
-            _serviceTicket = serviceTicket;
         }
 
         public async void SendMessage()

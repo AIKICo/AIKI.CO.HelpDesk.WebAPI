@@ -35,12 +35,12 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             IHttpContextAccessor context,
             IDataProtectionProvider provider)
         {
-            _map = map;
-            _appSettings = appSettings.Value;
+            _map = map ?? throw new NullReferenceException(nameof(map));
+            _appSettings = appSettings?.Value;
             _unitofwork = unitofwork;
             _repository = _unitofwork.GetRepository<T>();
             _context = context;
-            _protector = provider.CreateProtector("MemberService.CompanyId");
+            _protector = provider?.CreateProtector("MemberService.CompanyId");
             if (_context.HttpContext.Request.Headers["CompanyID"].Any())
                 _companyId =
                     Guid.Parse(_protector.Unprotect(_context.HttpContext.Request.Headers["CompanyID"].ToString()));

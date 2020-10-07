@@ -32,9 +32,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             IService<T, V> service,
             IStringLocalizer<BaseRApiController<T, V>> localizer)
         {
-            _map = map;
+            _map = map ?? throw new NullReferenceException(nameof(map));
             _appSettings = appSettings.Value;
-            _service = service;
+            _service = service ?? throw new NullReferenceException(nameof(service));
         }
 
         [HttpGet]

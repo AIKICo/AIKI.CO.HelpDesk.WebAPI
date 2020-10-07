@@ -38,9 +38,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
             IStringLocalizer<BaseCRUDApiController<T, V>> localizer,
             bool isReadOnly = false)
         {
-            _map = map;
-            _appSettings = appSettings.Value;
-            _service = service;
+            _map = map ?? throw new NullReferenceException(nameof(map));
+            _appSettings = appSettings?.Value;
+            _service = service ?? throw new NullReferenceException(nameof(service));
             _isReadOnly = isReadOnly;
             _localizer = localizer;
         }
