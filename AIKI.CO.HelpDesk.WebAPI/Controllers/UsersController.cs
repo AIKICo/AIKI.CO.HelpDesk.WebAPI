@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.CustomActionFilters;
 using AIKI.CO.HelpDesk.WebAPI.Extensions;
@@ -39,6 +40,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
+        [ProducesResponseType((int) HttpStatusCode.BadRequest)]
         public IActionResult Authenticate([FromBody] AuthenticateModel model)
         {
             var user = _userService.Authenticate(model.Username, model.Password);
@@ -59,11 +61,13 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
         [HttpPut]
         [Produces("application/json")]
         [ModelValidation]
+        [ProducesResponseType((int) HttpStatusCode.BadRequest)]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
         public override async Task<IActionResult> Put(MemberResponse request)
         {
             if (_isReadOnly) return BadRequest(new {message = "اطلاعات قابل ویرایش نیستند"});
             var existsRecord = await _userService.GetSingleWithPassword(q => q.id == request.id);
-            if (existsRecord == null) return NotFound();
+            if (existsRecord == null) return NotFound(new {message = "اطلاعات درخواستی در دسترسی  نمی باشد"});
             if (string.IsNullOrEmpty(request.password)) request.password = existsRecord.password;
             var result = await _service.UpdateRecord(request);
             if (result > 0) return Ok(request.WithoutPassword().WithoutCompanyId());
@@ -72,9 +76,10 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         [AllowAnonymous]
         [HttpGet("ResendPassword/{id}")]
+        [ProducesResponseType((int) HttpStatusCode.BadRequest)]
         public async Task<IActionResult> ResendPassword([FromRoute] string id)
         {
-            if (string.IsNullOrEmpty(id)) return BadRequest("آدرس ایمیل را وارد نمایید");
+            if (string.IsNullOrEmpty(id)) return BadRequest(new {message = "آدرس ایمیل را وارد نمایید"});
             var userInfo = await _userService.GetSingleWithPassword(q => q.email == id, true);
             if (userInfo == null) return BadRequest(new {message = "آدرس ایمیل ثبت نشده است"});
             _emailService.Send(new EmailMessage

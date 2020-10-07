@@ -46,14 +46,11 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
                         OnMessageReceived = context =>
                         {
                             var accessToken = context.Request.Query["access_token"];
-                            if (string.IsNullOrEmpty(accessToken) == false)
-                            {
-                                context.Token = accessToken;
-                                context.HttpContext.Request.Headers.Add("CompanyID",
-                                    context.Request.Query["CompanyID"]);
-                                context.HttpContext.Request.Headers.Add("MemberID", context.Request.Query["MemberID"]);
-                            }
-
+                            if (string.IsNullOrEmpty(accessToken)) return Task.CompletedTask;
+                            context.Token = accessToken;
+                            context.HttpContext.Request.Headers.Add("CompanyID",
+                                context.Request.Query["CompanyID"]);
+                            context.HttpContext.Request.Headers.Add("MemberID", context.Request.Query["MemberID"]);
                             return Task.CompletedTask;
                         }
                     };

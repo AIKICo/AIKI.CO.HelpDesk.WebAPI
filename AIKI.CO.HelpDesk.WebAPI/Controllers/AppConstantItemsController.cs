@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
@@ -37,6 +38,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         [Authorize(Roles = "admin, backupuser")]
         [HttpGet("GetByParentId/{id:guid}")]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
         public async Task<IActionResult> GetByParentId([FromRoute] Guid id)
         {
             var result = await _service.GetAll(q => q.appconstantid == id,

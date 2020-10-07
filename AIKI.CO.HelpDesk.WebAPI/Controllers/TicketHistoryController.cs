@@ -24,12 +24,13 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         [HttpGet("TicketHistoryByTicketID/{id:guid}")]
         [ProducesResponseType((int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.BadRequest)]
         public async Task<IActionResult> TicketHistoryByTicketID([FromRoute] Guid id)
         {
             var response = await _service.GetAll(q => q.ticketid == id);
             if (response != null)
                 return Ok(response);
-            return BadRequest();
+            return BadRequest(new {message = "اطلاعات در دسترسی نمی باشد"});
         }
     }
 }

@@ -44,7 +44,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         }
 
-        private bool CheckIfExcelFile(IFormFile file)
+        private static bool CheckIfExcelFile(IFormFile file)
         {
             var extension = "." + file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
             return extension == ".jpg" || extension == ".png"; // Change the extension based on your need

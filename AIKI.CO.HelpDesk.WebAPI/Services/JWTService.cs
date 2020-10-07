@@ -28,7 +28,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_secret);
-
             var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.username),
@@ -53,9 +52,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                 EncryptingCredentials = new EncryptingCredentials(new SymmetricSecurityKey(_encryptionkey),
                     SecurityAlgorithms.Aes128KW, SecurityAlgorithms.Aes128CbcHmacSha256)
             };
-
             var token = tokenHandler.CreateToken(tokenDescriptor);
-
             return tokenHandler.WriteToken(token);
         }
     }

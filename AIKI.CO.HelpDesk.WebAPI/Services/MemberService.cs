@@ -57,9 +57,11 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             Func<IQueryable<Member>, IOrderedQueryable<Member>> orderBy = null,
             Func<IQueryable<Member>, IIncludableQueryable<Member, object>> include = null, bool disableTracking = true,
             bool ignoreQueryFilters = false)
-            => _map.Map<IEnumerable<MemberResponse>>(await _repository.GetAllAsync(predicate, orderBy, include,
+        {
+            return _map.Map<IEnumerable<MemberResponse>>(await _repository.GetAllAsync(predicate, orderBy, include,
                 disableTracking,
                 ignoreQueryFilters)).WithoutPasswords().WithoutCompanyIds();
+        }
 
         public override async Task<IList<MemberResponse>> GetPagedList(Expression<Func<Member, bool>> predicate = null,
             Func<IQueryable<Member>, IOrderedQueryable<Member>> orderBy = null,

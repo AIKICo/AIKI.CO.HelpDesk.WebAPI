@@ -33,7 +33,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Controllers
 
         [HttpGet("GetAll/{id:guid}")]
         [ProducesResponseType((int) HttpStatusCode.OK)]
-
         public async Task<IActionResult> GetAll([FromRoute] Guid id)
             => Ok(await _service.GetAll(q => q.customerid == id && q.registerdate.Year == DateTime.Now.Year));
     }

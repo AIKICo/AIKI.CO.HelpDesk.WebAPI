@@ -41,7 +41,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
             _repository = _unitofwork.GetRepository<T>();
             _context = context;
             _protector = provider?.CreateProtector("MemberService.CompanyId");
-            if (_context.HttpContext.Request.Headers["CompanyID"].Any())
+            if (_context.HttpContext != null && _context.HttpContext.Request.Headers["CompanyID"].Any())
                 _companyId =
                     Guid.Parse(_protector.Unprotect(_context.HttpContext.Request.Headers["CompanyID"].ToString()));
         }
@@ -125,7 +125,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
                 _repository.Delete(founded);
                 return await _unitofwork.SaveChangesAsync();
             }
-
             return 0;
         }
 

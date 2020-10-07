@@ -19,7 +19,6 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
         public CustomerService(IMapper map,
             IUnitOfWork unitofwork,
             IOptions<AppSettings> appSettings,
-            IService<TicketHistory, TicketHistoryResponse> serviceHistory,
             IHttpContextAccessor context,
             IDataProtectionProvider provider,
             IService<OrganizeChart, OrganizeChartResponse> serviceOrgChart) : base(map, unitofwork, appSettings,
