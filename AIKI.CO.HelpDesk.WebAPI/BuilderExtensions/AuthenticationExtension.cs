@@ -2,7 +2,6 @@
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
@@ -11,8 +10,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
     public static class AuthenticationExtension
     {
         public static IServiceCollection AddTokenAuthentication(
-            this IServiceCollection services,
-            IConfiguration config)
+            this IServiceCollection services)
         {
             var secret = Environment.GetEnvironmentVariable("jwt_secret") ?? throw new Exception();
             var key = Encoding.ASCII.GetBytes(secret);

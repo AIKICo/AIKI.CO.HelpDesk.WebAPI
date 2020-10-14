@@ -108,7 +108,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
                 config.AssumeDefaultVersionWhenUnspecified = true;
                 config.ReportApiVersions = true;
             });
-            services.AddTokenAuthentication(Configuration);
+            services.AddTokenAuthentication();
             services.AddAuthorization();
             services.AddSignalR();
             services.AddMemoryCache();
