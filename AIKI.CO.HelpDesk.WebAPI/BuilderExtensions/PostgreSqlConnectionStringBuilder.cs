@@ -152,7 +152,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
                         break;
 
                     default:
-                        throw new ArgumentException(string.Format("Invalid keyword '{0}'.", keyword));
+                        throw new ArgumentException($"Invalid keyword '{keyword}'.");
                 }
             }
         }
@@ -166,7 +166,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.BuilderExtensions
         {
             var isUri = Uri.TryCreate(uriString, UriKind.Absolute, out var uri);
 
-            if (!isUri) throw new FormatException(string.Format("'{0}' is not a valid URI.", uriString));
+            if (!isUri) throw new FormatException($"'{uriString}' is not a valid URI.");
 
             Host = uri.Host;
             Port = uri.Port;

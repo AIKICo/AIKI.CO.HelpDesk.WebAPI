@@ -37,17 +37,21 @@ namespace AIKI.CO.HelpDesk.WebAPI
     public sealed class Startup
     {
         private static X509Certificate2 _logServerCertificate;
+        private readonly IWebHostEnvironment _environment;
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            _environment = environment;
         }
 
         private IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var builder = new PostgreSqlConnectionStringBuilder(Configuration["DATABASE_URL"])
+            var builder = new PostgreSqlConnectionStringBuilder(_environment.IsDevelopment()
+                ? Configuration["DATABASE_URL"]
+                : Environment.GetEnvironmentVariable("DATABASE_URL"))
             {
                 Pooling = true,
                 TrustServerCertificate = true,
@@ -155,6 +159,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
             {
                 app.UseHsts();
             }
+
             Log.Logger = new LoggerConfiguration()
                 .Enrich.FromLogContext()
                 .MinimumLevel.Debug()
@@ -173,7 +178,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
 
             loggerFactory.AddSerilog();
             app.UseHttpsRedirection();
-            
+
             app.UseResponseCompression();
             app.UseResponseCaching();
             app.UseCors();
@@ -187,7 +192,7 @@ namespace AIKI.CO.HelpDesk.WebAPI
             {
                 endpoints.MapControllerRoute("default", "{culture:culture}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllers();
-                endpoints.MapHub<TicketAlarmHub>("/ticketalarmhub", options => {  });
+                endpoints.MapHub<TicketAlarmHub>("/ticketalarmhub", options => { });
             });
         }
 

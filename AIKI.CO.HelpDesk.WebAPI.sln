@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIKI.CO.HelpDesk.WebAPI", "AIKI.CO.HelpDesk.WebAPI\AIKI.CO.HelpDesk.WebAPI.csproj", "{6325A7BB-65C1-41A5-9817-619621C60C77}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIKI.CO.HelpDesk.WebAPI.IntegrationTests", "AIKI.CO.HelpDesk.WebAPI.IntegrationTests\AIKI.CO.HelpDesk.WebAPI.IntegrationTests.csproj", "{B9B8A39F-FF28-4331-B17D-477A8B6E2753}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{6325A7BB-65C1-41A5-9817-619621C60C77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6325A7BB-65C1-41A5-9817-619621C60C77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6325A7BB-65C1-41A5-9817-619621C60C77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9B8A39F-FF28-4331-B17D-477A8B6E2753}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9B8A39F-FF28-4331-B17D-477A8B6E2753}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9B8A39F-FF28-4331-B17D-477A8B6E2753}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9B8A39F-FF28-4331-B17D-477A8B6E2753}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
