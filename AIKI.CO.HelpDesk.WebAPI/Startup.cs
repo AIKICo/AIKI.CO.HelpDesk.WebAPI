@@ -160,25 +160,27 @@ namespace AIKI.CO.HelpDesk.WebAPI
                 app.UseHsts();
             }
 
-            if (Convert.ToBoolean(Environment.GetEnvironmentVariable("LogEnabled")))
-            {
-                Log.Logger = new LoggerConfiguration()
-                    .Enrich.FromLogContext()
-                    .MinimumLevel.Debug()
-                    .WriteTo.Console()
-                    .WriteTo.RavenDB(CreateRavenDocStore(env), errorExpiration: TimeSpan.FromDays(90))
-                    .CreateLogger();
-                app.Use(async (httpContext, next) =>
-                {
-                    var username = httpContext.User.Identity.IsAuthenticated ? httpContext.User.Identity.Name : "anonymous";
-                    LogContext.PushProperty("User", username);
-                    var ip = httpContext.Connection.RemoteIpAddress.ToString();
-                    LogContext.PushProperty("IP", !string.IsNullOrWhiteSpace(ip) ? ip : "unknown");
-                
-                    await next.Invoke();
-                });
-            }
-           
+            // if (bool.Parse(Environment.GetEnvironmentVariable("LogEnabled")))
+            // {
+            //     Log.Logger = new LoggerConfiguration()
+            //         .Enrich.FromLogContext()
+            //         .MinimumLevel.Debug()
+            //         .WriteTo.Console()
+            //         .WriteTo.RavenDB(CreateRavenDocStore(env), errorExpiration: TimeSpan.FromDays(90))
+            //         .CreateLogger();
+            //     app.Use(async (httpContext, next) =>
+            //     {
+            //         var username = httpContext.User.Identity.IsAuthenticated
+            //             ? httpContext.User.Identity.Name
+            //             : "anonymous";
+            //         LogContext.PushProperty("User", username);
+            //         var ip = httpContext.Connection.RemoteIpAddress.ToString();
+            //         LogContext.PushProperty("IP", !string.IsNullOrWhiteSpace(ip) ? ip : "unknown");
+            //
+            //         await next.Invoke();
+            //     });
+            // }
+
             loggerFactory.AddSerilog();
             app.UseHttpsRedirection();
 

@@ -3,7 +3,9 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MimeKit.Text;
 using Newtonsoft.Json;
 
 namespace AIKI.CO.HelpDesk.WebAPI.IntegrationTests
@@ -12,6 +14,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.IntegrationTests
     public class UserContollerTests
     {
         private readonly HttpClient Client;
+        private string Token;
 
         public TestContext TestContext { get; set; }
 
@@ -31,7 +34,9 @@ namespace AIKI.CO.HelpDesk.WebAPI.IntegrationTests
             StringContent content =
                 new StringContent(JsonConvert.SerializeObject(loginInfo), Encoding.UTF8, "application/json");
             var response = await Client.PostAsync("/en-US/users/authenticate", content);
-            Assert.Equals(HttpStatusCode.OK, response.StatusCode);
+            var member = JsonConvert.DeserializeObject<MemberResponse>(await response.Content.ReadAsStringAsync());
+            Token = member.token;
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
     }
 }
