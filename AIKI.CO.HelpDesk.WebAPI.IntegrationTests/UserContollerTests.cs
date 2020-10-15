@@ -10,19 +10,8 @@ using Newtonsoft.Json;
 namespace AIKI.CO.HelpDesk.WebAPI.IntegrationTests
 {
     [TestClass]
-    public class UserContollerTests
+    public class UserContollerTests:BaseControllerTest
     {
-        private readonly HttpClient Client;
-        private string Token;
-        private string encryptedCompanyID;
-
-        public TestContext TestContext { get; set; }
-
-        public UserContollerTests()
-        {
-            Client = TestsHttpClient.Instane;
-        }
-
         [TestMethod]
         public async Task Authenticate()
         {
@@ -64,6 +53,5 @@ namespace AIKI.CO.HelpDesk.WebAPI.IntegrationTests
             var response = await Client.GetAsync("/en-US/users/IsUserNameExists/qermezkon@gmail.com");
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
-        
     }
 }
