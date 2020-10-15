@@ -14,6 +14,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.IntegrationTests
     {
         private readonly HttpClient Client;
         private string Token;
+        private string encryptedCompanyID;
 
         public TestContext TestContext { get; set; }
 
@@ -35,6 +36,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.IntegrationTests
             var response = await Client.PostAsync("/en-US/users/authenticate", content);
             var member = JsonConvert.DeserializeObject<MemberResponse>(await response.Content.ReadAsStringAsync());
             Token = member.token;
+            encryptedCompanyID = member.encryptedCompnayId;
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
     }
