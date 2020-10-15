@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Dependency;
 using Newtonsoft.Json;
@@ -11,7 +12,7 @@ using Newtonsoft.Json;
 namespace AIKI.CO.HelpDesk.WebAPI.IntegrationTests
 {
     [TestClass]
-    public class UserControllerTests
+    public class UserControllerTests:IClassFixture<WebApplicationFactory<Startup>>
     {
         private readonly HttpClient _client;
 
