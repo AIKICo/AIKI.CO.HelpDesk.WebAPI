@@ -37,7 +37,33 @@ namespace AIKI.CO.HelpDesk.WebAPI.IntegrationTests
             var member = JsonConvert.DeserializeObject<MemberResponse>(await response.Content.ReadAsStringAsync());
             Token = member.token;
             encryptedCompanyID = member.encryptedCompnayId;
+
+            Client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token);
+            Client.DefaultRequestHeaders.Add("CompanyID", encryptedCompanyID);
+
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
+
+        [TestMethod]
+        public async Task Get()
+        {
+            var response = await Client.GetAsync("/en-US/users");
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [TestMethod]
+        public async Task IsEmailExists()
+        {
+            var response = await Client.GetAsync($"/en-US/users/IsEmailExists/{Guid.NewGuid()}");
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
+        
+        [TestMethod]
+        public async Task IsUserNameExists()
+        {
+            var response = await Client.GetAsync("/en-US/users/IsUserNameExists/qermezkon@gmail.com");
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+        }
+        
     }
 }
