@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using MimeKit.Text;
 using Newtonsoft.Json;
 
 namespace AIKI.CO.HelpDesk.WebAPI.IntegrationTests
@@ -28,8 +27,8 @@ namespace AIKI.CO.HelpDesk.WebAPI.IntegrationTests
         {
             var loginInfo = new
             {
-                Username = "moh.mehrnia.lavan@gmail.com",
-                Password = "Mveyma6303$"
+                Username = Environment.GetEnvironmentVariable("testUserName"),
+                Password = Environment.GetEnvironmentVariable("testPassword")
             };
             StringContent content =
                 new StringContent(JsonConvert.SerializeObject(loginInfo), Encoding.UTF8, "application/json");

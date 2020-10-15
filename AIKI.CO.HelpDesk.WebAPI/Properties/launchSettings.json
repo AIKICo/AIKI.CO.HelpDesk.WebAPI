@@ -40,7 +40,9 @@
         "jwt_encryptionKey": "16CharEncryptKey",
         "CloudFlareApiKey": "5db1811494c862c1d095cf1886d80d8653fa0",
         "CloudFlareZoneId": "be7b5bc5b5c64101b618f1a53bbc31b8",
-        "LogEnabled":true
+        "LogEnabled":true,
+        "testUserName":"moh.mehrnia.lavan@gmail.com",
+        "testPassword":"Mveyma6303$"
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"
     }
