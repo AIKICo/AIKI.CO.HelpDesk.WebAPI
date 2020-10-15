@@ -2,12 +2,12 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /app
 ENV ASPNETCORE_ENVIRONMENT Development
 COPY *.sln .
-COPY AIKI.CO.HelpDesk.WebAPI/AIKI.CO.HelpDesk.WebAPI.csproj ./AIKI.CO.HelpDesk.WebAPI/
+COPY AIKI.CO.HelpDesk.WebAPI/*.csproj ./AIKI.CO.HelpDesk.WebAPI/
 RUN dotnet restore AIKI.CO.HelpDesk.WebAPI.csproj -s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/my/api/v3/index.json
 
-COPY AIKI.CO.HelpDesk.WebAPI/AIKI.CO.HelpDesk.WebAPI/. ./AIKI.CO.HelpDesk.WebAPI/
+COPY AIKI.CO.HelpDesk.WebAPI/. ./AIKI.CO.HelpDesk.WebAPI/
 WORKDIR /app/AIKI.CO.HelpDesk.WebAPI
-RUN dotnet publish AIKI.CO.HelpDesk.WebAPI.csproj -c Release -o out --self-contained false
+RUN dotnet publish -c Release -o out --self-contained false
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS runtime
 RUN apt-get update && apt-get install -y vim apt-utils libgdiplus libc6-dev tzdata && apt-get clean && rm -rf /var/lib/apt/lists/*
