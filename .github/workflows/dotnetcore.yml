@@ -12,7 +12,7 @@ jobs:
     - name: dotnet Restore
       run: dotnet restore -s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/my/api/v3/index.json
     - name: dotnet Test
-      run: dotnet test -l liquid.md
+      run: dotnet test
     - name: Build with dotnet
       run: dotnet build ./AIKI.CO.HelpDesk.WebAPI.sln --configuration Release
     - name: Publish 
