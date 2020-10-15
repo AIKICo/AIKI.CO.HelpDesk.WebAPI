@@ -3,7 +3,7 @@ WORKDIR /app
 ENV ASPNETCORE_ENVIRONMENT Development
 COPY *.sln .
 COPY AIKI.CO.HelpDesk.WebAPI/*.csproj ./AIKI.CO.HelpDesk.WebAPI/
-RUN dotnet restore AIKI.CO.HelpDesk.WebAPI.csproj -s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/my/api/v3/index.json
+RUN dotnet restore -s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/my/api/v3/index.json
 
 COPY AIKI.CO.HelpDesk.WebAPI/. ./AIKI.CO.HelpDesk.WebAPI/
 WORKDIR /app/AIKI.CO.HelpDesk.WebAPI
