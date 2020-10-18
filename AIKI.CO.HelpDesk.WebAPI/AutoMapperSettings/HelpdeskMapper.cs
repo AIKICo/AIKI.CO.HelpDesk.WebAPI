@@ -1,6 +1,6 @@
 ﻿using System;
+using AIKI.CO.HelpDesk.WebAPI.Models.DTO;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
-using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AutoMapper;
 using MD.PersianDateTime.Standard;
 

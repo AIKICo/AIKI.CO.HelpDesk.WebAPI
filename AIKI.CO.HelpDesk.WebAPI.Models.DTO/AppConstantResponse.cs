@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
+namespace AIKI.CO.HelpDesk.WebAPI.Models.DTO
 {
     public class AppConstantResponse : BaseResponse
     {

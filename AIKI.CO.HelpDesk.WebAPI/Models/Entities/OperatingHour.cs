@@ -1,4 +1,6 @@
-﻿namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
+﻿using AIKI.CO.HelpDesk.WebAPI.Models.DTO;
+
+namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
 {
     public class OperatingHour : BaseObject
     {

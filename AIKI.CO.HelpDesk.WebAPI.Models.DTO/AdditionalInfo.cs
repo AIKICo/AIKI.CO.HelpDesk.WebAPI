@@ -1,6 +1,6 @@
-namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
+namespace AIKI.CO.HelpDesk.WebAPI.Models.DTO
 {
-    public class AssetAdditionalInfo
+    public class AdditionalInfo
     {
         public string Label { get; set; }
         public string Value { get; set; }

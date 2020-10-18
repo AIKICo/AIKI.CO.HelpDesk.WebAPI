@@ -1,3 +1,4 @@
+using AIKI.CO.HelpDesk.WebAPI.Models.DTO;
 using System;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities

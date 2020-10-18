@@ -2,7 +2,6 @@ using System;
 using System.Data;
 using AIKI.CO.HelpDesk.WebAPI.BuilderExtensions;
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
-using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;

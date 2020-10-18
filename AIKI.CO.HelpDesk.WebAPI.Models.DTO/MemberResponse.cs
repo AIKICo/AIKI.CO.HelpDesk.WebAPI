@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
+namespace AIKI.CO.HelpDesk.WebAPI.Models.DTO
 {
     public sealed class MemberResponse : BaseResponse
     {

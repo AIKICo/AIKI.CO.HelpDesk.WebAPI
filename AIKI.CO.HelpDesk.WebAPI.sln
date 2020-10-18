@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIKI.CO.HelpDesk.WebAPI", "AIKI.CO.HelpDesk.WebAPI\AIKI.CO.HelpDesk.WebAPI.csproj", "{6325A7BB-65C1-41A5-9817-619621C60C77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AIKI.CO.HelpDesk.WebAPI", "AIKI.CO.HelpDesk.WebAPI\AIKI.CO.HelpDesk.WebAPI.csproj", "{6325A7BB-65C1-41A5-9817-619621C60C77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIKI.CO.HelpDesk.WebAPI.IntegrationTests", "AIKI.CO.HelpDesk.WebAPI.IntegrationTests\AIKI.CO.HelpDesk.WebAPI.IntegrationTests.csproj", "{D9ACBBC5-8706-4AA7-AFEF-661955C9A945}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AIKI.CO.HelpDesk.WebAPI.IntegrationTests", "AIKI.CO.HelpDesk.WebAPI.IntegrationTests\AIKI.CO.HelpDesk.WebAPI.IntegrationTests.csproj", "{D9ACBBC5-8706-4AA7-AFEF-661955C9A945}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIKI.CO.HelpDesk.WebAPI.Models.DTO", "AIKI.CO.HelpDesk.WebAPI.Models.DTO\AIKI.CO.HelpDesk.WebAPI.Models.DTO.csproj", "{C12D19AF-63D1-48F7-8C3A-906B2AD755E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{D9ACBBC5-8706-4AA7-AFEF-661955C9A945}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9ACBBC5-8706-4AA7-AFEF-661955C9A945}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9ACBBC5-8706-4AA7-AFEF-661955C9A945}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C12D19AF-63D1-48F7-8C3A-906B2AD755E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C12D19AF-63D1-48F7-8C3A-906B2AD755E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C12D19AF-63D1-48F7-8C3A-906B2AD755E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C12D19AF-63D1-48F7-8C3A-906B2AD755E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

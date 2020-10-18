@@ -1,4 +1,4 @@
-﻿namespace AIKI.CO.HelpDesk.WebAPI.Models.Entities
+﻿namespace AIKI.CO.HelpDesk.WebAPI.Models.DTO
 {
     public class Workday
     {

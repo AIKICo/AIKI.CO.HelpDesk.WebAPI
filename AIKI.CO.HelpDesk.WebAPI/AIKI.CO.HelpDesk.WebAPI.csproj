@@ -45,6 +45,11 @@
     <Folder Include="CustomMiddleware\" />
     <Folder Include="DataProtectionKeys" />
     <Folder Include="Models\CustomValidation\" />
+    <Folder Include="Models\ReponseEntities\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AIKI.CO.HelpDesk.WebAPI.Models.DTO\AIKI.CO.HelpDesk.WebAPI.Models.DTO.csproj" />
   </ItemGroup>
 
   <ItemGroup>

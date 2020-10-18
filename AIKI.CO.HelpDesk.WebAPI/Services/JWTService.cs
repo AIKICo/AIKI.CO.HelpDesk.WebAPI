@@ -2,7 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
+using AIKI.CO.HelpDesk.WebAPI.Models.DTO;
 using AIKI.CO.HelpDesk.WebAPI.Services.Interface;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

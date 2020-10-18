@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
+using AIKI.CO.HelpDesk.WebAPI.Models.DTO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 

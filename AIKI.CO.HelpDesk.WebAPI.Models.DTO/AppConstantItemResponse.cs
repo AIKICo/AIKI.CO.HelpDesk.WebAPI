@@ -1,8 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 
-namespace AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities
+namespace AIKI.CO.HelpDesk.WebAPI.Models.DTO
 {
     public class AppConstantItemResponse : BaseResponse
     {

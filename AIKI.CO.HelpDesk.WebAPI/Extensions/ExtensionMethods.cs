@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using AIKI.CO.HelpDesk.WebAPI.Models.ReponseEntities;
+using AIKI.CO.HelpDesk.WebAPI.Models.DTO;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Extensions
 {
