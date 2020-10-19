@@ -1,11 +1,16 @@
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
 WORKDIR /app
 ENV ASPNETCORE_ENVIRONMENT Development
-COPY AIKI.CO.HelpDesk.WebAPI/*.csproj ./AIKI.CO.HelpDesk.WebAPI/
-RUN dotnet restore ./AIKI.CO.HelpDesk.WebAPI/AIKI.CO.HelpDesk.WebAPI.csproj  -s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/my/api/v3/index.json
+COPY . /app/
 
-COPY AIKI.CO.HelpDesk.WebAPI/. ./AIKI.CO.HelpDesk.WebAPI/
 WORKDIR /app/AIKI.CO.HelpDesk.WebAPI
+RUN dotnet restore  -s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/my/api/v3/index.json
+
+WORKDIR /app/AIKI.CO.HelpDesk.WebAPI.Models.DTO
+RUN dotnet restore  -s https://api.nuget.org/v3/index.json -s https://www.myget.org/F/my/api/v3/index.json
+
+WORKDIR /app/AIKI.CO.HelpDesk.WebAPI
+RUN dotnet build
 RUN dotnet publish -c Release -o out --self-contained false
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS runtime
