@@ -6,7 +6,7 @@ RUN dotnet restore ./AIKI.CO.HelpDesk.WebAPI/AIKI.CO.HelpDesk.WebAPI.csproj  -s 
 
 COPY AIKI.CO.HelpDesk.WebAPI/. ./AIKI.CO.HelpDesk.WebAPI/
 WORKDIR /app/AIKI.CO.HelpDesk.WebAPI
-RUN dotnet publish -c Release -o out --self-contained false
+RUN dotnet publish ./AIKI.CO.HelpDesk.WebAPI/AIKI.CO.HelpDesk.WebAPI.csproj -c Release -o out --self-contained false
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS runtime
 RUN apt-get update && apt-get install -y vim apt-utils libgdiplus libc6-dev tzdata && apt-get clean && rm -rf /var/lib/apt/lists/*
