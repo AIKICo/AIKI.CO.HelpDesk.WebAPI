@@ -2,6 +2,7 @@
 using AIKI.CO.HelpDesk.WebAPI.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 
 namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
 {
@@ -13,12 +14,14 @@ namespace AIKI.CO.HelpDesk.WebAPI.Models.EntitiesConfiguration
         {
             this.companyid = companyid;
         }
+
         public virtual void Configure(EntityTypeBuilder<T> builder)
         {
             builder.HasKey(c => c.id);
+            builder.Property(c => c.id).ValueGeneratedOnAdd().HasValueGenerator<GuidValueGenerator>().IsRequired();
             builder.Property(c => c.companyid).HasDefaultValue(companyid);
-            builder.Property(c => c.id)
-                .ValueGeneratedNever();
+                // builder.Property(c => c.id)
+                //     .ValueGeneratedNever();
         }
     }
 }

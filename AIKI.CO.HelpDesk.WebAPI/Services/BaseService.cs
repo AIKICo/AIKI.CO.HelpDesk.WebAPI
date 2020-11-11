@@ -88,7 +88,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 
         public virtual async Task<int> AddRecord(V request, Guid? companyId = null)
         {
-            request.id = Guid.NewGuid();
+            //request.id = Guid.NewGuid();
             var record = _map.Map<T>(request);
             record.companyid = companyId == null ? _companyId : companyId;
             record.allowdelete = true;
@@ -98,7 +98,7 @@ namespace AIKI.CO.HelpDesk.WebAPI.Services
 
         public virtual async Task<V> AddRecordWithReturnRequest(V request)
         {
-            request.id = Guid.NewGuid();
+            //request.id = Guid.NewGuid();
             var record = _map.Map<T>(request);
             record.companyid = _companyId;
             record.allowdelete = true;

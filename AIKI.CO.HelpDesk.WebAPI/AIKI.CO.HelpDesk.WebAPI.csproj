@@ -45,7 +45,6 @@
     <Folder Include="CustomMiddleware\" />
     <Folder Include="DataProtectionKeys" />
     <Folder Include="Models\CustomValidation\" />
-    <Folder Include="Models\ReponseEntities\" />
   </ItemGroup>
 
   <ItemGroup>
